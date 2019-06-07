@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -46,17 +46,16 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="active"><a href="index.html"><span class="fa fa-home"></span><span> Home</span> </a></li>
+                                    <li class="active"><a href="/"><span class="fa fa-home"></span><span> Home</span> </a></li>
                                     <li><a href="#"><span class="fa fa-fire"></span><span> Mega</span></a>
                                         <div class="megamenu">
                                             <ul class="single-mega cn-col-4">
-                                                <li id="tagidCul"><a href="culture.html">Culture</a></li>
-                                                <li id="tagidPol"><a href="politics.html">Politics</a></li>
-                                                <li id="tagidSci"><a href="Science.html">Science</a></li>
-                                                <li id="tagidEco"><a href="Economy.html">Economy</a></li>
-                                                <li id="tagidMil"><a href="Military.html">Military</a></li>
+                                                {{#each lcCategories}}
+                                                <li id={{IDCate_Parents}}><a href="culture.html">{{Name_parentscate}}</a></li>
+                                                
+                                                {{/each}}
                                             </ul>
-                                            <div id="defaulttag">
+                                            {{!-- <div id={{IDCate_Parents}}>
                                                 <ul class="single-mega cn-col-4">
                                                     <img src="img/bg-img/mega_cul1.jpg" alt="mega-image" style="margin-bottom: 10px;">
                                                     <p><strong>Top 5 Asia places beautiful in year</strong></p>
@@ -73,7 +72,7 @@
                                                     <p style="font-size: 10px;color: #B9A4A4;">Nguyễn Hoàng Giang | 11 April 2019</p>
                                                 </ul>
                                             </div>
-                                            <div id="tagdivCul" style="display: none;">
+                                            <div id={{IDCate_Parents}} style="display: none;">
                                                 <ul class="single-mega cn-col-4">
                                                     <img src="img/bg-img/mega_cul1.jpg" alt="mega-image" style="margin-bottom: 10px;">
                                                     <p><strong>Top 5 Asia places beautiful in year</strong></p>
@@ -90,7 +89,7 @@
                                                     <p style="font-size: 10px;color: #B9A4A4;">Nguyễn Hoàng Giang | 11 April 2019</p>
                                                 </ul>
                                             </div>
-                                            <div id="tagdivPol" style="display: none;">
+                                            <div id={{IDCate_Parents}} style="display: none;">
                                                 <ul class="single-mega cn-col-4">
                                                     <img src="img/bg-img/politic_1.png" alt="mega-image" style="margin-bottom: 10px;">
                                                     <p><strong>US President officially visited Vietnam.</strong></p>
@@ -107,7 +106,7 @@
                                                     <p style="font-size: 10px;color: #B9A4A4;">Nguyễn Hoàng Giang | 11 April 2019</p>
                                                 </ul>
                                             </div>
-                                            <div id="tagdivSci" style="display: none;">
+                                            <div id={{IDCate_Parents}} style="display: none;">
                                                 <ul class="single-mega cn-col-4">
                                                     <img src="img/bg-img/science_1.png" alt="mega-image" style="margin-bottom: 10px;">
                                                     <p><strong>Successfully tested breast cancer drugs.</strong></p>
@@ -124,7 +123,7 @@
                                                     <p style="font-size: 10px;color: #B9A4A4;">Nguyễn Hoàng Giang | 11 April 2019</p>
                                                 </ul>
                                             </div>
-                                            <div id="tagdivEco" style="display: none;">
+                                            <div id={{IDCate_Parents}} style="display: none;">
                                                 <ul class="single-mega cn-col-4">
                                                     <img src="img/bg-img/Economy_1.png" alt="mega-image" style="margin-bottom: 10px;">
                                                     <p><strong>US stocks plunged.</strong></p>
@@ -141,7 +140,7 @@
                                                     <p style="font-size: 10px;color: #B9A4A4;">Nguyễn Hoàng Giang | 11 April 2019</p>
                                                 </ul>
                                             </div>
-                                            <div id="tagdivMil" style="display: none;">
+                                            <div id={{IDCate_Parents}} style="display: none;">
                                                 <ul class="single-mega cn-col-4">
                                                     <img src="img/bg-img/military_1.png" alt="mega-image" style="margin-bottom: 10px;">
                                                     <p><strong>US Air Force training.</strong></p>
@@ -157,19 +156,25 @@
                                                     <p><strong>Vietnam reviewed the independence day.</strong></p>
                                                     <p style="font-size: 10px;color: #B9A4A4;">Nguyễn Hoàng Giang | 11 April 2019</p>
                                                 </ul>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </li>
                                     <li><a href="#"><span class="fa fa-bars"></span><span> Categories</span></a>
-                                        <ul id="hoverid" class="dropdown">
-                                            <li><a href="culture.html">Culture</a>
+                                       
+                                        <ul id="hoverid" class="dropdown" id="categoriesMenu">
+                                             {{#each lcCategories}}
+                                            <li><a href="/{{Name_parentscate}}">{{Name_parentscate}}</a>
                                                 <ul class="dropdown">
-                                                    <li><a href="sports.html">Sports</a></li>
+                                                    {{!-- <li><a href="sports.html">Sports</a></li>
                                                     <li><a href="health.html">Healthy</a></li>
-                                                    <li><a href="music.html">Music</a></li>
+                                                    <li><a href="music.html">Music</a></li> --}}
+                                                    {{#each lcTopics}}
+                                                    <li><a href="music.html">{{Name_childcate}}</a></li>
+                                                    {{/each}}
                                                 </ul>
                                             </li>
-                                            <li><a href="politics.html">Politics</a>
+                                              {{/each}}
+                                            {{!-- <li><a href="politics.html">Politics</a>
                                                 <ul class="dropdown">
                                                     <li><a href="diplomatics.html">Diplomatic</a></li>
                                                     <li><a href="Vote.html">Vote</a></li>
@@ -196,8 +201,9 @@
                                                     <li><a href="WeaponContract.html">Weapon Contract</a></li>
                                                     <li><a href="ArmedCoflict.html">Armed Coflict</a></li>
                                                 </ul>
-                                            </li>
+                                            </li> --}}
                                         </ul>
+                                      
                                     </li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact.html">Contact</a></li>
@@ -299,9 +305,9 @@
 {{!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script></body> --}}
-<script src="script/jquery-2.2.4.min.js"></script>
-<script src="script/bootstrap.min.js"></script>
-<script src="script/popper.min.js"></script>
-<script src="script/plugins.js"></script>
-<script src="script/active.js"></script>
+<script src="/script/jquery-2.2.4.min.js"></script>
+<script src="/script/bootstrap.min.js"></script>
+<script src="/script/popper.min.js"></script>
+<script src="/script/plugins.js"></script>
+<script src="/script/active.js"></script>
 </html>

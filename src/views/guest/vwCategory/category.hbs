@@ -1,0 +1,206 @@
+   <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/culture_bg.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        {{#each this.category}}
+                        <h2>{{Name_parentscate}}</h2>
+                        {{/each}}
+                        <div class="btn-group mt-30">
+                            {{!-- <a href="sports.html" class="btn my-group-btn">Sports </a>
+                            <a href="health.html" class="btn my-group-btn">Healthy </a>
+                            <a href="music.html" class="btn my-group-btn">Music</a> --}}
+                            {{#each this.topics}}
+                            <a href="/{{Name_parentscate}}/{{IDCate_Child}}" class="btn my-group-btn">{{Name_childcate}} </a>
+                            {{/each}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END HEADER -->
+    <!-- <BREADCRUMB -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            {{#each this.category}}
+                            <li class="breadcrumb-item active" aria-current="page">{{Name_parentscate}}<li>
+                            {{/each}}
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  
+   <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-12">
+                    <div class="archive-posts-area bg-white p-50 mb-30 box-shadow">
+                        <!-- Trending Now Posts Area -->
+                        <div class="trending-now-posts mb-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>TRENDING NOW</h5>
+                            </div>
+
+                            <div class="trending-post-slides owl-carousel">
+                                <!-- Single Trending Post -->
+                                <div class="single-trending-post">
+                                    <img src="img/bg-img/QuachThiLan.png" alt="">
+                                    <div class="post-content">
+                                        <a href="#" class="post-cata">Sports</a>
+                                        <a href="post.html" class="post-title">Vietnam’s Lan wins Asian athletics gold</a>
+                                    </div>
+                                </div>
+
+                                <!-- Single Trending Post -->
+                                <div class="single-trending-post">
+                                    <img src="img/bg-img/f1Vietnam.png" alt="">
+                                    <div class="post-content">
+                                        <a href="#" class="post-cata">Sports</a>
+                                        <a href="post.html" class="post-title">F1 legend David Coulthard burns the tires in Hanoi</a>
+                                    </div>
+                                </div>
+
+                                <!-- Single Trending Post -->
+                                <div class="single-trending-post">
+                                    <img src="img/bg-img/egg.png" alt="">
+                                    <div class="post-content">
+                                        <a href="#" class="post-cata">Health</a>
+                                        <a href="post.html" class="post-title">An egg a day might reduce your risk of heart disease, study says</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-heading">
+                            <h5>LATEST NEWS</h5>
+                        </div>
+
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/egg.jpg);">
+
+                            </div>
+
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">Health</a>
+                                </div>
+                                <a href="post.html" class="post-title">An egg a day might reduce your risk of heart disease, study says</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Eating an egg a day may lower your risk of cardiovascular disease, a study of more than 400,000 adults in China suggests.</p>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/QuachThiLan.png);">
+
+                            </div>
+
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">Sports</a>
+                                </div>
+                                <a href="post.html" class="post-title">Vietnam’s Lan wins Asian athletics gold</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Quach Thi Lan won the gold medal in the women’s 400 meters hurdles at the Asian Athletics Championships in Qatar on Monday night.</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/f1Vietnam.png);">
+                            </div>
+
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">Sports</a>
+                                </div>
+                                <a href="post.html" class="post-title">F1 legend David Coulthard burns the tires in Hanoi</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>The F1 Vietnam Grand Prix heated up in Hanoi with David Coulthard starring in a kick-off event Saturday night.</p>
+                            </div>
+                        </div>
+
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/Festival.jpg);">
+                            </div>
+
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">Music</a>
+                                </div>
+                                <a href="post.html" class="post-title">Aftershock Festival Sets Lineup: Tool, Slipknot, Blink-182, Korn and More</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Rock festival Aftershock returns to Sacramento, Calif. from October 11-13 for its eighth annual edition, featuring Tool, Slipknot, Blink-182, Korn, Rob Zombie, Marilyn Manson and more. Staind will also return after a five-year
+                                    hiatus.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <!-- Pagination -->
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="ti-angle-right"></i></a></li>
+                            </ul>
+                        </nav>
+                        <!-- <div class="col text-center">
+                            <a href="#" class="btn load-more"><span></span>LOAD MORE <span class="fa fa-chevron-circle-down"> </span></a>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
