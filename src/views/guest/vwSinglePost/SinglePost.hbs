@@ -1,0 +1,153 @@
+    <!-- ##### Breadcrumb Area Start ##### -->
+    {{#each this.post}}
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/bamboocover.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>{{Title}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="/{{Name_parentscate}}">{{Name_parentscate}}</a></li>
+                            <li class="breadcrumb-item"><a href="/{{Name_parentscate}}/{{IDCate_Child}}">{{Name_childcate}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{Title}}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Post Details Area Start ##### -->
+    <section class="post-details-area">
+
+            <div class="row justify-content-center">
+                <div class="container">
+                    <!-- Post Details Content Area -->
+                    <div class="col-12 col-xl-12">
+                        <div class="col-12 col-xl-8"></div>
+                        <div class="post-details-content bg-white mb-30 p-5 box-shadow">
+                            <div class="blog-content">
+                                
+                                <h4 class="post-title section-heading">{{Title}}</h4>
+                                <!-- Post Meta -->
+                                <div class="post-meta">
+                                        <i href="#" style="color:#222">By {{Username}} </i>
+                                        <a href="/{{Name_parentscate}}/{{IDCate_Child}}"> /{{Name_childcate}}</a>
+                                        <br/>
+                                        <i href="#" style="color:#222">{{DateComplete}} </i>   
+                                </div>
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> {{Num_of_Comment}}</a>
+                                </div>
+                                <br>
+                                <br>
+                                {{{Content}}}
+                               <br>
+                               <br>
+                                <hr>
+                                <!-- Like Dislike Share -->
+                                <div class="like-dislike-share my-5 d-flex justify-content-center">
+                                   
+                                    <a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"> Share on Facebook</i></a>
+                                    <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"> Share on Twitter</i></a>
+                                    <!-- Share Info -->
+                                </div>
+                                 
+    
+                               
+                            </div>
+                        </div>
+                        <div class="related-post-area bg-white mb-30 px-30 p-30 box-shadow">
+                            <section class="section-heading">TAGS</section>
+                                    {{#each this.Tags}}
+                                    <span class="tag">{{Name_tag}}</span>
+                                    {{/each}}
+                        </div>
+                
+                            
+                        <!-- Comment Area Start -->
+                        <div class="comment_area clearfix bg-white mb-30 p-30 box-shadow">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>COMMENTS</h5>
+                            </div>
+    
+                            <ol>
+                                <hr>
+                                {{#each this.Comments}}
+                                <!-- Single Comment Area -->
+                                <li class="single_comment_area">
+                                    <!-- Comment Content -->
+                                    <div class="comment-content d-flex">
+                                        <!-- Comment Author -->
+                                        <div class="comment-author">
+                                            <img src="img/bg-img/55.jpg" alt="author">
+                                        </div>
+                                        <!-- Comment Meta -->
+                                        <div class="comment-meta">
+                                            <a href="#" class="comment-date">{{Comment_Date}}</a>
+                                            <h6>{{Username}}</h6>
+                                            <p>{{ContentComment}}</p>
+                                            <div class="d-flex align-items-center">
+                                                <a href="#" class="like">like</a>
+                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Like_of_Comment}}</a>
+
+                                                {{!-- <a href="#" class="reply">Reply</a> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {{/each}}
+                                <hr>
+    
+                                
+                                <hr>
+                            </ol>
+                        </div>
+    
+                        <!-- Post A Comment Area -->
+                        <div class="post-a-comment-area bg-white mb-30 p-30 box-shadow clearfix">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>YOUR COMMENTS</h5>
+                            </div>
+    
+                            <!-- Reply Form -->
+                            <div class="contact-form-area">
+                                <form action="#" method="post">
+                                    <div class="row">
+                                        
+                                        <div class="col-12">
+                                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Your comments..." required></textarea>
+                                        </div>
+                                        <div class="col-12 text-right">
+                                            <button class="btn mag-btn mt-30 " type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+             </div>
+    </section>
+    {{/each}}
+    <!-- ##### Post Details Area End ##### -->

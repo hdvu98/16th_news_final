@@ -1,656 +1,75 @@
     <!-- ##### Slideshow Area Start ##### -->
-            <div class="slider">
-                <div id="quote-carousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators ">
-                        <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#quote-carousel" data-slide-to="1"></li>
-                        <li data-target="#quote-carousel" data-slide-to="2"></li>
-                    </ol>
-                    <a href="post.html"> 
-                            <div class="carousel-inner ">
-                                    <div class="carousel-item active" id="slide1" >
-                                        <img class="image d-block w-100 carou " src="img/bg-img/vn-01.jpg" alt="First slide">
-                                        <div class="carousel-caption">
-                                            <a class="slideCategoryButton btn" href="culture.html">Culture</a>
-            
-                                            <a href="post.html"><h5 class="tittle">Vietnam wins AFF Cup 2018</h5></a>
-                                            <p class="date">01/04/2019</p>
-                                            <!-- <p class="summary-content">Vietnam’s national football team becomes winner of the ASEAN Federation Football (AFF) Suzuki Cup 2018 after defeating Malaysia 1-0 in the return leg of the final in Hanoi’s My Dinh Stadium on Saturday. ......<span class="roboto-font-bold"
-                                                    id="readMore"><a href="#">Read more.</a></span></p> -->
-                                        </div>
-                                        <div class="overlay"></div>
-            
-            
-                                        <!-- end-info -->
-                                    </div>
-                    </a>
-                    
-                    <a href="post.html">
-                            <div class="carousel-item" id="slide2">
-                                    <img class="d-block w-100 carou" src="img/bg-img/vn-02.jpg" alt="Second slide">
-                                    <div class="carousel-caption ">
-                                        <a class="slideCategoryButton btn" href="politics.html">Politics</a>
-                                        <a href="post.html">
-                                                <h5 class="tittle">OANA members commit to fight fake news with modern technology</h5>
-                                        </a>
-                                        <p class="date">01/04/2019</p>
-                                        <!-- <p class="summary-content">Members of the Organisation of Asia-Pacific News Agencies (OANA) are of one mind that it’s time to use every advantage to develop mechanisms in the fight against fake news, and all media outlets should not compromise truth,
-                                            accuracy and accountability for speed.....<span class="roboto-font-bold" id="readMore"><a href="#">Read more.</a></span></p> -->
-                                    </div>
-                                    <!-- end-info -->
-                                    <div class="overlay"></div>
-                                </div>
 
-                    </a>
-                    <a href="post.html">
-                            <div class="carousel-item " id="slide3">
-                                    <img class="d-block w-100 carou" src="img/bg-img/vn-03.jpg" alt="Third slide">
-                                    <div class="carousel-caption ">
-                                        <a class="slideCategoryButton btn" href="culture.html">Culture</a>
-                                       <a href="post.html">
-                                            <h5 class="tittle">Ha Long Bay among most beautiful UNESCO World Heritage Sites</h5>
-                                       </a> 
-                                        <p class="date">01/01/2019</p>
-                                        <!-- <p class="summary-content">Ha Long Bay has been placed 14th on a list of the Top 100 most beautiful UNESCO World Heritage Sites from US newspaper Newsweek. The list encompasses both natural and man-made wonders from every area of the globe for people
-                                            to tick off their bucket list and are among over 1,000 protected places across the globe from the UNESCO list......<span class="roboto-font-bold" id="readMore"><a href="#">Read more.</a></span></p> -->
-                                    </div>
-                                    <!-- end-info -->
-                                    <div class="overlay"></div>
-                                </div>
-
-                    </a>
-                       
-                       
+    <div class="hero-area owl-carousel">
+        <!-- Single Blog Post -->
+        {{#each this.topTrending}}
+        <div class="hero-blog-post bg-img bg-overlay" style="background-image: url({{Thumbnail}});">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="carousel-caption">
+                             <a class="slideCategoryButton btn" data-animation="bounceIn" data-delay="500ms"href="{{Name_parentscate}}/{{IDCate_Child}}">{{Name_parentscate}} | {{Name_childcate}}</a>         
+                            <a href="/post/{{IDPost}}"><h5 class="tittle" data-animation="fadeInUp" data-delay="300ms">{{Title}}</h5></a>
+                            <p class="date" data-animation="fadeInUp" data-delay="300ms">{{DateComplete}}</p>                                  
+                        </div>
                     </div>
-                    <!--  end carousel-inner -->
-                    <a class="carousel-control-prev" href="#quote-carousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#quote-carousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                </div>
             </div>
+        </div>
+        {{/each}}
+
+    </div>
             <!-- end-slider -->
     <!-- ##### Mag Posts Area Start ##### -->
     <section class="mag-posts-area d-flex flex-wrap">
 
         <!-- >>>>>>>>>>>>>>>>>>>>
-         Post Left Sidebar Area
-        <<<<<<<<<<<<<<<<<<<<< -->
-        <div class="post-sidebar-area left-sidebar mt-30 mb-30 bg-white box-shadow">
-           
-
-            <!-- Sidebar Widget -->
-            <div class="single-sidebar-widget p-30 sticky-top">
-                <!-- Section Title -->
-                <div class="section-heading">
-                    <h5>Latest Posts</h5>
-                </div>
-
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/Economy_1.png" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Coventry City Guide Including Coventry</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/culture_1.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Clean food is scarce.</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/culture_1.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Choose The Perfect Accommodations</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/politic_6.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Russia expressed concern about US military actions at Sirya.</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/culture_3.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Get Ready Fast For Fall Leaf Viewing</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/science_5.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">NASA announced the first image of a cosmic black hole.</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/egg.png" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Global Resorts Network Grn Putting</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/military_5.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">America announced defense budget 2019.</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/khoahoc.png" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">Travel Prudently Luggage And Carry</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Blog Post -->
-                <div class="single-blog-post d-flex">
-                    <div class="post-thumbnail">
-                        <img src="img/bg-img/culture_2.jpg" alt="">
-                    </div>
-                    <div class="post-content">
-                        <a href="#" class="post-title">MAMA awards ceremony.</a>
-                        <div class="post-meta d-flex justify-content-between">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- >>>>>>>>>>>>>>>>>>>>
              Main Posts Area
         <<<<<<<<<<<<<<<<<<<<< -->
         <div class="mag-posts-content mt-30 mb-30 p-30 box-shadow">
-           
-
-            <!-- Feature Video Posts Area -->
-            <div class="feature-video-posts mb-30">
+        <div class="trending-now-posts mb-30">
                 <!-- Section Title -->
                 <div class="section-heading">
-                    <h5>Most Popular</h5>
+                    <h5>MOST POPULAR</h5>
                 </div>
-
-                <div class="featured-video-posts">
-                    <div class="row">
-                        <div class="col-12 col-lg-7">
-                            <!-- Single Featured Post -->
-                            <div class="single-featured-post">
-                                <!-- Thumbnail -->
-                                <div class="post-thumbnail mb-50">
-                                    <img src="img/bg-img/Economy_5.jpg" alt="">
-                                </div>
-                                <!-- Post Contetnt -->
-                                <div class="post-content">
-                                    <div class="post-meta">
-                                        <a href="#">MAY 8, 2019</a>
-                                        <a href="sports.html">Economy</a>
-                                    </div>
-                                    <a href="post.html" class="post-title">Comprehensive picture of the world economy 2019</a>
-                                    <p>A year is not too impressive about the economic growth of the great powers. But 2019 is a year marked by a strong rise of emerging industrial countries</p>
-                                        </div>
-                                <!-- Post Share Area -->
-                                <div class="post-share-area d-flex align-items-center justify-content-between">
-                                    <!-- Post Meta -->
-                                    <div class="post-meta pl-3">
-                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                        <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-5">
-                            <!-- Featured Video Posts Slide -->
-                            <div class="featured-video-posts-slide owl-carousel">
-
-                                <div class="single--slide">
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/kinhte.png" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">Global Resorts Network Grn Putting Timeshares To Shame</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/mega_cul2.jpg" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/military_2.png" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">American Standards And European Culture How To Avoid</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/military_3.png" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">Mother Earth Hosts Our Travels</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/politic_2.png" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="single--slide">
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/putin.jpg" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">Global Resorts Network Grn Putting Timeshares To Shame</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/science_3.png" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/science_5.jpg" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">American Standards And European Culture How To Avoid</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/science_4.jpg" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">Mother Earth Hosts Our Travels</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Single Blog Post -->
-                                    <div class="single-blog-post d-flex style-3">
-                                        <div class="post-thumbnail">
-                                            <img src="img/bg-img/science_2.png" alt="">
-                                        </div>
-                                        <div class="post-content">
-                                            <a href="#" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
-                                            <div class="post-meta d-flex">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                <div class="trending-post-slides owl-carousel">
+                    <!-- Single Trending Post -->
+                    {{#each this.topViews}}
+                    <div class="single-trending-post">
+                        <img src="{{Thumbnail}}" alt="thumbnail">
+                        <div class="post-content">
+                            <a href="/{{Name_parentscate}}/{{IDCate_Child}}" class="post-cata">{{Name_parentscate}} | {{Name_childcate}}</a>
+                            <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
                         </div>
                     </div>
+                    {{/each}}
+                   
                 </div>
             </div>
-
-            
-
+            <br/>
             <!-- Sports Videos -->
             <div class="sports-videos-area">
-                <div class="row">
+                <div class="row">                   
+                    {{#each this.postEachTopic}}
                     <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6 ">
-                            <div class="section-heading">Music</div>
+                    <div class="col-12 col-lg-4 ">
                         <div class="single-blog-post style-4">
+                            <div class="section-heading"><a href="/{{Name_parentscate}}/{{IDCate_Child}}"class="post-cata">{{Name_parentscate}} | {{Name_childcate}}</a></div>
                             <div class="post-thumbnail">
-                                <img src="img/bg-img/science_3.png" alt="">
+                                <img src="{{Thumbnail}}" alt="thumbnail">
                             </div>
                             <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
+                                <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
                                 <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{Num_of_Comment}}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {{/each}}
 
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6 ">
-                        <div class="single-blog-post style-4">
-                            <div class="section-heading">Sports</div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/science_2.png" alt="">
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6 ">
-                        <div class="section-heading">
-                            Health
-                        </div>
-                        <div class="single-blog-post style-4">
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/putin.jpg" alt="">
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Diplomatic
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/science_2.png" alt="">
-                               
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Vote
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/science_2.png" alt="">
-                               
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Invention
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/mega_cul3.jpg" alt="">
-                               
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Application
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/military_3.png" alt="">
-                                
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Research
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/egg.jpg" alt="">
-                                
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Finance
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/science_1.png" alt="">
-                               
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Blog Post -->
-                    <div class="col-12 col-lg-6">
-                        <div class="single-blog-post style-4">
-                                <div class="section-heading">
-                                        Weapon Contract
-                                    </div>
-                            <div class="post-thumbnail">
-                                <img src="img/bg-img/science_3.png" alt="">
-                                
-                            </div>
-                            <div class="post-content">
-                                <a href="#" class="post-title">A Guide To Rocky Mountain Vacations</a>
-                                <div class="post-meta d-flex">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -660,31 +79,55 @@
          Post Right Sidebar Area
         <<<<<<<<<<<<<<<<<<<<< -->
         <div class="post-sidebar-area right-sidebar mt-30 mb-30 box-shadow">
-           
+
+            <!-- Sidebar Widget -->
+            <div class="single-sidebar-widget p-30 ">
+                <!-- Section Title -->
+                <div class="section-heading">
+                    <h5>Latest Posts</h5>
+                </div>
+
+                <!-- Single Blog Post -->
+                {{#each this.topLasted}}
+                <div class="single-blog-post d-flex">
+                    <div class="small-post-thumbnail">
+                        <img src="{{Thumbnail}}" alt="thumbnail">
+                    </div>
+                    <div class="post-content">
+                        <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
+                        <div class="post-meta d-flex justify-content-between">
+                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{Num_of_View}}</a>
+                            <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{Num_of_Comment}}</a>
+                        </div>
+                    </div>
+                </div> 
+                {{/each}}
+            </div>
+
             <!-- Sidebar Widget -->
             <div class="single-sidebar-widget p-30">
                 <!-- Section Title -->
                 <div class="section-heading">
                     <h5>Categories</h5>
                 </div>
-
                 <!-- Catagory Widget -->
                 <ul class="catagory-widgets">
-                    <li><a href="culture.html"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Culture</span> <span>35</span></a></li>
-                    <li><a href="politics.html"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Politics</span> <span>30</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Science</span> <span>13</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Economy</span> <span>06</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Military</span> <span>28</span></a></li>
-
+                    {{#each this.category}}
+                    <li><a href="/{{Name_parentscate}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{Name_parentscate}}</span> <span>{{num_of_posts}}</span></a></li>
+                    {{/each}}
                 </ul>
                
             </div>
+        </div>
+           
+            
 
             <!-- Sidebar Widget -->
-            <div class="single-sidebar-widget sticky-top ">
+            {{!-- <div class="single-sidebar-widget sticky-top ">
 
                         <a href="#" class="add-img"><img src="img/bg-img/add.png" alt=""></a>
-            </div>
+            </div> --}}
            
         </div>
     </section>
