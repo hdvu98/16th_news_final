@@ -1,0 +1,110 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+  $(function () {
+
+    
+
+    $('#frmRegister').validate({
+      rules: {
+        exampleInputUserName1: {
+          required: true,
+          remote: {
+            url: '/account/is-available',
+            // data: {
+            //   user: function () {
+            //     return $('#txtUsername').val();
+            //   }
+            // }
+          }
+        },
+        exampleInputPassword1: {
+          required: true,
+          minlength: 6
+        },
+        exampleInputRetypePassword1: {
+          required: true,
+          equalTo: $('[name="exampleInputPassword1"]')
+        },
+        exampleInputEmail1: {
+          required: true,
+          email: true
+        },
+        
+      },
+      messages: {
+        exampleInputUserName1: {
+          required: 'Your username is required.',
+          remote: 'Your username has been taken, please take another.'
+        },
+        exampleInputPassword1: {
+          required: 'Your password is required.',
+          minlength: 'Your password must have at least 6 characters.'
+        },
+
+        exampleInputRetypePassword1: {
+          required: 'Your password does not match.',
+          equalTo: 'Your password does not match.'
+        },
+       
+        exampleInputEmail1: {
+          required: 'Please enter a valid email address.',
+          email: 'Please enter a valid email address.'
+        },
+        
+      },
+
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      validClass: 'is-valid',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      }
+    });
+  })
+</script>
+{{/section}}
+
+  <div class="w3layoutscontaineragileits">
+  <div class="section-heading">
+        <h5 class="header-area">SIGN UP</h5>
+    </div>
+    <form method="POST" id="frmRegister" novalidate >
+      <div class="form-group">
+                <input type="text" class="form-control" id="exampleInputUserName1" name="exampleInputUserName1" placeholder="User name" autocomplete="off">
+                <h6 id="usercheck"></h6>
+      </div>
+      <div class="form-group">
+                <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" placeholder="Email" autocomplete="off">
+                <h6 id="emailcheck"></h6>
+      </div>
+      <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1" placeholder="Password" autocomplete="off">
+                <h6 id="passcheck"></h6> 
+      </div>
+      <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputRetypePassword1" name="exampleInputRetypePassword1" placeholder="Retype password" autocomplete="off" >
+                <h6 id="repasscheck"></h6>
+      </div>
+      <div class="form-group">
+        <div class="card-footer text-right">
+      <button type="submit" class="btn btn-lg btn-success btn-block">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Register
+      </button>
+     </div>
+        <p> You have account? <span>→</span> <a class="w3_play_icon1" href="sign-in.html"> Click Here</a></p>
+        <div class="clear"></div>
+      </div>
+    </form>
+  </div>

@@ -3,11 +3,14 @@ var exphbrs=require('express-handlebars');
 var categoryModel=require('./models/Category.model');
 var topicModel=require('./models/Topic.model');
 var morgan=require('morgan');
-
+var hbs_sections = require('express-handlebars-sections');
 var app=express();
 app.engine('hbs',exphbrs({
     defaultLayout:'main.hbs',
-    layoutsDir:'views/_layouts'
+    layoutsDir:'views/_layouts',
+    helpers:{
+        section:hbs_sections()
+    }
 }));
 
 app.use(morgan('dev'));
@@ -17,7 +20,7 @@ app.use(express.static(__dirname + '/public'));
 //app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/Category',require('./routes/guest/category.route'));
 app.use(require('./middlewares/local.mdw'));
-
+app.use('/account', require('./routes/account.route'));
 app.set('view engine','hbs');
 
 app.get('/',(req,res)=>{
