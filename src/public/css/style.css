@@ -1351,6 +1351,7 @@ input:focus {
     flex: 0 0 100%;
     max-width: 100%;
     width: 100%;
+    height: 250px;
     margin-bottom: 15px;
 }
 
@@ -1395,25 +1396,28 @@ input:focus {
 }
 
 .single-blog-post.style-4 .post-content .post-title {
-    font-size: 22px;
+    font-size: 16px;
     margin-bottom: 10px;
+    height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1499px) {
-    .single-blog-post.style-4 .post-content .post-title {
-        font-size: 18px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
     .single-blog-post.style-4 .post-content .post-title {
         font-size: 16px;
     }
 }
 
+@media only screen and (max-width: 767px) {
+    .single-blog-post.style-4 .post-content .post-title {
+        font-size: 14px;
+    }
+}
+
 @media only screen and (min-width: 480px) and (max-width: 767px) {
     .single-blog-post.style-4 .post-content .post-title {
-        font-size: 18px;
+        font-size: 12px;
     }
 }
 

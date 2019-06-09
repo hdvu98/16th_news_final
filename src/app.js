@@ -3,6 +3,9 @@ var exphbrs=require('express-handlebars');
 var categoryModel=require('./models/Category.model');
 var topicModel=require('./models/Topic.model');
 var postModel=require('./models/Post.model');
+var tagsModel=require('./models/Tag.model');
+var commentsModel=require('./models/Comment.model');
+
 var morgan=require('morgan');
 var hbs_sections = require('express-handlebars-sections');
 var app=express();
@@ -103,9 +106,14 @@ app.get('/post/:id',(req,res)=>{
     var post,trending,Tags,Comments;
     postModel.singleFullInfo(id).then(rows=>{
         post=rows;
-        postModel.topTrending().then(trends=>{
-            trending=trends;
-            res.render('guest/vwSinglePost/SinglePost',{post,trending});
+        tagsModel.allPostTags(id).then(TagsRows=>{
+            
+            commentsModel.allPostComments(id).then(cmtRows=>{
+                res.render('guest/vwSinglePost/SinglePost',{post,Tags:TagsRows,Comments:cmtRows});
+            }).catch(err=>{
+                console.log(err);
+                res.end('error occured');
+            });
         }).catch(err=>{
             console.log(err);
             res.end('error occured');
