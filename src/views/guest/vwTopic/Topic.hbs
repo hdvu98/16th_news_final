@@ -46,25 +46,20 @@
                                 <h5>TRENDING NOW</h5>
                             </div>
 
-
+                           
                             <div class="trending-post-slides owl-carousel">
                                 <!-- Single Trending Post -->
+                                 {{#each this.trending}}
                                 <div class="single-trending-post">
-                                    <img src="img/bg-img/QuachThiLan.png" alt="">
+                                    <img src="{{Thumbnail}}" alt="">
                                     <div class="post-content">
-                                        <a href="#" class="post-cata">Sports</a>
-                                        <a href="video-post.html" class="post-title">Vietnam’s Lan wins Asian athletics gold</a>
+                                        <a href="#" class="post-cata">{{Name_childcate}}</a>
+                                        <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
                                     </div>
                                 </div>
+                                {{/each}}
 
-                                <!-- Single Trending Post -->
-                                <div class="single-trending-post">
-                                    <img src="img/bg-img/f1Vietnam.png" alt="">
-                                    <div class="post-content">
-                                        <a href="#" class="post-cata">Sports</a>
-                                        <a href="video-post.html" class="post-title">F1 legend David Coulthard burns the tires in Hanoi</a>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="section-heading">
@@ -74,73 +69,34 @@
                         <!-- Single Catagory Post -->
 
 
+                        {{#each this.posts}}
                         <!-- Single Catagory Post -->
                         <div class="single-catagory-post d-flex flex-wrap">
                             <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/QuachThiLan.png);">
+                            <div class="post-thumbnail bg-img" style="background-image: url({{Thumbnail}});">
 
                             </div>
 
                             <!-- Post Contetnt -->
                             <div class="post-content">
+                                <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
                                 <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">Sports</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Vietnam’s Lan wins Asian athletics gold</a>
+                                   <a href="#">{{Name_childcate}}</a>
+                                    <br/>
+                                    <i href="#" style="font-size: 11px;">{{DateComplete}}</i>
+                                </div>                                
                                 <!-- Post Meta -->
                                 <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{Num_of_Comment}}</a>
                                 </div>
-                                <p>Quach Thi Lan won the gold medal in the women’s 400 meters hurdles at the Asian Athletics Championships in Qatar on Monday night.</p>
+                                <p class="sumary-post-area">{{{sumary}}}</p>
                             </div>
                         </div>
+                        {{/each}}
 
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/f1Vietnam.png);">
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">Sports</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">F1 legend David Coulthard burns the tires in Hanoi</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>The F1 Vietnam Grand Prix heated up in Hanoi with David Coulthard starring in a kick-off event Saturday night.</p>
-                            </div>
-                        </div>
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/mu.jpg);">
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">Sports</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Moyes: United playing for Manchester pride</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Former Man Utd manager says Red Devils must take fast-paced attacking approach against City in Manchester derby</p>
-                            </div>
-                        </div>
+                        
 
                         <!-- Pagination -->
                         <nav>
