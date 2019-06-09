@@ -80,7 +80,7 @@ module.exports={
     },
     allLastedPostByEachTopic:()=>{
         return db.load(`select * from
-        ((select f.IDPost,f.Title,f.Thumbnail,f.Status_post,f.FKCategory,f.FKIDWritter_post,f.FKTag,f.DateComplete,f.Content,f.Num_of_View,f.Num_of_Like,f.Num_of_Comment,f.Type_of_post
+        ((select f.IDPost,f.Title,f.Thumbnail,f.Status_post,f.FKCategory,f.FKIDWritter_post,f.DateComplete,f.Content,f.Num_of_View,f.Num_of_Like,f.Num_of_Comment,f.Type_of_post
         from (
            select title,idpost, min(datecomplete) as lasted
            from post group by fkcategory
@@ -94,7 +94,6 @@ module.exports={
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
             INNER JOIN news.account On FKIDWritter_post=IDAccount
-            INNER JOIN tag on FKTag = IDTAG
         where IDpost='${id}'`)
     }
 

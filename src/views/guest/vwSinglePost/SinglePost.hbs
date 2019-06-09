@@ -30,6 +30,7 @@
             </div>
         </div>
     </div>
+    {{/each}}
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Post Details Area Start ##### -->
@@ -40,6 +41,7 @@
                     <!-- Post Details Content Area -->
                     <div class="col-12 col-xl-12">
                         <div class="col-12 col-xl-8"></div>
+                         {{#each this.post}}
                         <div class="post-details-content bg-white mb-30 p-5 box-shadow">
                             <div class="blog-content">
                                 
@@ -74,6 +76,7 @@
                                
                             </div>
                         </div>
+                            {{/each}}
                         <div class="related-post-area bg-white mb-30 px-30 p-30 box-shadow">
                             <section class="section-heading">TAGS</section>
                                     {{#each this.Tags}}
@@ -114,11 +117,10 @@
                                         </div>
                                     </div>
                                 </li>
+                                 <hr>
                                 {{/each}}
-                                <hr>
+                               
     
-                                
-                                <hr>
                             </ol>
                         </div>
     
@@ -149,5 +151,5 @@
                 
              </div>
     </section>
-    {{/each}}
+
     <!-- ##### Post Details Area End ##### -->
