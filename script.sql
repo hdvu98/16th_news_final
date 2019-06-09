@@ -16,7 +16,6 @@ Vip int not null,
 constraint PK_TK primary key (IDAccount)
 );
 
-insert into ACCOUNT(Username,Email,Pass,Status_account,Type_account,Vip) values('HoangDuong','duong@gmail.com','1234',0,1,0);
 #Tao bang thu muc cha
 #status_cate: trang thai cua muc, 0:exits, 1: not exist
 create table CATE_PARENTS
@@ -26,11 +25,6 @@ Name_parentscate nvarchar(60) not null,
 Status_parentscate int not null,
 constraint PK_TK primary key (IDCate_Parents)
 );
-insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Culture',0);
-insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Politics',0);
-insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Science',0);
-insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Economy',0);
-insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Military',0);
 
 
 #Tao bang thu muc con
@@ -44,36 +38,35 @@ Status_childcate int not null,
 constraint PK_TK primary key (IDCate_Child)
 );
 
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(1,'Sport',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(1,'Healthy',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(1,'Music',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(2,'Diplomatic',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(2,'Vote',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(2,'Hot News',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(3,'Invention',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(3,'Application',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(3,'Research',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(4,'Finance',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(4,'Consumption',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(4,'Stock Exchange',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(5,'Hot News',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(5,'Weapon Contract',0);
-insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(5,'Armed Coflict',0);
-
 
 
 #Tao bang Tag
+#Status_Tag: 0 -exits    1-not exits
 create table TAG
 (
 IDTAG int auto_increment  not null,
 Name_tag nvarchar(60) not null,
+Status_Tag int not null,
 constraint PK_TK primary key (IDTAG)
 );
-insert into TAG(Name_tag) values('#hospital');
-insert into TAG(Name_tag) values('#mytam');
-insert into TAG(Name_tag) values('#sontung');
-insert into TAG(Name_tag) values('#batanvlog');
-insert into TAG(Name_tag) values('#bongda');
+
+insert into TAG(Name_tag,Status_Tag) values('#hospital',0);
+insert into TAG(Name_tag,Status_Tag) values('#mytam',0);
+insert into TAG(Name_tag,Status_Tag) values('#sontung',0);
+insert into TAG(Name_tag,Status_Tag) values('#batanvlog',0);
+insert into TAG(Name_tag,Status_Tag) values('#bongda',0);
+
+#Tao bang Tagpost
+create table TAG_POST
+(
+IDTAG_POST int auto_increment  not null,
+FKTag int not null,
+FKPost int not null,
+constraint PK_TK primary key (IDTAG_POST)
+);
+
+insert into TAG(FKTag,FKPost) values('#bongda',0);
+
 
 #Tao bang bai viet
 #Status_post: trang thai bai viet, 0: published, 1:accepted,2:Pendding, 3: denied
@@ -88,7 +81,6 @@ Thumbnail nvarchar(60) not null,
 Status_post int not null,
 FKCategory int not null,
 FKIDWritter_post int not null,
-FKTag int not null,
 DateComplete datetime not null,
 Content nvarchar (1000) not null,
 Num_of_View int not null,
@@ -141,55 +133,113 @@ ALTER TABLE PICTURE ADD CONSTRAINT FK_PIC_POST FOREIGN KEY (FKIDPost) REFERENCES
 
 ALTER TABLE POST ADD CONSTRAINT FK_POST_CATE FOREIGN KEY (FKCategory) REFERENCES CATE_CHILD(IDCate_Child);
 ALTER TABLE POST ADD CONSTRAINT FK_POST_ACC FOREIGN KEY (FKIDWritter_post) REFERENCES ACCOUNT(IDAccount);
-ALTER TABLE POST ADD CONSTRAINT FK_POST_TAG FOREIGN KEY (FKTag) REFERENCES TAG(IDTAG);
 
 ALTER TABLE CATE_CHILD ADD CONSTRAINT FK_CATECHILD_CATEPARENTS FOREIGN KEY (FKIDCate_Parents) REFERENCES CATE_PARENTS(IDCate_Parents);
 
+ALTER TABLE TAG_POST ADD CONSTRAINT FK_TAG_POST FOREIGN KEY (FKPost) REFERENCES POST(IDPost);
+ALTER TABLE TAG_POST ADD CONSTRAINT FK_TAG_POST_TAG FOREIGN KEY (FKTag) REFERENCES TAG(IDTAG);
 
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/imgs/imgs/post/1/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/2/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/3/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/4/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/5/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/6/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/7/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/8/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/9/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/10/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/11/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/12/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/13/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/14/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/15/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/16/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/17/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/18/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/19/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/20/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/21/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/22/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
-insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,FKTag,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
-values('Coventry City Guide Including Coventry','/img/imgs/post/23/main_thumb.jpg',0,1,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into ACCOUNT(Username,Email,Pass,Status_account,Type_account,Vip) values('HoangDuong','duong@gmail.com','1234',0,1,0);
+
+insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Culture',0);
+insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Politics',0);
+insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Science',0);
+insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Economy',0);
+insert into CATE_PARENTS(Name_parentscate,Status_parentscate) value('Military',0);
+
+
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(1,'Sport',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(1,'Healthy',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(1,'Music',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(2,'Diplomatic',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(2,'Vote',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(2,'Hot News',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(3,'Invention',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(3,'Application',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(3,'Research',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(4,'Finance',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(4,'Consumption',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(4,'Stock Exchange',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(5,'Hot News',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(5,'Weapon Contract',0);
+insert into CATE_CHILD(FKIDCate_Parents,Name_childcate,Status_childcate) value(5,'Armed Coflict',0);
+
+insert into TAG(Name_tag,Status_Tag) values('#hospital',0);
+insert into TAG(Name_tag,Status_Tag) values('#mytam',0);
+insert into TAG(Name_tag,Status_Tag) values('#sontung',0);
+insert into TAG(Name_tag,Status_Tag) values('#batanvlog',0);
+insert into TAG(Name_tag,Status_Tag) values('#bongda',0);
+
+
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/imgs/imgs/post/1/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/2/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/3/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/4/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/5/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/6/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/7/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/8/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/9/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/10/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/11/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/12/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/13/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/14/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/15/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/16/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/17/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/18/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/19/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/20/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/21/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/22/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+insert into POST(Title,Thumbnail,Status_post,FKCategory,FKIDWritter_post,DateComplete,Content,Num_of_View,Num_of_Like,Num_of_Comment,Type_of_post)
+values('Coventry City Guide Including Coventry','/img/imgs/post/23/main_thumb.jpg',0,1,1,'2019-01-01','Hello world',10,20,30,0);
+
+insert into TAG_POST(FKTag,FKPost) values(1,1);
+insert into TAG_POST(FKTag,FKPost) values(1,2);
+insert into TAG_POST(FKTag,FKPost) values(1,3);
+insert into TAG_POST(FKTag,FKPost) values(1,4);
+insert into TAG_POST(FKTag,FKPost) values(1,5);
+insert into TAG_POST(FKTag,FKPost) values(1,6);
+insert into TAG_POST(FKTag,FKPost) values(1,7);
+insert into TAG_POST(FKTag,FKPost) values(1,8);
+insert into TAG_POST(FKTag,FKPost) values(1,9);
+insert into TAG_POST(FKTag,FKPost) values(1,10);
+insert into TAG_POST(FKTag,FKPost) values(1,11);
+insert into TAG_POST(FKTag,FKPost) values(1,12);
+insert into TAG_POST(FKTag,FKPost) values(1,13);
+insert into TAG_POST(FKTag,FKPost) values(1,14);
+insert into TAG_POST(FKTag,FKPost) values(1,15);
+insert into TAG_POST(FKTag,FKPost) values(1,16);
+insert into TAG_POST(FKTag,FKPost) values(1,17);
+insert into TAG_POST(FKTag,FKPost) values(1,18);
+insert into TAG_POST(FKTag,FKPost) values(1,19);
+insert into TAG_POST(FKTag,FKPost) values(1,20);
+insert into TAG_POST(FKTag,FKPost) values(1,21);
+insert into TAG_POST(FKTag,FKPost) values(1,22);
+insert into TAG_POST(FKTag,FKPost) values(1,23);
 	
+    
