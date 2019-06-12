@@ -2,10 +2,10 @@ var express = require('express');
 var bcrypt = require('bcrypt');
 var moment = require('moment');
 var userModel = require('../models/user.model');
-/*var passport = require('passport');
+var passport = require('passport');
 
 var auth = require('../middlewares/auth');
-*/
+
 var router = express.Router();
 
 router.get('/register', (req, res, next) => {
@@ -50,10 +50,9 @@ router.get('/is-available', (req, res, next) => {
 })
 
 router.get('/login', (req, res, next) => {
-  //res.render('vwAccount/login', { layout: false });
-  res.end('LOGIN');
+  res.render('vwAccount/login', { layout: false });
 })
-/*
+
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err)
@@ -75,12 +74,13 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 })
 
-router.post('/logout', (req, res, next) => {
-
+router.post('/logout', auth,(req, res, next) => {
+req.logOut();
+res.redirect('/account/login');
 })
 
 router.get('/profile', auth, (req, res, next) => {
   res.end('PROFILE');
 })
-*/
+
 module.exports = router;

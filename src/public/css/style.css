@@ -4154,3 +4154,7 @@ select.form-control[multiple]
      overflow: hidden;
      text-overflow: ellipsis;
 }
+#user{
+margin-right:100px;
+cursor:pointer;
+}

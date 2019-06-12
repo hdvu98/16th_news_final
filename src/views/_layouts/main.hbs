@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>TH16 - News</title>
     <link rel="icon" href="img/core-img/favicon.ico">
-    {{{_sections.css}}}
-    
 </head>
 <body>
         <!-- Preloader -->
@@ -221,23 +219,28 @@
                                 </form>
                             </div>
                             <!-- Login -->
-                            <a id="login" href="sign-in.html" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
-                            <!--Sign-in  -->
-                            <a id="regis" href="sign-up.html" class="login-btn"><i class="fa fa-registered" aria-hidden="true"></i></a>
-                            <!--User -->
-                            <div id="user" class="container">
+                            <form id="frmSignOut" action="/account/logout" method="POST"></form>
+                             {{#if isAuthenticated}}
+                              <!--User -->
+                             <div id="user" class="container">
                                 <div class="dropdown">
-                                 <a  href="sign-up.html" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i>Dung Le</a>
+                                 <a  ></i>Hi, <b>{{authUser.Username}}</b></a>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="edit-info.html">Edit profile</a>
                                     <a id="writerpost" class="dropdown-item" href="submit-posts.html">Submit post</a>
                                     <a id="editorpost" class="dropdown-item" href="editor-Management.html">Editor Management</a>
                                      <a id="adminpost" class="dropdown-item" href="Admin-Categories-Management.html">Admin Management</a>
-                                    <a id="logout" class="dropdown-item" href="index.html">Logout</a>
+                                    <a id="logout" class="dropdown-item" href="javascript: $('#frmSignOut').submit();">Logout</a>
                                   </div>
                                 </div>
                                 </div>      
-
+                            {{else}}
+                            
+                            <a id="login" href="/account/login" class="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                            <!--Sign-in  -->
+                            <a id="regis" href="/account/register" class="login-btn"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                           
+                        {{/if}}
                             
                         </div>
                     </div>
@@ -306,9 +309,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script></body> --}}
 <script src="/script/jquery-2.2.4.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="/script/bootstrap.min.js"></script>
+<script src="/script/bootstrap.min.js"></script>
 <script src="/script/popper.min.js"></script>
 <script src="/script/plugins.js"></script>
 <script src="/script/active.js"></script>
