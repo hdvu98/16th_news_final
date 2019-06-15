@@ -79,8 +79,8 @@ req.logOut();
 res.redirect('/account/login');
 })
 
-router.get('/profile', auth, (req, res, next) => {
-  res.end('PROFILE');
+router.get('/profile', (req, res, next) => {
+  res.render('vwAccount/EditProfile');
 })
 
 module.exports = router;

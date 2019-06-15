@@ -26,11 +26,13 @@ app.engine('hbs', exphbs({
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
+
 app.use(express.static(__dirname + '/public'));
 //app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/Category',require('./routes/guest/category.route'));
 app.use(require('./middlewares/local.mdw'));
 app.use('/account', require('./routes/account.route'));
+app.use('/powerful', require('./routes/guest/powerful.route'));
 app.use(require('./middlewares/auth-locals.mdw'));
 //app.use(require('./middlewares/locals.mdw'));
 

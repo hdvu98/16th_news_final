@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>TH16 - News</title>
     <link rel="icon" href="img/core-img/favicon.ico">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <!-- icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Title -->
+    <title>Editor</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+
+
 </head>
 <body>
         <!-- Preloader -->
@@ -226,10 +236,16 @@
                                 <div class="dropdown">
                                  <a  ></i>Hi, <b>{{authUser.Username}}</b></a>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="edit-info.html">Edit profile</a>
-                                    <a id="writerpost" class="dropdown-item" href="submit-posts.html">Submit post</a>
-                                    <a id="editorpost" class="dropdown-item" href="editor-Management.html">Editor Management</a>
-                                     <a id="adminpost" class="dropdown-item" href="Admin-Categories-Management.html">Admin Management</a>
+                                    <a class="dropdown-item" href="/account/profile">Edit profile</a>
+                                    {{#if isWriter}}
+                                        <a id="writerpost" class="dropdown-item" href="\">Submit post</a>
+                                     {{/if}}
+                                     {{#if isEditor}}
+                                        <a id="editorpost" class="dropdown-item" href="/powerful/editorMag">Editor Management</a>
+                                     {{/if}}
+                                     {{#if isAdmin}}
+                                       <a id="adminpost" class="dropdown-item" href="\">Admin Management</a>
+                                     {{/if}}
                                     <a id="logout" class="dropdown-item" href="javascript: $('#frmSignOut').submit();">Logout</a>
                                   </div>
                                 </div>

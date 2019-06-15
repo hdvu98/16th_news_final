@@ -1,0 +1,96 @@
+ {{#section 'js'}}
+  <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+    <script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
+ {{/section}}
+ 
+
+     
+
+    <div class="d-flex" id="wrapper">
+
+            <!-- Sidebar -->
+            <div class="bg-dark border-right" id="sidebar-wrapper">
+              <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
+              <div class="list-group list-group-flush">
+                <a href="edit-info.html" class="list-group-item list-group-item-action bg-dark">Personal Information</a>
+                <a href="change-password.html" class="list-group-item list-group-item-action bg-dark">Change Password</a>
+                
+              </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+        
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+        
+              <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn tag" id="menu-toggle"><i class="fa fa-navicon"></i></button>
+        
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button> -->
+
+              </nav>
+        
+              <div class="container-fluid">
+                    <div class="w3layoutscontaineragileits" style="margin-right: 20%;width: 50%">
+                            <div class="section-heading">
+                                 <h5 class="header-area">Account Information</h5>
+                            </div>
+                    
+                            <form action="#" method="post">
+                                
+                                <div class="form-group">
+                                    <label style="float: left;">Username: </label>
+                                    <input  type="text" class="form-control" id="exampleUsername" placeholder="Giang">
+                                </div>
+                                <div class="form-group">
+                                    <label style="float: left;">Date of birth: </label>
+                                    <input id="datepicker" class="form-control" placeholder="MM/DD/YYYY">
+                                </div>
+                    
+                                
+                                <div class="form-group">
+                                    <label style="float: left;">Password: </label>
+                                    <input type="password" class="form-control" id="exampleInputPassword" placeholder="******">
+                                </div>
+                               
+                            </form>
+                                   <hr>
+                           <form action="#" method="post">
+                                <div class="section-heading">
+                                    <h5 class="header-area">Contact Information</h5>
+                                </div>
+                                
+                                <div class="form-group">
+                                     <label style="float: left;">Email: </label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="abc@example.com">
+                                </div>
+                                <div class="form-group">
+                                     <label style="float: left;">Phone: </label>
+                                    <input type="text" class="form-control" id="exampleInputPhone" placeholder="0123456789">
+                                </div>
+                                <div class="col text-center">
+                                      <a href="index.html" class="btn load-more"><span></span>SAVE</a>
+                                </div>
+                            </form>
+                            </div>
+                  
+
+
+
+              </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        
+          </div>
+          <!-- /#wrapper -->   
+   

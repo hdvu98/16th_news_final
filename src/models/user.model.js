@@ -12,7 +12,9 @@ module.exports = {
   singleByUserName: userName => {
     return db.load(`select * from account where Username = '${userName}'`);
   },
-
+  TypeByID: id => {
+    return db.load(`select Type_account  from account where IDAccount  = '${id}'`);
+  },
   add: entity => {
     return db.add('account', entity);
   },

@@ -1,7 +1,7 @@
 create database News;
 use News;
 #Tao bang tai khoan
-#Type_account 0 :doc gia, 1: writter, 2:admin
+#Type_account 0 :doc gia, 1: writter,2:editor, 3:admin
 #status_account: trang thai cua tai khoan, 0:exits, 1: not exist
 #Vip : 0: not vip, 1: vip
 create table ACCOUNT

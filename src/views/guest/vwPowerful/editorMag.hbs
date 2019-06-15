@@ -1,0 +1,248 @@
+{{#section 'js'}}
+<script>
+    var modal = document.getElementById('myAcceptModal');
+    var span = document.getElementsByClassName('close')[0];
+    function viewSettings(){
+		 modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+    <!-- end-modal -->
+    <!-- date -->
+    <script>
+            $('#datepicker').datepicker({
+                uiLibrary: 'bootstrap4'
+            });
+    </script>
+    <!-- date -->
+
+        <!-- search -->
+        <script>
+                $(document).ready(function(){
+                  $("#searchInput").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#managementTable tr").filter(function() {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                  });
+                });
+             </script>
+        <!-- end search -->
+
+    <script>
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+              });
+    </script>
+{{/section}}
+ <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-dark border-right" id="sidebar-wrapper">
+          <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
+          <div class="list-group list-group-flush">
+            <a href="editorMag" class="list-group-item list-group-item-action bg-dark">Management</a>
+            
+          </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+    
+          <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn tag" id="menu-toggle"><i class="fa fa-navicon"></i></button>
+    
+
+          </nav>
+    
+            <div class="container-fluid ">
+                   
+                           
+                    <div class="table-wrapper  box-shadow">
+                                <div class="table-title bg-dark">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h2>Post <b>Management</b></h2>
+                                            </div>
+                                            <div class="col-sm-8">						
+                                                <a href="#" class="btn btn-primary"><i class="material-icons"></i> <span>Refresh List</span></a>
+                                            </div>
+                                        </div>
+                                    </div>    
+                            <div class="table-filter">
+                                  <!-- filter -->
+                                  <div class="row  mt-1">
+                                      <div class="col">
+                                      </div>
+                                      <!-- end filter -->  
+                                      <div class="col">
+                                              <!-- search -->
+                                        <div class="filter-group">
+                                                <label>Search</label>
+                                                <input type="text" class="form-control" id="searchInput">
+                                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                            </div> 
+                                            <!-- search -->       
+
+                                      </div>
+                                                
+                                </div>
+                
+                                 
+                            </div>
+                            <table class="table table-striped table-hover" id="managementTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Author</th>						
+                                        <th>Date</th>											                                      
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-row">
+                                        <td>1</td>
+                                        <td><a href="post.html">Bamboo Airways fleet expansion plan runs into overreach concernse</a></td>
+                                        <td>Nam Anh</td>
+                                        <td>20/01/2019</td>                        
+                                        <!-- <td><span class="status text-published">&bull;</span></td> -->
+                                        <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                                            <a href="#" class="accept" title="Accept"data-toggle="tooltip"onclick="viewSettings()"><i class="fa fa-check"></i></a>
+                                            <a href="#" class="remove" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
+                                        </td>
+                                    </tr>
+                                    <tr  class="table-row">
+                                            <td>2</td>
+                                            <td><a href="post.html">Vietnam’s first carmaker to launch nonprofit electric bus service</a></td>
+                                           <td>Hoai Thuong</td>
+                                            <td>01/05/2019</td>                        
+                                            <!-- <td><span class="status text-approved" >&bull;</span></td> -->
+                                            <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                                                <a href="#" class="accept"  title="Accept" data-toggle="tooltip"onclick="viewSettings()"><i class="fa fa-check"></i></a>
+                                                <a href="#" class="remove " title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
+                                            </td>                                    </tr>
+                                    <tr class="table-row">
+                                            <td>3</td>
+                                            <td><a href="post.html">Hanoi FC extends winning streak, eyes semifinal berth at AFC Cup</a></td>
+                                            <td>Nguyen Van</td>
+                                            <td>29/04/2019</td>                        
+                                            <!-- <td><span class="status text-denied">&bull;</span></td> -->
+                                            <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                                                <a href="#" class="accept" title="Accept" data-toggle="tooltip" onclick="viewSettings()"><i class="fa fa-check"></i></a>
+                                                <a href="#" class="remove" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
+                                            </td>                                    
+                                        </tr>                       
+                                </tbody>
+                            </table>
+                                <!-- <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div> -->
+                                <ul class="pagination mt-5">
+                                    <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
+                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+               
+             </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    
+      </div>
+      <div class="accept-modal" id="myAcceptModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Settings</h3>
+                <div class="form-group">
+                        <label for="upload-file">Catagory</label>
+                        <select id="postcatagory" name="post-catagory" class="form-control">
+                            <option value="culture">Culture</option>
+                            <option value="politics">Politics</option>
+                            <option value="science">Science</option>
+                            <option value="economy">Economy</option>
+                            <option value="military">Military</option>
+                        </select>
+                    </div>
+                    <div id="culture" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    <select  name="post-tag" class="form-control">
+                            <option value="sports">Sports</option>
+                            <option value="healthy">Healthy</option>
+                            <option value="Music">Music</option>
+                            
+                        </select>
+                                                        
+                    </div>
+                    <div id="politics" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    <select name="post-tag" class="form-control">
+                            <option value="diplomatics">Diplomatics</option>
+                            <option value="vote">Vote</option>
+                            <option value="polhotnews">Hot News</option>
+                            
+                        </select>
+                    
+                    </div>
+                    <div id="science" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    
+                        
+                        <select name="post-tag" class="form-control">
+                            <option value="invention">Invention</option>
+                            <option value="application">Application</option>
+                            <option value="research">Research</option>
+                        
+                        </select>
+                    
+                    </div>
+                    <div id="economy" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    
+                        <select name="post-tag" class="form-control">
+                            <option value="finance">Finance</option>
+                            <option value="consumption">Consumption</option>
+                            <option value="stockexchange">StockExchange</option>
+                            
+                        </select>
+                    
+                    </div>
+                    <div id="military" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    
+                        <select name="post-tag" class="form-control">
+                            <option value="milhotnews">Hot News</option>
+                            <option value="weaponcontract">WeaponContract</option>
+                            <option value="armedcoflict">ArmedCoflict</option>
+                        
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                            <label style="float: left;">Publish date: </label>
+                            <input id="datepicker" class="form-control" placeholder="MM/DD/YYYY">
+                    </div>
+                    <div class="modal-submit">
+                                    <a href="" class="btn btn-success modal-btn">Apply</a>
+                                    <a href="" class="btn btn-danger modal-btn">Close</a>
+                    </div>
+                
+                <ol id="subjects" type="1" class="circle"style="margin-left:32px;">
+                  </ol>
+            </div>
+        </div>
+    <div class="clearfix">
+      <!-- /#wrapper -->   
