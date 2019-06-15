@@ -8,6 +8,12 @@
             "script": "start",
             "path": "src/",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "install",
+            "path": "src/",
+            "problemMatcher": []
         }
     ]
 }

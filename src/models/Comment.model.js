@@ -6,5 +6,8 @@ module.exports={
        from postcomment inner join post on fkidpost=idpost
        inner join account on fkiduser=idaccount
        where idpost='${idPost}'`) ;
-    }
+    },
+    add: entity => {
+        return db.add('postcomment',  entity);
+      },
 }

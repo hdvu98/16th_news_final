@@ -134,38 +134,6 @@ app.get('/post/:id',(req,res)=>{
 
 
 });
-// app.get('/:category',(req,res)=>{
-//     var category=req.params.category;
-//     var topics,category,posts;
-
-//     categoryModel.categoryWithTopicsByName(category).then(rows=>{
-//               topics=rows;
-//     }).catch(err=>{
-//         console.log(err);
-//         res.end('error occured');
-//     });
-
-//     categoryModel.singleByName(category).then(cate=>{
-//             category=cate;
-//     }).catch(err=>{
-//         console.log(err);
-//         res.end('error occured');
-//     });
-
-//     postModel.allByCate(category).then(postsCate=>{
-//         posts=postsCate;
-//     }).catch(err=>{
-//         console.log(err);
-//         res.end('error occured');
-//     });
-
-//     postModel.topTrendingCate(category).then(trends=>{
-//         res.render('guest/vwCategory/Category',{topics,category,posts,trending:trends});
-//     }).catch(err=>{
-//         console.log(err);
-//         res.end('error occured');
-//     });
-// });
 
 app.get('/:category/:topic',(req,res)=>{
     var category=req.params.category;
@@ -198,3 +166,28 @@ app.get('/:category/:topic',(req,res)=>{
 app.listen('3000',()=>{
     console.log('web server is running at http://localhost:3000');
 })
+
+app.post('/post/:id',(req,res,next)=>{
+    if(req.isAuthenticated()){
+        try{
+    
+            var entity = {
+              FKIDPost: req.params.id,
+              FKIDUser: req.user.IDAccount,
+              ContentComment: req.body.message,
+              Like_of_Comment:0
+             }
+             console.log(entity);
+            commentsModel.add(entity).then(rows => {
+              res.redirect(req.get('referer'));
+            })
+            }catch(error){
+              next(error);
+            }
+
+    }
+    else{
+       next();
+    }
+    
+});
