@@ -1,15 +1,26 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
  {{#section 'js'}}
+ <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   <script>
+      $(function () {
+
+    $('#txtDOB').datetimepicker({
+      format: 'd/m/Y',
+      timepicker: false,
+      mask: true,
+    });
+      });
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
     </script>
-    <script>
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4'
-        });
-    </script>
+    
  {{/section}}
  
 
@@ -21,8 +32,8 @@
             <div class="bg-dark border-right" id="sidebar-wrapper">
               <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
               <div class="list-group list-group-flush">
-                <a href="edit-info.html" class="list-group-item list-group-item-action bg-dark">Personal Information</a>
-                <a href="change-password.html" class="list-group-item list-group-item-action bg-dark">Change Password</a>
+                <a href="EditProfile" class="list-group-item list-group-item-action bg-dark">Personal Information</a>
+                <a href="changePassword" class="list-group-item list-group-item-action bg-dark">Change Password</a>
                 
               </div>
             </div>
@@ -45,23 +56,20 @@
                             <div class="section-heading">
                                  <h5 class="header-area">Account Information</h5>
                             </div>
-                    
+                            
                             <form action="#" method="post">
                                 
                                 <div class="form-group">
                                     <label style="float: left;">Username: </label>
                                     <input  type="text" class="form-control" id="exampleUsername" placeholder="Giang">
                                 </div>
-                                <div class="form-group">
-                                    <label style="float: left;">Date of birth: </label>
-                                    <input id="datepicker" class="form-control" placeholder="MM/DD/YYYY">
+                               <div class="form-group">
+                                    <label for="txtDOB">Date of birth</label>
+                                    <input type="text" class="form-control" id="txtDOB" name="dob">
                                 </div>
                     
                                 
-                                <div class="form-group">
-                                    <label style="float: left;">Password: </label>
-                                    <input type="password" class="form-control" id="exampleInputPassword" placeholder="******">
-                                </div>
+                                
                                
                             </form>
                                    <hr>

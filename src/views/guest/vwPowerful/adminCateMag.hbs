@@ -1,0 +1,247 @@
+{{#section 'js'}}
+ 
+<script>
+    var modal = document.getElementById('myAcceptModal');
+    var span = document.getElementsByClassName('close')[0];
+    function viewSettings(){
+		 modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+    <!-- end-modal -->
+    
+
+        <!-- search -->
+        <script>
+                $(document).ready(function(){
+                  $("#searchInput").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#managementTable tr").filter(function() {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                  });
+                });
+             </script>
+        <!-- end search -->
+
+    <script>
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+              });
+    </script>     
+    
+ {{/section}}
+
+
+  <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-dark border-right" id="sidebar-wrapper">
+          <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
+          <div class="list-group list-group-flush">
+            <a href="adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
+            <a href="adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
+            <a href="adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
+            <a href="adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
+            <a href="adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
+            <a href="adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
+
+            
+          </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+    
+          <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn tag" id="menu-toggle"><i class="fa fa-navicon"></i></button>
+    
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button> -->
+
+          </nav>
+    
+            <div class="container-fluid ">
+                <div class="section-heading mt-3">
+                   <h2>Categories</h2>
+                </div>
+                <div class="row">
+                    <div class="col categories">
+                        
+                    <div class="form-group category">
+                            <label for="upload-file"><b>Catagory</b></label>
+                            <select id="postcatagory" name="post-catagory" class="form-control category" multiple>
+                                <option value="culture">Culture</option>
+                                <option value="politics">Politics</option>
+                                <option value="science">Science</option>
+                                <option value="economy">Economy</option>
+                                <option value="military">Military</option>
+                            </select>
+                        </div>
+                        <div>
+                                <a href="" class="btnAdd"><i class="fa fa-plus"></i></a>
+                                <a href="" class="btnRemove"><i class="fa fa-remove"></i></a>
+                                <a href="" class="btnEdit"><i class="fa fa-edit"></i></a>
+                            </div>
+
+                    </div>
+                    <div class="col topics">
+                            <div id="culture" class="form-group">
+                                    <label for="upload-file"><b>Topic</b></label>
+                                <select  name="post-tag" class="form-control  topic" multiple>
+                                        <option value="sports">Sports</option>
+                                        <option value="healthy">Healthy</option>
+                                        <option value="Music">Music</option>
+                                        
+                                    </select>
+                                                                    
+                                </div>
+                            <div id="politics" class="form-group">
+                                <label for="upload-file"><b>Topic</b></label>
+                            <select name="post-tag" class="form-control  topic" multiple>
+                                    <option value="diplomatics">Diplomatics</option>
+                                    <option value="vote">Vote</option>
+                                    <option value="polhotnews">Hot News</option>
+                                    
+                                </select>
+                            
+                            </div>
+                            <div id="science" class="form-group">
+                                <label for="upload-file"><b>Topic</b></label>
+                            
+                                
+                                <select name="post-tag" class="form-control  topic" multiple>
+                                    <option value="invention">Invention</option>
+                                    <option value="application">Application</option>
+                                    <option value="research">Research</option>
+                                
+                                </select>
+                            
+                            </div>
+                            <div id="economy" class="form-group">
+                                <label for="upload-file"><b>Topic</b></label>
+                            
+                                <select name="post-tag" class="form-control  topic"multiple>
+                                    <option value="finance">Finance</option>
+                                    <option value="consumption">Consumption</option>
+                                    <option value="stockexchange">StockExchange</option>
+                                    
+                                </select>
+                            
+                            </div>
+                            <div id="military" class="form-group">
+                                <label for="upload-file"><b>Topic</b></label>
+                            
+                                <select name="post-tag" class="form-control  topic" multiple>
+                                    <option value="milhotnews">Hot News</option>
+                                    <option value="weaponcontract">WeaponContract</option>
+                                    <option value="armedcoflict">ArmedCoflict</option>
+                                
+                                </select>
+                            </div>
+                            <div>
+                                <a href="" class="btnAdd"><i class="fa fa-plus"></i></a>
+                                <a href="" class="btnRemove"><i class="fa fa-remove"></i></a>
+                                <a href="" class="btnEdit"><i class="fa fa-edit"></i></a>
+                            </div>
+                    </div>
+                </div>          
+             </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    
+      </div>
+      <div class="accept-modal" id="myAcceptModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Settings</h3>
+                <div class="form-group">
+                        <label for="upload-file">Catagory</label>
+                        <select id="postcatagory" name="post-catagory" class="form-control">
+                            <option value="culture">Culture</option>
+                            <option value="politics">Politics</option>
+                            <option value="science">Science</option>
+                            <option value="economy">Economy</option>
+                            <option value="military">Military</option>
+                        </select>
+                    </div>
+                    <div id="culture" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    <select  name="post-tag" class="form-control">
+                            <option value="sports">Sports</option>
+                            <option value="healthy">Healthy</option>
+                            <option value="Music">Music</option>
+                            
+                        </select>
+                                                        
+                    </div>
+                    <div id="politics" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    <select name="post-tag" class="form-control">
+                            <option value="diplomatics">Diplomatics</option>
+                            <option value="vote">Vote</option>
+                            <option value="polhotnews">Hot News</option>
+                            
+                        </select>
+                    
+                    </div>
+                    <div id="science" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    
+                        
+                        <select name="post-tag" class="form-control">
+                            <option value="invention">Invention</option>
+                            <option value="application">Application</option>
+                            <option value="research">Research</option>
+                        
+                        </select>
+                    
+                    </div>
+                    <div id="economy" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    
+                        <select name="post-tag" class="form-control">
+                            <option value="finance">Finance</option>
+                            <option value="consumption">Consumption</option>
+                            <option value="stockexchange">StockExchange</option>
+                            
+                        </select>
+                    
+                    </div>
+                    <div id="military" class="form-group">
+                        <label for="upload-file">Topic</label>
+                    
+                        <select name="post-tag" class="form-control">
+                            <option value="milhotnews">Hot News</option>
+                            <option value="weaponcontract">WeaponContract</option>
+                            <option value="armedcoflict">ArmedCoflict</option>
+                        
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                            <label style="float: left;">Publish date: </label>
+                            <input id="datepicker" class="form-control" placeholder="MM/DD/YYYY">
+                    </div>
+                    <div class="modal-submit">
+                                    <a href="" class="btn btn-success modal-btn">Apply</a>
+                                    <a href="" class="btn btn-danger modal-btn">Close</a>
+                    </div>
+                
+                <ol id="subjects" type="1" class="circle"style="margin-left:32px;">
+                  </ol>
+            </div>
+        </div>
+    <div class="clearfix">
+      <!-- /#wrapper -->   

@@ -82,5 +82,7 @@ res.redirect('/account/login');
 router.get('/profile', (req, res, next) => {
   res.render('vwAccount/EditProfile');
 })
-
+router.get('/changepassword', (req, res, next) => {
+  res.render('vwAccount/changePassword');
+})
 module.exports = router;
