@@ -10,6 +10,9 @@ module.exports={
     alllByTopic:id=>{
         return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}'`);
     },
+    Top5ByTopic:id=>{
+        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory =( select FKCategory from post where idpost= '${id}') limit 5`);
+    },
     allByCate:Name=>{
         return db.load(`
         SELECT *FROM post
@@ -95,6 +98,11 @@ module.exports={
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
             INNER JOIN news.account On FKIDWritter_post=IDAccount
         where IDpost='${id}'`)
+    },
+    update:entity=>{
+        var id = entity.ID;
+        delete entity.ID;
+        return db.update('post', 'IDPost', entity, id);
     }
 
 }

@@ -111,14 +111,20 @@ app.get('/:category',(req,res)=>{
 });
 
 app.get('/post/:id',(req,res)=>{
+
     var id=req.params.id;
-    var post,trending,Tags,Comments;
+    var post,similarPost,Tags,Comments;
     postModel.singleFullInfo(id).then(rows=>{
         post=rows;
         tagsModel.allPostTags(id).then(TagsRows=>{
             
             commentsModel.allPostComments(id).then(cmtRows=>{
-                res.render('guest/vwSinglePost/SinglePost',{post,Tags:TagsRows,Comments:cmtRows});
+                postModel.Top5ByTopic(id).then(similarPost=>{
+                    res.render('guest/vwSinglePost/SinglePost',{post,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost});
+                }).catch(err=>{
+                    console.log(err);
+                    res.end('error occured');
+                });
             }).catch(err=>{
                 console.log(err);
                 res.end('error occured');
