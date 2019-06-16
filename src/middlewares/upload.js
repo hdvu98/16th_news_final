@@ -9,18 +9,22 @@ var storage = multer.diskStorage({
   },
 })
 
+var upload = multer({storage: storage});
+
 module.exports = function (app) {
   app.post('/upload', (req, res, next) => {
-    multer({ storage }).array('fuMain')(req, res, err => {
-      if (err) {
+    multer({ storage }).single('fuMain')(req, res, err => {
+      if (err) { 
         return res.json({
           error: err.message
         })
       }
-
       res.json({
+      }); 
+      var sfile=req.session;
+      sfile.file=req.file;
 
-      });
+    
     })
   })
 }

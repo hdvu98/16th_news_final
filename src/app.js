@@ -159,7 +159,6 @@ app.get('/:category/:topic',(req,res)=>{
         postModel.alllByTopic(id).then(postRows=>{
 
             postModel.topTrendingTopic(id).then(trends=>{
-
                 res.render('guest/vwTopic/Topic',{topics:rows,posts:postRows,trending:trends});
 
             }).catch(err=>{

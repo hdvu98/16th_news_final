@@ -103,6 +103,9 @@ module.exports={
         var id = entity.ID;
         delete entity.ID;
         return db.update('post', 'IDPost', entity, id);
-    }
+    },
+    add: entity => {
+        return db.add('post',  entity);
+      },
 
 }

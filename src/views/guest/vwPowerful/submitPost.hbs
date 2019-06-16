@@ -1,37 +1,30 @@
 {{#section 'css'}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+  rel="stylesheet" type="text/css" />
 {{/section}}
 
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
-
+<script>
+  $(function () {
+    $('#fuMain').fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      allowedFileExtensions: ['png', 'jpg', 'gif'],
+      uploadUrl: '/upload',
+      uploadAsync: false,
+    });
+  })
+</script>
      <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
     </script>
-     <script>
-        $(function () {
-            $('#fuMain').fileinput({
-            theme: 'fa',
-            dropZoneEnabled: false,
-            allowedFileExtensions: ['png', 'jpg', 'gif'],
-            uploadUrl: '/upload',
-            uploadAsync: false,
-            });
-        })
-</script>
-    <script>
-        $(document).ready(function(){
-            $("#category").on("change",function(){
-                var cateID=$("#category option:selected").val();               
-               
-            })
-        })
-    </script>
+
      <script src="https://cdn.tiny.cloud/1/xt1n4483v6cuvxghuuuhrpeslagu8b8vxcbzyppl6xz0sqqu/tinymce/5/tinymce.min.js"></script>
     <script>
         tinymce.init({selector:'textarea',height:600,
@@ -82,27 +75,25 @@
                                     <div class="video-info mt-30">
                                         <form action="#" method="post">
                                               <label for="upload-file">Upload Thumbnail</label></br>
-                                                                                        <div class="card-body">
-                                                <div class="form-group">
-                                                    <div class="file-loading">
-                                                    <input id="fuMain" name="fuMain" type="file">
+                                                   <div class="card-body">
+                                                    <div class="form-group">
+                                                        <div class="file-loading">
+                                                        <input id="fuMain" name="fuMain" type="file">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                </div>
-                                                <div class="card-footer text-right">
-                                     
-                                                </div>
+                                                    </div>
+                                                    <div class="card-footer text-right"></div>
                                             <div class="form-group">
                                                 <label for="upload-file">Post Title</label>
-                                                <input id="title"type="text" class="form-control" name="video-name">
+                                                <input id="title"type="text" class="form-control" name="title">
                                             </div>
-                                            <textarea>Next, use our Get Started docs to setup Tiny!</textarea>
+                                            <textarea name="content">Next, use our Get Started docs to setup Tiny!</textarea>
                                             <div class="form-group">
                                                 <label for="upload-file">Catagory</label>
                                                  
-                                                <select  id="category" name="post-catagory" class="form-control">
+                                                <select  id="category" name="category" class="form-control">
                                                    {{#each lcTopics}}
-                                                    <option value="{{IDCate_Child}}">{{Name_parentscate}}/{{Name_childcate}}</option>                                                   
+                                                    <option value={{IDCate_Child}}>{{Name_parentscate}}/{{Name_childcate}}</option>                                                   
                                                    {{/each}}
                                                 </select>
                                                  
@@ -111,10 +102,10 @@
                                             <div class="form-group">
                                                 <label for="upload-file">Type</label>
                                                  
-                                                <select  id="typePost" name="post-catagory" class="form-control">
+                                                <select  id="typePost" name="type" class="form-control">
                                                    
-                                                    <option value="0">Normal</option>                                                   
-                                                    <option value="1">Vip</option>                                                   
+                                                    <option value=0>Normal</option>                                                   
+                                                    <option value=1>Vip</option>                                                   
                                                 </select>
                                                  
                                             </div>
