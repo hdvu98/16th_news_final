@@ -7,34 +7,42 @@ var commentsModel=require('./models/Comment.model');
 var exphbs=require('express-handlebars');
 var hbs_sections = require('express-handlebars-sections');
 var morgan=require('morgan');
-
+const path=require('path');
 
 
 var app=express();
+
+
 app.engine('hbs', exphbs({
     defaultLayout: 'main.hbs',
-    layoutsDir: 'views/_layouts',
+    extname: '.hbs',
+    layoutsDir: path.join(__dirname,'views/_layouts'),
+    partialsDir: path.join(__dirname, 'views/partials'),
     helpers: {
       
       section: hbs_sections()
     }
   }));
-  app.set('view engine', 'hbs');
+
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+
   
-  require('./middlewares/session')(app);
-  require('./middlewares/passport')(app);
+require('./middlewares/session')(app);
+require('./middlewares/passport')(app);
+require('./middlewares/upload')(app);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 
 app.use(express.static(__dirname + '/public'));
-//app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/Category',require('./routes/guest/category.route'));
 app.use(require('./middlewares/local.mdw'));
 app.use('/account', require('./routes/account.route'));
 app.use('/powerful', require('./routes/guest/powerful.route'));
+
 app.use(require('./middlewares/auth-locals.mdw'));
-//app.use(require('./middlewares/locals.mdw'));
+
 
 app.get('/',(req,res)=>{
     postModel.topLasted().then(topLasted=>{
@@ -119,7 +127,9 @@ app.get('/post/:id',(req,res)=>{
         tagsModel.allPostTags(id).then(TagsRows=>{
             
             commentsModel.allPostComments(id).then(cmtRows=>{
+                var cmtRows=cmtRows;
                 postModel.Top5ByTopic(id).then(similarPost=>{
+                    console.log(cmtRows);
                     res.render('guest/vwSinglePost/SinglePost',{post,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost});
                 }).catch(err=>{
                     console.log(err);
@@ -149,7 +159,6 @@ app.get('/:category/:topic',(req,res)=>{
         postModel.alllByTopic(id).then(postRows=>{
 
             postModel.topTrendingTopic(id).then(trends=>{
-
                 res.render('guest/vwTopic/Topic',{topics:rows,posts:postRows,trending:trends});
 
             }).catch(err=>{

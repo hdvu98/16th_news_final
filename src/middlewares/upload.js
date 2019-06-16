@@ -1,0 +1,30 @@
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  },
+  destination: function (req, file, cb) {
+    cb(null, `./public/imgs/`);
+  },
+})
+
+var upload = multer({storage: storage});
+
+module.exports = function (app) {
+  app.post('/upload', (req, res, next) => {
+    multer({ storage }).single('fuMain')(req, res, err => {
+      if (err) { 
+        return res.json({
+          error: err.message
+        })
+      }
+      res.json({
+      }); 
+      var sfile=req.session;
+      sfile.file=req.file;
+
+    
+    })
+  })
+}

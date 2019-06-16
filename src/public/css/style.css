@@ -4166,3 +4166,10 @@ cursor:pointer;
   top: 50%;
   transform: translate(-50%, -50%);
 }
+.list-group-item.active{
+    z-index: 10;
+    color: rgb(255, 255, 255);
+    background-color: rgb(129, 149, 171) !important;
+    border-color: #3b5998 !important;
+
+}
