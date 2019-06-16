@@ -4158,3 +4158,11 @@ select.form-control[multiple]
 margin-right:100px;
 cursor:pointer;
 }
+
+#myModal {
+  position: absolute;
+  float: left;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

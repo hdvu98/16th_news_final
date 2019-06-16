@@ -2,23 +2,23 @@ var db=require('../utills/db')
 
 module.exports={
     all:()=>{
-        return db.load('Select * from post order by datecomplete desc ');
+        return db.load('Select * from post where Status_post=0 order by datecomplete desc ');
     },
     single : id=>{
-        return db.load(`SELECT * FROM post where IDpost = '${id}'`);
+        return db.load(`SELECT * FROM post where IDpost = '${id}' and Status_post=0`);
     },
     alllByTopic:id=>{
-        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}'`);
+        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0`);
     },
     Top5ByTopic:id=>{
-        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory =( select FKCategory from post where idpost= '${id}') limit 5`);
+        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory =( select FKCategory from post where idpost= '${id}') and Status_post=0 limit 5`);
     },
     allByCate:Name=>{
         return db.load(`
         SELECT *FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
-        where Name_parentscate='${Name}'
+        where Name_parentscate='${Name}' and Status_post=0
         ORDER BY datecomplete desc`);
     },
     topTenViews:()=>{
@@ -26,6 +26,7 @@ module.exports={
         SELECT *FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents c ON fkidcate_parents  = idcate_parents
+            where Status_post=0
         ORDER BY num_of_view desc
         LIMIT 10`);
     },
@@ -34,6 +35,7 @@ module.exports={
         SELECT *FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents c ON fkidcate_parents  = idcate_parents
+            where Status_post=0
         ORDER BY datecomplete desc
         LIMIT 10`);
     },
@@ -42,7 +44,7 @@ module.exports={
         SELECT *FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents c ON fkidcate_parents  = idcate_parents
-        where IDCate_child='${id}'
+        where IDCate_child='${id}' and Status_post=0
         ORDER BY datecomplete desc
         LIMIT 1`);
     },
@@ -51,6 +53,7 @@ module.exports={
         SELECT *, ((Num_of_view+num_of_like+num_of_comment)/3) as 'Interactive' FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents c ON fkidcate_parents  = idcate_parents
+            where Status_post=0
         ORDER BY Interactive desc
         LIMIT 3`);
 
@@ -60,7 +63,7 @@ module.exports={
         SELECT *, ((Num_of_view+num_of_like+num_of_comment)/3) as 'Interactive' FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents c ON fkidcate_parents  = idcate_parents
-        where IDCate_child='${id}'
+        where IDCate_child='${id}' and Status_post=0
         ORDER BY Interactive desc
         LIMIT 3`);
     },
@@ -68,7 +71,7 @@ module.exports={
         return db.load(`SELECT *, ((Num_of_view+num_of_like+num_of_comment)/3) as 'Interactive' FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents c ON fkidcate_parents  = idcate_parents
-        where Name_parentsCate='${Name}'
+        where Name_parentsCate='${Name}' and Status_post=0
         ORDER BY Interactive desc
         LIMIT 3`);
 
@@ -78,6 +81,7 @@ module.exports={
         return db.load(`SELECT*, count(idpost) as'num_of_posts' FROM cate_parents left join
         (post INNER JOIN cate_child ON FKCategory =IDCate_child )
         ON fkidcate_parents  = idcate_parents
+        where Status_post=0
         group by(idcate_parents)`
         );
     },
@@ -89,7 +93,8 @@ module.exports={
            from post group by fkcategory
         ) as x inner join post as f on f.idpost = x.idpost and f.datecomplete = x.lasted) as tbPost
         inner join cate_child on tbPost.fkcategory=idcate_child)
-        inner join cate_parents on fkidcate_parents=idcate_parents`
+        inner join cate_parents on fkidcate_parents=idcate_parents where Status_post=0`
+        
         );
     },
     singleFullInfo:id=>{
@@ -97,7 +102,7 @@ module.exports={
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
             INNER JOIN news.account On FKIDWritter_post=IDAccount
-        where IDpost='${id}'`)
+        where IDpost='${id}' and Status_post=0`)
     },
     update:entity=>{
         var id = entity.ID;
