@@ -5,5 +5,9 @@ module.exports={
        return db.load(`select * from tag inner join tag_post on idtag=fktag
        inner join post on fkPost=idpost
        where idpost='${idPost}' and Status_Tag=0`) ;
+    },
+    singleByID:id=>{
+        return db.load(`select * from tag 
+       where idtag='${id}' and Status_Tag=0`) ;
     }
 }

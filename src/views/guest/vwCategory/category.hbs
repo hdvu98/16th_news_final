@@ -97,17 +97,40 @@
                         </div>
                         {{/each}}
                         <!-- Pagination -->
-                        <nav>
+                           <div class="row">
+                        <div class="col-sm-12">
+                            <nav aria-label="Page navigation example">
                             <ul class="pagination">
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="ti-angle-right"></i></a></li>
+                               
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{first}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;First</span>
+                                </a>
+                                </li>
+                                 {{#each this.pages}}
+                                {{#if active}}
+                                <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">
+                                    {{value}} <span class="sr-only">(current)</span>
+                                </a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+                                
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{last}}" aria-label="Next">
+                                    <span aria-hidden="true">Last&raquo;</span>
+                                </a>
+                                </li>
+                                
                             </ul>
-                        </nav>
-                        <!-- <div class="col text-center">
-                            <a href="#" class="btn load-more"><span></span>LOAD MORE <span class="fa fa-chevron-circle-down"> </span></a>
-                        </div> -->
+                            </nav>
+                        </div>
+                        </div>
 
                     </div>
                 </div>
