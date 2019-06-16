@@ -10,4 +10,7 @@ module.exports={
     topicWithCateByID: id=>{
         return db.load(`Select * from news.cate_parents left join news.cate_child on IDcate_parents=FKIDCate_Parents where  IDCate_Child= '${id}'`);
     },
+    allWhitCate:()=>{
+        return db.load(`Select * from news.cate_parents left join news.cate_child on IDcate_parents=FKIDCate_Parents`);
+    }
 }

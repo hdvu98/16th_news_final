@@ -85,4 +85,7 @@ router.get('/profile', (req, res, next) => {
 router.get('/changepassword', (req, res, next) => {
   res.render('vwAccount/changePassword');
 })
+router.get('/submitPost', (req, res, next) => {
+  res.render('/writer/submitPost');
+})
 module.exports = router;
