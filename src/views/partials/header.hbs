@@ -34,12 +34,12 @@
                                        
                                         <ul id="hoverid" class="dropdown" id="categoriesMenu">
                                              {{#each lcCategories}}
-                                            <li><a href="/{{Name_parentscate}}">{{Name_parentscate}}</a>
-                                                {{!-- <ul class="dropdown">
-                                                    {{#each lcTopics}}
-                                                    <li><a href="music.html">{{Name_childcate}}</a></li>
+                                            <li><a href="/{{category.Name_parentscate}}">{{category.Name_parentscate}}</a>
+                                                <ul class="dropdown">
+                                                    {{#each topics}}
+                                                    <li><a href="/{{cateName}}/{{topicID}}">{{topicName}}</a></li>
                                                     {{/each}}
-                                                </ul> --}}
+                                                </ul>
                                             </li>
                                               {{/each}}
                                             

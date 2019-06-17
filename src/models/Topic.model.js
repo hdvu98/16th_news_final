@@ -4,6 +4,10 @@ module.exports={
     all:()=>{
         return db.load('Select * from news.cate_child where Status_childcate=0');
     },
+    count:()=>{
+        return db.load(`Select count(*) as 'total' from news.cate_child where Status_childcate=0`);
+    },
+
     topicByID:(id)=>{
         return db.load(`Select * from news.cate_child where IDCate_Child='${id}' and Status_childcate=0`);
     },
