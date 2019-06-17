@@ -64,10 +64,10 @@
     {{#if this.error}}
     <div class="alert alert-danger" role="alert">
       Invalid categoryId.
-      <a href="adminCategory" class="alert-link">Go Back</a>
+      <a href="/powerful/adminCateMag" class="alert-link">Go Back</a>
     </div>
     {{else}}
-    <form method="POST" action="updateCategory">
+    <form method="POST" action="/powerful/update">
       <div class="form-group">
         <label for="txtCatID">#</label>
         <input readonly type="text" class="form-control" id="txtCatID" name="IDCate_Parents" value="{{this.category.IDCate_Parents}}">
@@ -77,11 +77,11 @@
         <input type="text" class="form-control" id="txtCatName" name="Name_parentscate" autofocus
           value="{{this.category.Name_parentscate}}" placeholder="Enter category name">
       </div>
-      <a class="btn btn-primary" href="adminCategory" role="button">
+      <a class="btn btn-primary" href="/powerful/adminCateMag" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         List
       </a>
-      <button type="submit" class="btn btn-danger" formaction="deleteCategory">
+      <button type="submit" class="btn btn-outline-danger" formaction="/powerful/delete">
         <i class="fa fa-trash-o" aria-hidden="true"></i>
         Delete
       </button>

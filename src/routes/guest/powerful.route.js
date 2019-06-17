@@ -3,7 +3,7 @@ var multer=require('multer');
 var router = express.Router();
 
 var categoryModel = require('../../models/Category.model');
-
+var topicModel = require('../../models/Topic.model');
 var postModel=require('../../models/Post.model');
 //require('../../middlewares/upload')(router);
 
@@ -54,28 +54,70 @@ router.get('/adminCateMag', (req, res, next) => {
     });
     
 })
+router.get('/adminTopicsMag/:id', (req, res) => {
+    var id = req.params.id;
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/adminTopicsMag', { error: true });
+      return;
+    }
+  
+   
+    topicModel.topicFromParentsCateByID(id).then(rows => {
+        if (rows.length > 0) {
+            res.render('guest/vwPowerful/adminTopicsMag', {
+                error: false,
+                topics: rows
+                
+            });
+            
+        } else {
+           
+          res.render('guest/vwPowerful/adminTopicsMag', { error: true });
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+  })
 router.get('/editCategory/:id', (req, res) => {
     var id = req.params.id;
     if (isNaN(id)) {
-      res.render('editCategory', { error: true });
+      res.render('guest/vwPowerful/editCategory', { error: true });
       return;
     }
   
     categoryModel.single(id).then(rows => {
       if (rows.length > 0) {
-        res.render('editCategory', {
+        
+        res.render('guest/vwPowerful/editCategory', {
           error: false,
           category: rows[0]
         });
       } else {
-          console.log('loi');
-        res.render('editCategory', { error: true });
+         
+        res.render('guest/vwPowerful/editCategory', { error: true });
       }
     }).catch(err => {
       console.log(err);
     });
   })
-  
+router.post('/update', (req, res) => {
+    categoryModel.update(req.body)
+      .then(n => {
+       
+        res.redirect('/powerful/adminCateMag');
+      }).catch(err => {
+        console.log(err);
+      })
+  })
+router.post('/delete', (req, res) => {
+    categoryModel.delete(req.body.IDCate_Parents)
+      .then(n => {
+        res.redirect('/powerful/adminCateMag');
+      }).catch(err => {
+        console.log(err);
+      })
+  })
+    
 router.get('/addCategory', (req, res, next) => {
     res.render('guest/vwPowerful/addCategory');
 })
@@ -92,6 +134,7 @@ router.post('/addCategory', (req, res, next) => {
       console.log(err);
     }) 
 })
+
 router.get('/adminEditorMag', (req, res, next) => {
     res.render('guest/vwPowerful/adminEditorMag');
 })

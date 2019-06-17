@@ -59,32 +59,29 @@
     
            <div class="card shadow">
   <h4 class="card-header">
-    Categories
+    {{this.topics.Name_parentscate}}
   </h4>
   <table class="table table-hover">
     <thead>
       <tr>
         <th class="text-center" scope="col">#</th>
-        <th scope="col">Category</th>
+        <th scope="col">Topics</th>
         <th scope="col" class="text-right">
           <a class="btn btn-outline-success" href="addCategory" role="button">
             <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Category
+            Add Topic
           </a>
         </th>
       </tr>
     </thead>
     <tbody>
-      {{#each this.categories}}
+      {{#each this.topics}}
       <tr>
-        <th class="text-center" scope="row">{{IDCate_Parents}}</th>
-        <td>{{Name_parentscate}}</td>
+        <th class="text-center" scope="row">{{IDCate_Child}}</th>
+        <td>{{Name_childcate}}</td>
         <td class="text-right">
-            <a class="btn btn-primary btn-sm" href="adminTopicsMag/{{IDCate_Parents}}" role="button" style="color: yellow; background-color: :red;">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            
-          </a>
-          <a class="btn btn-primary btn-sm" href="editCategory/{{IDCate_Parents}}" role="button">
+           
+          <a class="btn btn-primary btn-sm" href="editTopic/{{IDCate_Child}}" role="button">
             
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
