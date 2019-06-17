@@ -15,5 +15,21 @@ module.exports={
     },
     allWhitCate:()=>{
         return db.load(`Select * from news.cate_parents left join news.cate_child on IDcate_parents=FKIDCate_Parents`);
+    },
+    add: entity => {
+        return db.add('cate_child', entity);
+    },
+    single : id=>{
+        return db.load(`Select * from news.cate_child where  IDCate_Child = '${id}' and Status_childcate=0`);
+    },
+    update: entity => {
+        return db.update('cate_child', 'IDCate_Child', entity);
+    },
+    
+    delete: id => {
+        return db.delete('cate_child', 'Status_childcate','IDCate_Child', id);
+    },
+    parent: id => {
+        return db.load(`Select * from news.cate_parents,news.cate_child where  IDCate_Child = '${id}' and IDcate_parents=FKIDCate_Parents`);
     }
 }

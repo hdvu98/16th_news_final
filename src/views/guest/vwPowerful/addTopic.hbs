@@ -32,7 +32,7 @@
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
-            <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
+           <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
             <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
             <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
             <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
@@ -57,13 +57,17 @@
           </nav>
          <div class="card shadow" >
   <h4 class="card-header">
-    New Category
+    New Topic Of <b>{{this.category.Name_parentscate}}</b>
   </h4>
   <div class="card-body">
     <form method="POST">
+        <div class="form-group">
+        <label for="txtCatID">#</label>
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDCate_Parents" value="{{this.category.IDCate_Parents}}">
+      </div>
       <div class="form-group">
-        <label for="txtCatName">Category</label>
-        <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus placeholder="Enter category name">
+        <label for="txtTopicName">Topic</label>
+        <input type="text" class="form-control" id="txtTopicName" name="topicName" autofocus placeholder="Enter topic name">
       </div>
       <a class="btn btn-primary" href="/powerful/adminCateMag" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>

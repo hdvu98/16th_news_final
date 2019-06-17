@@ -55,28 +55,48 @@
             </button> -->
 
           </nav>
-         <div class="card shadow" >
+       
+      <div class="card shadow">
   <h4 class="card-header">
-    New Category
+    Edit Category
   </h4>
   <div class="card-body">
-    <form method="POST">
+    {{#if this.error}}
+    <div class="alert alert-danger" role="alert">
+      Invalid Topic id.
+      <a href="/powerful/adminTopicsMag/{{nameCate.IDCate_Parents}}" class="alert-link">Go Back</a>
+    </div>
+    {{else}}
+    <form method="POST" action="/powerful/updateTopic">
       <div class="form-group">
-        <label for="txtCatName">Category</label>
-        <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus placeholder="Enter category name">
+        <label for="txtCatID">#</label>
+        <input readonly type="text" class="form-control" id="txtCatId" name="IDCate_Parents" value="{{nameCate.IDCate_Parents}}">
       </div>
-      <a class="btn btn-primary" href="/powerful/adminCateMag" role="button">
+      <div class="form-group">
+        <label for="txtCatID">IDTopic</label>
+        <input readonly type="text" class="form-control" id="txtTopicID" name="IDCate_Child" value="{{this.topics.IDCate_Child}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatName">Topic</label>
+        <input type="text" class="form-control" id="txtTopicName" name="Name_childcate" autofocus
+          value="{{this.topics.Name_childcate}}" placeholder="Enter topic name">
+      </div>
+      <a class="btn btn-primary" href="/powerful/adminTopicsMag/{{nameCate.IDCate_Parents}}" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
-        Back To List
+        List
       </a>
+      <button type="submit" class="btn btn-outline-danger" formaction="/powerful/deleteTopic">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete
+      </button>
       <button type="submit" class="btn btn-success">
         <i class="fa fa-check" aria-hidden="true"></i>
         Save
       </button>
     </form>
+    {{/if}}
   </div>
 </div>
-      
             
         <!-- /#page-content-wrapper -->
     

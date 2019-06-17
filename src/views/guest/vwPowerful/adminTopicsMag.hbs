@@ -33,12 +33,12 @@
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
-            <a href="adminCateMag" class="list-group-item list-group-item-action bg-dark active ">Categories Management</a>
-            <a href="adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
-            <a href="adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
-            <a href="adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
-            <a href="adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
-            <a href="adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
+            <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
+            <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
+            <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
+            <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
+            <a href="/powerful/adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
+            <a href="/powerful/adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
 
             
           </div>
@@ -58,19 +58,29 @@
           </nav>
     
            <div class="card shadow">
+             {{#if this.error}}
+    <div class="alert alert-danger" role="alert">
+      Invalid categoryId.
+      <a href="/powerful/adminCateMag" class="alert-link">Go Back</a>
+    </div>
+    {{else}}
   <h4 class="card-header">
-    {{this.topics.Name_parentscate}}
+    {{nameCategory.Name_parentscate}} <i><a class="btn btn-primary" href="/powerful/adminCateMag" role="button" style="float:right;">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back To List
+      </a></i>
   </h4>
+  <div >
+        <label for="txtCatID">#</label>
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDCate_Parents" value="{{nameCategory.IDCate_Parents}}">
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>
         <th class="text-center" scope="col">#</th>
         <th scope="col">Topics</th>
         <th scope="col" class="text-right">
-          <a class="btn btn-outline-success" href="addCategory" role="button">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Topic
-          </a>
+          
         </th>
       </tr>
     </thead>
@@ -81,7 +91,7 @@
         <td>{{Name_childcate}}</td>
         <td class="text-right">
            
-          <a class="btn btn-primary btn-sm" href="editTopic/{{IDCate_Child}}" role="button">
+          <a class="btn btn-primary btn-sm" href="/powerful/editTopics/{{IDCate_Child}}" role="button">
             
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
@@ -91,7 +101,9 @@
       {{/each}}
     </tbody>
   </table>
+  {{/if}}
 </div>
+
         </div>
         <!-- /#page-content-wrapper -->
     

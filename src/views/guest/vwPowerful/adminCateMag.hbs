@@ -33,12 +33,12 @@
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
-            <a href="adminCateMag" class="list-group-item list-group-item-action bg-dark active ">Categories Management</a>
-            <a href="adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
-            <a href="adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
-            <a href="adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
-            <a href="adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
-            <a href="adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
+            <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
+            <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
+            <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
+            <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
+            <a href="/powerful/adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
+            <a href="/powerful/adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
 
             
           </div>
@@ -67,7 +67,7 @@
         <th class="text-center" scope="col">#</th>
         <th scope="col">Category</th>
         <th scope="col" class="text-right">
-          <a class="btn btn-outline-success" href="addCategory" role="button">
+          <a class="btn btn-outline-success" href="/powerful/addCategory" role="button">
             <i class="fa fa-plus" aria-hidden="true"></i>
             Add Category
           </a>
@@ -80,11 +80,16 @@
         <th class="text-center" scope="row">{{IDCate_Parents}}</th>
         <td>{{Name_parentscate}}</td>
         <td class="text-right">
-            <a class="btn btn-primary btn-sm" href="adminTopicsMag/{{IDCate_Parents}}" role="button" style="color: yellow; background-color: :red;">
+            <a class="btn btn-primary btn-sm" href="/powerful/addTopic/{{IDCate_Parents}}" role="button" style="color: yellow; background-color: :red;">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            
+             </a>
+
+            <a class="btn btn-primary btn-sm" href="/powerful/adminTopicsMag/{{IDCate_Parents}}" role="button" style="color: yellow; background-color: :red;">
             <i class="fa fa-eye" aria-hidden="true"></i>
             
           </a>
-          <a class="btn btn-primary btn-sm" href="editCategory/{{IDCate_Parents}}" role="button">
+          <a class="btn btn-primary btn-sm" href="/powerful/editCategory/{{IDCate_Parents}}" role="button">
             
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
