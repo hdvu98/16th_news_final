@@ -33,7 +33,7 @@ require('./middlewares/passport')(app);
 require('./middlewares/upload')(app);
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 app.use('/Category',require('./routes/guest/category.route'));
@@ -41,6 +41,8 @@ app.use(require('./middlewares/local.mdw'));
 app.use('/account', require('./routes/account.route'));
 app.use('/powerful', require('./routes/guest/powerful.route'));
 app.use('/tag', require('./routes/guest/tags.route'));
+app.use('/search', require('./routes/guest/search.route'));
+
 app.use(require('./middlewares/auth-locals.mdw'));
 
 

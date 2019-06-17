@@ -1,24 +1,44 @@
- <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/Vote_bg.png);">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-12">
-                    <div class="breadcrumb-content">
-                        {{#each this.tag}}
-                        <h2>{{Name_tag}}</h2>
-                        {{/each}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- END BREADCRUMB -->
+{{#section 'js'}}
+    <script>
+        $(document).ready(function(e){
+        $('.search-panel .dropdown-menu').find('a').click(function(e) {
+            e.preventDefault();
+            var param = $(this).attr("href").replace("#","");
+            var concept = $(this).text();
+            $('.search-panel span#search_concept').text(concept);
+            $('.input-group #search_param').val(param);
+        });
+    });
+    </script>
+{{/section}}
 <!--main content-->
 <div class="archive-post-area">
-
         <div class="container">
+
+            
+
             <div class="row justify-content-center">
                 <div class="col-12 col-xl-12">
-                    <div class="archive-posts-area bg-white p-50 mb-30 box-shadow">
+                    <div class="archive-posts-area bg-white p-50 mt-30 mb-30 box-shadow">
+
+                        {{!-- search --}}
+
+                          <form class="form">
+                              <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Search">
+                               <div class="form-group ">                                                 
+                                                <select   id="filter" name="filter" class="form-control">                                                 
+                                                    <option value=0>Default</option>                                                   
+                                                    <option value=1>Title</option> 
+                                                    <option value=2>Content</option>                                                   
+                                                </select>                                                                
+                                </div>
+                                <button class="btn mag-btn my-2 my-sm-0" type="submit">Search</button>  
+                        </form>
+
+            {{!-- end search --}}
+            <div class="section-heading mt-30 mb-30">
+                    <h5>Result</h5>
+                </div>
 
                         {{#each this.posts}}
                         <!-- Single Catagory Post -->
