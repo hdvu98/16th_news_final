@@ -133,6 +133,33 @@ module.exports={
         return db.load(`select count(*) as 'total' from post inner join tag_post on idpost= FKPost
         inner join tag on fktag=idtag where IDTAG='${id}' and Status_post=0`)
 
+      },
+      searchTitle:(key)=>{
+        return db.load(`SELECT * FROM news.post WHERE MATCH (title) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0
+        ORDER BY datecomplete desc`);
+      },
+      countSearchTitle:(key)=>{
+        return db.load(`SELECT count(*) as 'total' FROM news.post WHERE MATCH (title) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0`);
+      },
+      countSearchContent:(key)=>{
+        return db.load(`SELECT count(*) as 'total' FROM news.post WHERE MATCH (content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0`);}
+      ,
+      countSearchDefault:(key)=>{
+        return db.load(`SELECT count(*) as 'total' FROM news.post WHERE MATCH (title,content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0`);}
+      ,
+      searchContent:(key)=>{
+        return db.load(`SELECT * FROM news.post WHERE MATCH (content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0
+        ORDER BY datecomplete desc `);
+      },
+      searchDefault:(key)=>{
+        return db.load(`SELECT * FROM news.post WHERE MATCH (title,content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0
+        ORDER BY datecomplete desc `);
       }
 
 }
