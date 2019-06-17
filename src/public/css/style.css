@@ -4164,3 +4164,18 @@ cursor:pointer;
     background-color: rgb(129, 149, 171) !important;
     border-color: #3b5998 !important;
 }
+.table-wrapper .btn.btn-primary {
+    margin:2px;
+    color: #fff;
+    background: red;
+}
+.table-wrapper .btn.btn-view {
+    margin:2px;
+    color: #fff;
+    background: #0397d6;
+}
+.table-wrapper .btn.btn-edit {
+    margin:2px;
+    color: #fff;
+    background:#fa8231;
+}

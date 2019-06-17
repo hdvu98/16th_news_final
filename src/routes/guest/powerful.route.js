@@ -8,18 +8,113 @@ var postModel=require('../../models/Post.model');
 //require('../../middlewares/upload')(router);
 
 
-// post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt
+// post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt /4 xóa
 router.get('/editorMag', (req, res, next) => {
     res.render('guest/vwPowerful/editorMag');
 })
 router.get('/postMagWriter', (req, res, next) => {
-    res.render('guest/vwPowerful/postMagWriter');
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==1)
+    {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var posts=postModel.allByWriter(req.user.IDAccount,limit,offset);
+      var count=postModel.countByWriter(req.user.IDAccount);
+      Promise.all([posts,count]).then(([posts,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+
+        //phân trang
+
+        var post_status=[];
+        nPosts=count[0].total;
+        for (i = 0; i <nPosts ; i++) {
+          Accepted = false;
+          Denied=false;
+          Published=false;
+          Pendding=false;
+          post=posts[i];
+          if(posts[i].Status_post==0)
+          {
+            Published=true;
+          }    
+          else if(posts[i].Status_post==1)
+          {
+            Accepted=true;
+          }
+          else if(posts[i].Status_post==2)
+          {
+            Pendding=true;
+          }
+          else{
+            Denied=true;
+          }
+          
+          var obj = {
+          post,
+          Accepted,
+          Denied,
+          Published,
+          Pendding
+          }
+          post_status.push(obj);
+        }
+        res.render('guest/vwPowerful/postMagWriter',{post_status,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+     
+    }
+   else{
+     res.redirect('/');
+   }
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+ 
 })
 router.get('/submitPost', (req, res, next) => {
-    res.render('guest/vwPowerful/submitPost');
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==1){
+      res.render('guest/vwPowerful/submitPost');
+    }
+    else{
+      res.redirect('/');
+    }
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
 })
 
 router.post('/submitPost',(req,res,next)=>{
+
     try{
       var entity = {
         Title: req.body.title,
@@ -27,7 +122,6 @@ router.post('/submitPost',(req,res,next)=>{
         Status_post: 2,
         FKCategory:req.body.category,
         FKIDWritter_post:req.user.IDAccount,
-        DateComplete: 0,
         Content:req.body.content,
         Num_of_View:0,
         Num_of_Like:0,
@@ -35,11 +129,74 @@ router.post('/submitPost',(req,res,next)=>{
         Type_of_post:req.body.type
        }
       postModel.add(entity).then(id => {
-        res.redirect('/postMagWriter');
+        res.redirect('/powerful/postMagWriter');
       })
       }catch(error){
         next(error);
       }
+  
+})
+
+router.get('/postMagWriter/raw/:id',(req, res, next) => {
+  var id=req.params.id;
+  var post=postModel.singleRaw(id);
+  Promise.all([post]).then(([post])=>{
+        res.render('guest/vwPowerful/vwWriter/raw',{post:post});
+  }).catch(err => {
+    console.log(err);
+  });
+  
+})
+router.get('/postMagWriter/edit/:id',(req, res, next) => {
+  var id=req.params.id;
+  var post=postModel.singleRaw(id);
+  Promise.all([post]).then(([post])=>{
+    res.render('guest/vwPowerful/vwWriter/editPost',{post:post});
+  }).catch(err => {
+    console.log(err);
+  });
+  
+});
+router.post('/postMagWriter/edit/:id',(req, res, next) => {
+  try{
+    var id=req.params.id;
+    var url="/powerful/postMagWriter/raw/"+id;
+    var entity = {
+      ID:id,
+      Title: req.body.title,
+      Thumbnail: "/imgs/1.jpg",
+      Status_post: 2,
+      FKCategory:req.body.category,
+      FKIDWritter_post:req.user.IDAccount,
+      Content:req.body.content,
+      Num_of_View:0,
+      Num_of_Like:0,
+      Num_of_Comment:0,
+      Type_of_post:req.body.type
+     }
+    postModel.update(entity).then(rows => {
+      res.redirect(url);
+    })
+    }catch(error){
+      next(error);
+    }
+  
+})
+
+router.post('/postMagWriter/delete/:id',(req, res, next) => {
+  try{
+    var id=req.params.id;
+    var entity = {
+      ID:id,
+      Status_post: 4,
+     }
+    postModel.update(entity).then(rows => {
+      res.redirect('/powerful/postMagWriter');
+    })
+    }catch(error){
+      next(error);
+    }
+  
 })
 
 //route admin category management page
@@ -86,6 +243,9 @@ router.get('/adminTopicsMag/:id', (req, res) => {
         console.log(err);
       });
   })
+
+  
+
 router.get('/addTopic/:id', (req, res,next) => {
   var id = req.params.id;
   if (isNaN(id)) {
