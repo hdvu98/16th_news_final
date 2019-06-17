@@ -3,34 +3,14 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcrumb-content">
-                        {{#each this.topics}}
-                        <h2>{{Name_childcate}}</h2>
+                        {{#each this.tag}}
+                        <h2>{{Name_tag}}</h2>
                         {{/each}}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- END HEADER -->
-    <!-- <BREADCRUMB -->
-    <div class="mag-breadcrumb py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            {{#each this.topics}}
-                            <li class="breadcrumb-item"><a href="/><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="/{{Name_parentscate}}">{{Name_parentscate}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{Name_childcate}}</li>
-                            {{/each}}
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- END BREADCRUMB -->
 <!--main content-->
 <div class="archive-post-area">
@@ -39,35 +19,6 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-xl-12">
                     <div class="archive-posts-area bg-white p-50 mb-30 box-shadow">
-                        <!-- Trending Now Posts Area -->
-                        <div class="trending-now-posts mb-30">
-                            <!-- Section Title -->
-                            <div class="section-heading">
-                                <h5>TRENDING NOW</h5>
-                            </div>
-
-                           
-                            <div class="trending-post-slides owl-carousel">
-                                <!-- Single Trending Post -->
-                                 {{#each this.trending}}
-                                <div class="single-trending-post">
-                                    <img src="{{Thumbnail}}" alt="">
-                                    <div class="post-content">
-                                        <a href="#" class="post-cata">{{Name_childcate}}</a>
-                                        <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-
-                               
-                            </div>
-                        </div>
-                        <div class="section-heading">
-                            <h5>LATEST NEWS</h5>
-                        </div>
-
-                        <!-- Single Catagory Post -->
-
 
                         {{#each this.posts}}
                         <!-- Single Catagory Post -->
@@ -95,10 +46,8 @@
                             </div>
                         </div>
                         {{/each}}
-
-                        
-
-                           <div class="row">
+                 
+                        <div class="row">
                         <div class="col-sm-12">
                             <nav aria-label="Page navigation example">
                             <ul class="pagination">

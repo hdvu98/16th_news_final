@@ -7,19 +7,32 @@ module.exports={
     single : id=>{
         return db.load(`SELECT * FROM post where IDpost = '${id}' and Status_post=0`);
     },
-    alllByTopic:id=>{
-        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0`);
+    alllByTopic:(id,limit,offset)=>{
+        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0 
+        ORDER BY datecomplete desc
+        limit ${limit} offset ${offset}`);
+    },
+    countPostByTopic:id=>{
+        return db.load(`Select count(*) as 'total' from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0 
+        `);
     },
     Top5ByTopic:id=>{
         return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory =( select FKCategory from post where idpost= '${id}') and Status_post=0 limit 5`);
     },
-    allByCate:Name=>{
+    allByCate:(Name,limit,offset)=>{
         return db.load(`
         SELECT *FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
         where Name_parentscate='${Name}' and Status_post=0
-        ORDER BY datecomplete desc`);
+        ORDER BY datecomplete desc limit ${limit} offset ${offset}`);
+    },
+    countPostByCate:Name=>{
+        return db.load(`
+        SELECT count(*) as 'total' FROM post
+            INNER JOIN cate_child ON FKCategory =IDCate_child 
+            INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+        where Name_parentscate='${Name}' and Status_post=0`);
     },
     topTenViews:()=>{
         return db.load(`
@@ -112,5 +125,14 @@ module.exports={
     add: entity => {
         return db.add('post',  entity);
       },
+      allPostByTag:(id,limit,offset)=>{
+        return db.load(`select * from post inner join tag_post on idpost= FKPost
+        inner join tag on fktag=idtag where IDTAG='${id}' and Status_post=0 limit ${limit} offset ${offset}`)
+      },
+      countPostsByTag:(id)=>{
+        return db.load(`select count(*) as 'total' from post inner join tag_post on idpost= FKPost
+        inner join tag on fktag=idtag where IDTAG='${id}' and Status_post=0`)
+
+      }
 
 }

@@ -40,7 +40,7 @@ app.use('/Category',require('./routes/guest/category.route'));
 app.use(require('./middlewares/local.mdw'));
 app.use('/account', require('./routes/account.route'));
 app.use('/powerful', require('./routes/guest/powerful.route'));
-
+app.use('/tag', require('./routes/guest/tags.route'));
 app.use(require('./middlewares/auth-locals.mdw'));
 
 
@@ -89,29 +89,41 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/:category',(req,res)=>{
+    var limit = 10;
+  
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
     var category=req.params.category;
-    categoryModel.categoryWithTopicsByName(category).then(rows=>{
-        categoryModel.singleByName(category).then(cate=>{
-            postModel.allByCate(category).then(postsCate=>{
-                //res.render('guest/vwCategory/Category',{topics:rows,category:cate,posts:postsCate});
 
-                postModel.topTrendingCate(category).then(trends=>{
-                    res.render('guest/vwCategory/Category',{topics:rows,category:cate,posts:postsCate,trending:trends});
-                }).catch(err=>{
-                    console.log(err);
-                    res.end('error occured');
-                });
+    var rows=categoryModel.categoryWithTopicsByName(category);
+    var cate=categoryModel.singleByName(category);
+    var postsCate=postModel.allByCate(category,limit,offset);
+    var trends=postModel.topTrendingCate(category);
+    var count_rows = postModel.countPostByCate(category);
+    Promise.all([rows,cate,postsCate,trends,count_rows]).then(([rows,cate,postsCate,trends,count_rows])=>{
 
-            }).catch(err=>{
-                console.log(err);
-                res.end('error occured');
-            });
+        var pages = [];
+        var total = count_rows[0].total;
 
-        }).catch(err=>{
-            console.log(err);
-            res.end('error occured');
-        })
-        
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        first=1;
+        last=nPages;
+        for (i = 1; i <= nPages; i++) {
+            
+          var active = false;
+          if (+page === i) active = true;
+    
+          var obj = {
+            value: i,
+            active
+          }
+          pages.push(obj);
+        }
+    
+
+        res.render('guest/vwCategory/Category',{topics:rows,category:cate,posts:postsCate,trending:trends,pages,first,last});
     }).catch(err=>{
         console.log(err);
         res.end('error occured');
@@ -120,62 +132,91 @@ app.get('/:category',(req,res)=>{
 
 app.get('/post/:id',(req,res)=>{
 
+    var limit = 10;
+  
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+    var category=req.params.category;
+
     var id=req.params.id;
-    var post,similarPost,Tags,Comments;
-    postModel.singleFullInfo(id).then(rows=>{
-        post=rows;
-        tagsModel.allPostTags(id).then(TagsRows=>{
+    var rows=postModel.singleFullInfo(id);
+    var TagsRows=tagsModel.allPostTags(id);
+    var cmtRows= commentsModel.allPostComments(id,limit,offset);
+    var similarPost= postModel.Top5ByTopic(id);
+    var countComments=commentsModel.countComment(id);
+
+    Promise.all([rows,TagsRows,cmtRows,similarPost,countComments]).then(([rows,TagsRows,cmtRows,similarPost,countComments])=>{
+
+        var pages = [];
+        var total = countComments[0].total;
+
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        first=1;
+        last=nPages;
+        for (i = 1; i <= nPages; i++) {
             
-            commentsModel.allPostComments(id).then(cmtRows=>{
-                var cmtRows=cmtRows;
-                postModel.Top5ByTopic(id).then(similarPost=>{
-                    console.log(cmtRows);
-                    res.render('guest/vwSinglePost/SinglePost',{post,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost});
-                }).catch(err=>{
+          var active = false;
+          if (+page === i) active = true;
+    
+          var obj = {
+            value: i,
+            active
+          }
+          pages.push(obj);
+        }
+        
+        res.render('guest/vwSinglePost/SinglePost',{post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
+
+    })
+    .catch(err=>{
                     console.log(err);
                     res.end('error occured');
                 });
-            }).catch(err=>{
-                console.log(err);
-                res.end('error occured');
-            });
-        }).catch(err=>{
-            console.log(err);
-            res.end('error occured');
-        });
+});
+
+app.get('/:category/:topic',(req,res)=>{
+    var limit = 10;
+  
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+    var category=req.params.category;
+    var id=req.params.topic;
+
+    var rows= topicModel.topicWithCateByID(id);
+    var postRows=postModel.alllByTopic(id,limit,offset);
+    var trends= postModel.topTrendingTopic(id);
+    var count=postModel.countPostByTopic(id);
+
+    Promise.all([rows,postRows,trends,count]).then(([rows,postRows,trends,count])=>{
+        var pages = [];
+        var total = count[0].total;
+
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        first=1;
+        last=nPages;
+        for (i = 1; i <= nPages; i++) {
+            
+          var active = false;
+          if (+page === i) active = true;
+    
+          var obj = {
+            value: i,
+            active
+          }
+          pages.push(obj);
+        }
+        res.render('guest/vwTopic/Topic',{topics:rows,posts:postRows,trending:trends,pages,first,last});
+
     }).catch(err=>{
         console.log(err);
         res.end('error occured');
     });
 
-
-});
-
-app.get('/:category/:topic',(req,res)=>{
-    var category=req.params.category;
-    var id=req.params.topic;
-    topicModel.topicWithCateByID(id).then(rows=>{
-       
-        postModel.alllByTopic(id).then(postRows=>{
-
-            postModel.topTrendingTopic(id).then(trends=>{
-                res.render('guest/vwTopic/Topic',{topics:rows,posts:postRows,trending:trends});
-
-            }).catch(err=>{
-                console.log(err);
-                res.end('error occured');
-            })
-       
-            
-        }).catch(err=>{
-            console.log(err);
-            res.end('error occured');
-        })
-        
-    }).catch(err=>{
-        console.log(err);
-        res.end('error occured');
-    })
+    
 });
 
 app.listen('3000',()=>{
