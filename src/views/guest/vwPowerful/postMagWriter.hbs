@@ -1,5 +1,34 @@
 {{#section 'js'}}
  
+      <script>
+            function filterText()
+                {  
+                    var rex = new RegExp($('#status-filter').val().toLowerCase());
+                    if(rex =="/all/"){clearFilter()}else{
+                        $('.table-row').hide();
+                        $('.table-row').filter(function() {
+                        return rex.test($(this).text().toLowerCase());
+                        }).show();
+                }
+                }
+                
+            function clearFilter()
+                {
+                    $('.status-filter').val('');
+                    $('.table-row').show();
+                }
+        </script>
+        <!-- search -->
+        <script>
+                $(document).ready(function(){
+                  $("#searchInput").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#managementTable tr").filter(function() {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                  });
+                });
+             </script>
     <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
@@ -82,7 +111,7 @@
                             <table class="table table-striped table-hover" id="managementTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>ID</th>
                                         <th>Title</th>					
                                         <th>Date</th>						
                                         <th>Status</th>						                                      
@@ -90,71 +119,72 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{#each this.post_status}}
                                     <tr class="table-row">
-                                        <td>1</td>
-                                        <td><a href="post.html">Bamboo Airways fleet expansion plan runs into overreach concernse</a></td>
-                                        <td>20/01/2019</td>                        
-                                        <!-- <td><span class="status text-published">&bull;</span></td> -->
+                                        <td>{{post.IDPost}}</td>
+                                        <td><a href="#">{{post.Title}}</a></td>
+                                        <td>{{post.DateComplete}}</td>                        
+                                        <!-- <td><span class="status text-published">&bull;</span></td> -->                               
+                                        {{#if Published}}
                                         <td>Published</td>
-                                        <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="edit disabled" title="Edit"data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="remove disabled" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
+                                        {{/if}}
+                                        {{#if Accepted}}
+                                        <td>Accepted</td>
+                                        {{/if}}
+                                        {{#if Pendding}}
+                                        <td>Pendding</td>
+                                        {{/if}}
+                                        {{#if Denied}}
+                                        <td>Denied</td>
+                                        {{/if}}
+                                        <td>
+                                          <form class="form-inline" method="post" action="/powerful/postMagWriter/delete/{{post.IDPost}}">
+                                            <a href="/powerful/postMagWriter/raw/{{post.IDPost}}" class="btn  btn-sm btn-view" title="View" data-toggle="tooltip" ><i class="fa fa-eye"></i></a>
+                                            <a href="/powerful/postMagWriter/edit/{{post.IDPost}}" class=" btn  btn-sm btn-edit" title="Edit"data-toggle="tooltip" formaction=""><i class="fa fa-edit"></i></a>
+                                             <button class="btn btn-sm btn-primary" type="submit" name="remove" value="remove">       
+                                                <i class="fa fa-remove" aria-hidden="true"></i>
+                                             </button>
+                                          </form>
                                         </td>
                                     </tr>
-                                    <tr  class="table-row">
-                                            <td>2</td>
-                                            <td><a href="post.html">Vietnam’s first carmaker to launch nonprofit electric bus service</a></td>
-                                            <td>01/05/2019</td>                        
-                                            <!-- <td><span class="status text-approved" >&bull;</span></td> -->
-                                            <td>Accepted</td>
-                                            <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                                <a href="#" class="edit disabled"  title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="remove disabled" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                            </td>                                    </tr>
-                                    <tr class="table-row">
-                                            <td>3</td>
-                                            <td><a href="post.html">Hanoi FC extends winning streak, eyes semifinal berth at AFC Cup</a></td>
-                                            <td>29/04/2019</td>                        
-                                            <!-- <td><span class="status text-denied">&bull;</span></td> -->
-                                            <td>Denied</td>
-                                            <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="remove" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                            </td>                                    </tr>
-                                    <tr class="table-row">
-                                            <td>4</td>
-                                            <td><a href="post.html">Trump's approval rating on the economy hits a new high</a></td>
-                                            <td>10/03/2019</td>                        
-                                            <!-- <td><span class="status text-notApproved">&bull;</span></td> -->
-                                            <td>Pendding</td>
-                                            <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                                <a href="#" class="edit" aria-disabled="true" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="remove" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                            </td>                                    </tr>
-                                    <tr class="table-row">
-                                            <td>5</td>
-                                            <td><a href="post.html">How permanent daylight saving time and later school starts could affect health</a></td>
-                                            <td>01/01/2018</td>                        
-                                            <!-- <td value="pendding"><span class="status text-notApproved">&bull;</span></td> -->
-                                            <td>Pendding</td>
-                                            <td><a href="post.html" class="view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                                <a href="#" class="edit" aria-disabled="true" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="remove" title="Delete" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                            </td>                                    </tr>
+                                    {{/each}}
+                                   
                                 </tbody>
                             </table>
-                            <div class="clearfix">
-                                <!-- <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div> -->
-                                <ul class="pagination">
-                                    <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
-                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                                </ul>
-                            </div>
+                                <div class="row">
+                        <div class="col-sm-12">
+                            <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                               
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{first}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;First</span>
+                                </a>
+                                </li>
+                                 {{#each this.pages}}
+                                {{#if active}}
+                                <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">
+                                    {{value}} <span class="sr-only">(current)</span>
+                                </a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+                                
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{last}}" aria-label="Next">
+                                    <span aria-hidden="true">Last&raquo;</span>
+                                </a>
+                                </li>
+                                
+                            </ul>
+                            </nav>
+                        </div>
+                        </div>
                         </div>
                
              </div>

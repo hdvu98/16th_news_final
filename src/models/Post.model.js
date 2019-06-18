@@ -12,6 +12,16 @@ module.exports={
         ORDER BY datecomplete desc
         limit ${limit} offset ${offset}`);
     },
+    allByWriter:(id,limit,offset)=>{
+        return db.load(`Select * from post where FKIDWritter_post = '${id}' 
+        ORDER BY datecomplete desc
+        limit ${limit} offset ${offset}`);
+    },
+    countByWriter:(id)=>{
+        return db.load(`Select count(*) as 'total' from post where FKIDWritter_post = '${id}' 
+        `);
+    }
+    ,
     countPostByTopic:id=>{
         return db.load(`Select count(*) as 'total' from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0 
         `);
@@ -117,10 +127,17 @@ module.exports={
             INNER JOIN news.account On FKIDWritter_post=IDAccount
         where IDpost='${id}' and Status_post=0`)
     },
+    singleRaw:id=>{
+        return db.load(`SELECT * FROM post
+            INNER JOIN cate_child ON FKCategory =IDCate_child 
+            INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+            INNER JOIN news.account On FKIDWritter_post=IDAccount
+        where IDpost='${id}' and Status_post<4`)
+    },
     update:entity=>{
         var id = entity.ID;
         delete entity.ID;
-        return db.update('post', 'IDPost', entity, id);
+        return db.update('post', 'IDPost', entity,id);
     },
     add: entity => {
         return db.add('post',  entity);

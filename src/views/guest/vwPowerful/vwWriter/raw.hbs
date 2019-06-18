@@ -1,0 +1,111 @@
+ {{#section 'css'}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{{/section}}
+
+{{#section 'js'}}
+
+     <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+ {{/section}}
+
+
+  <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-dark border-right" id="sidebar-wrapper">
+          <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
+          <div class="list-group list-group-flush">
+            <a href="/powerful/submitPost" class="list-group-item list-group-item-action bg-dark ">Submit Post</a>
+            <a href="/powerful/postMagWriter" class="list-group-item list-group-item-action bg-dark active">Post Management</a>
+            
+          </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    
+        <!--Content -->
+              <div id="page-content-wrapper">
+    
+          <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn tag" id="menu-toggle"><i class="fa fa-navicon"></i></button>
+    
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <a class="btn btn-primary" href="/powerful/postMagWriter" role="button" style="float:right;">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                    Back
+                  </a>
+
+          </nav>
+    
+          <div class="container-fluid">
+              {{actions}}
+               {{#each this.post}}
+                    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/bamboocover.jpg);">
+                        <div class="container h-100">
+                            <div class="row h-100 align-items-center">
+                                <div class="col-12">
+                                    <div class="breadcrumb-content">
+                                        <h2>{{Title}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ##### Breadcrumb Area End ##### -->
+
+                {{/each}}
+                  <section class="post-details-area">
+
+            <div class="row justify-content-center">
+                <div class="container">
+                    <!-- Post Details Content Area -->
+                    <div class="col-12 col-xl-12">
+                        <div class="col-12 col-xl-8"></div>
+                         {{#each this.post}}
+                        <div class="post-details-content bg-white mb-30 p-5 box-shadow">
+                            <div class="blog-content">
+                                
+                                <h4 class="post-title section-heading">{{Title}}</h4>
+                                <!-- Post Meta -->
+                                <div class="post-meta">
+                                        <i href="#" style="color:#222">By {{Username}} </i>
+                                        <a href="/{{Name_parentscate}}/{{IDCate_Child}}"> /{{Name_childcate}}</a>
+                                        <br/>
+                                        <i href="#" style="color:#222">{{DateComplete}} </i>   
+                                </div>
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> {{Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> {{Num_of_Comment}}</a>
+                                </div>
+                                <br>
+                                <br>
+                                {{{Content}}}
+                               <br>
+                               <br>
+                                <hr>                   
+                            </div>
+                        </div>
+                            {{/each}}
+                        <div class="related-post-area bg-white mb-30 px-30 p-30 box-shadow">
+                            <section class="section-heading">TAGS</section>
+                                    {{#each this.Tags}}
+                                    <a href="/tag/{{IDTAG}}"><span class="tag">{{Name_tag}}</span></a>
+                                    {{/each}}
+                        </div>
+                      
+                </div>
+                
+             </div>
+    </section>
+          </div>
+               
+        </div>
+    
+</div>
+      <!-- /#wrapper -->   
