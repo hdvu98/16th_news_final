@@ -16,12 +16,14 @@ router.post('/register', (req, res, next) => {
   try{
     var saltRounds = 10;
   var hash = bcrypt.hashSync(req.body.exampleInputPassword1, saltRounds);
-  //var dob = moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  var dob = moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
 
   var entity = {
     Username: req.body.exampleInputUserName1,
     Email: req.body.exampleInputEmail1,
     Pass: hash,
+    DOB:dob,
+    Phone:req.body.phone,
     Status_account:0,
     Type_account:1,
     Vip: 0
@@ -38,7 +40,7 @@ router.post('/register', (req, res, next) => {
 router.get('/is-available', (req, res, next) => {
   var user = req.query.exampleInputUserName1;
   userModel.singleByUserName(user).then(rows => {
-    console.log(rows);
+    console.log(rows.length);
     if (rows.length > 0)
       {
         
@@ -48,7 +50,19 @@ router.get('/is-available', (req, res, next) => {
     return res.json(true);
   });
 })
+router.get('/is-availablesameusername', (req, res, next) => {
+  var user = req.query.exampleInputUserName1;
+  userModel.singleSameAsUserName(user,req.user.IDAccount).then(rows => {
+    console.log(rows.length);
+    if (rows.length > 0)
+      {
+        
+        return res.json(false);
+      }
 
+    return res.json(true);
+  });
+})
 router.get('/login', (req, res, next) => {
   res.render('vwAccount/login', { layout: false });
 })
@@ -80,7 +94,32 @@ res.redirect('/account/login');
 })
 
 router.get('/profile', (req, res, next) => {
-  res.render('vwAccount/EditProfile');
+  if(req.isAuthenticated()){
+    var id=req.user.IDAccount;
+    console.log(id);
+    
+    userModel.single(id).then(rows => {
+      if (rows.length > 0) {
+       
+        res.render('vwAccount/EditProfile', {
+          error: false,
+          inforUser: rows[0]
+          
+        });
+      } else {
+         
+        res.render('vwAccount/EditProfile', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    });
+
+}
+else{
+  res.redirect('/account/login');
+}
+
+  
 })
 router.get('/changepassword', (req, res, next) => {
   res.render('vwAccount/changePassword');

@@ -33,7 +33,12 @@ CREATE TABLE `account` (
   PRIMARY KEY (`IDAccount`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+ALTER TABLE account
+ADD COLUMN Phone VARCHAR(15) AFTER Email;
+ALTER TABLE account
+ADD COLUMN DOB datetime AFTER Phone;
+ALTER TABLE account
+MODIFY  COLUMN DOB date;
 --
 -- Dumping data for table `account`
 --

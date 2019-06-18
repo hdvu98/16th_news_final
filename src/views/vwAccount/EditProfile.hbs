@@ -6,20 +6,64 @@
  <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-  <script>
-      $(function () {
+    <script>
+  $(function () {
 
-    $('#txtDOB').datetimepicker({
-      format: 'd/m/Y',
-      timepicker: false,
-      mask: true,
-    });
-      });
-    $("#menu-toggle").click(function(e) {
+  $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
-    </script>
+    $('#frmRegister').validate({
+      rules: {
+        username: {
+          required: true,
+          remote: {
+            url: '/account/is-availablesameusername',
+            // data: {
+            //   user: function () {
+            //     return $('#txtUsername').val();
+            //   }
+            // }
+          }
+        },
+        
+        email: {
+          required: true,
+          email: true
+        },
+       
+        phone: {
+          required: true,
+        },
+      },
+      messages: {
+        username: {
+          required: 'Your username is required.',
+          remote: 'Your username has been taken, please take another.'
+        },
+        
+        email: {
+          required: 'Please enter a valid email address.',
+          email: 'Please enter a valid email address.'
+        },
+       
+         phone: {
+          required: 'Valid phone is required.',
+        }
+      },
+
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      validClass: 'is-valid',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      }
+    });
+  })
+</script>
     
  {{/section}}
 
@@ -59,38 +103,32 @@
                                  <h5 class="header-area">Account Information</h5>
                             </div>
                             
-                            <form action="#" method="post">
+                            <form method="POST" id="frmRegister" novalidate >
                                 
                                 <div class="form-group">
                                     <label style="float: left;">Username: </label>
-                                    <input  type="text" class="form-control" id="exampleUsername" placeholder="Giang">
+                                    <input  type="text" class="form-control" name="username" id="exampleUsername" placeholder="Username" value="{{this.inforUser.Username}}"> 
                                 </div>
-                               <div class="form-group">
-                                    <label for="txtDOB">Date of birth</label>
-                                    <input type="text" class="form-control" id="txtDOB" name="dob">
-                                </div>
-                    
-                                
+                               
                                 
                                
-                            </form>
-                                   <hr>
-                           <form action="#" method="post">
+                           
                                 <div class="section-heading">
                                     <h5 class="header-area">Contact Information</h5>
                                 </div>
                                 
                                 <div class="form-group">
                                      <label style="float: left;">Email: </label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="abc@example.com">
+                                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="abc@example.com" value="{{this.inforUser.Email}}">
                                 </div>
                                 <div class="form-group">
                                      <label style="float: left;">Phone: </label>
-                                    <input type="text" class="form-control" id="exampleInputPhone" placeholder="0123456789">
+                                    <input type="text" class="form-control" name="phone" id="exampleInputPhone" value="{{this.inforUser.Phone}}" placeholder="Phone number" >
                                 </div>
-                                <div class="col text-center">
-                                      <a href="index.html" class="btn load-more"><span></span>SAVE</a>
-                                </div>
+                                <button type="submit" class="btn btn-lg btn-success btn-block">
+                                  <i class="fa fa-check" aria-hidden="true"></i>
+                                  Save
+                                </button>
                             </form>
                             </div>
                   

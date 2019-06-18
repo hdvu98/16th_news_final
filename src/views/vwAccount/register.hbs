@@ -10,7 +10,11 @@
 <script>
   $(function () {
 
-    
+ $('#txtDOB').datetimepicker({
+      format: 'd/m/Y',
+      timepicker: false,
+      mask: true,
+    });    
 
     $('#frmRegister').validate({
       rules: {
@@ -37,7 +41,12 @@
           required: true,
           email: true
         },
-        
+        dob: {
+          required: true,
+        },
+        phone: {
+          required: true,
+        },
       },
       messages: {
         exampleInputUserName1: {
@@ -58,7 +67,12 @@
           required: 'Please enter a valid email address.',
           email: 'Please enter a valid email address.'
         },
-        
+        dob: {
+          required: 'Valid date of birth is required.',
+        },
+         phone: {
+          required: 'Valid phone is required.',
+        }
       },
 
       errorElement: 'small',
@@ -87,6 +101,15 @@
       <div class="form-group">
                 <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" placeholder="Email" autocomplete="off">
                 <h6 id="emailcheck"></h6>
+      </div>
+      <div class="form-group">
+        
+        <input type="text" class="form-control" id="txtPhone" name="phone" placeholder="Phone number" autocomplete="off">
+        <h6></h6>
+      </div>
+      <div class="form-group">       
+        <input type="text" class="form-control" id="txtDOB" name="dob"  placeholder="Day of Birth" autocomplete="off">
+        <h6></h6>
       </div>
       <div class="form-group">
                 <input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1" placeholder="Password" autocomplete="off">
