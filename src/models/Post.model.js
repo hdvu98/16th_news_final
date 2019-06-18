@@ -124,7 +124,7 @@ module.exports={
         return db.load(`SELECT * FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
-            INNER JOIN news.account On FKIDWritter_post=IDAccount
+            left JOIN news.account On FKIDWritter_post=IDAccount
         where IDpost='${id}' and Status_post=0`)
     },
     singleRaw:id=>{
@@ -175,6 +175,12 @@ module.exports={
         return db.load(`SELECT * FROM news.post WHERE MATCH (title,content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
         and Status_post=0
         ORDER BY datecomplete desc `);
+      },
+      allVipPost:(status,Type,limit,offset)=>{
+        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where 
+        Type_of_post= '${Type}' and Status_post='${status}'
+        ORDER BY datecomplete desc
+        limit ${limit} offset ${offset}`);
       }
 
 }

@@ -6,6 +6,11 @@
                 <div class="col-12">
                     <div class="breadcrumb-content">
                         <h2>{{Title}}</h2>
+       {{/each}}
+                        {{#if this.isVip}}
+                                <i  style="font-size: 20px; color:darkorange" class="fa fa-star"> VIP</i>
+                        {{/if}}
+        {{#each this.post}}
                     </div>
                 </div>
             </div>
@@ -46,6 +51,7 @@
                             <div class="blog-content">
                                 
                                 <h4 class="post-title section-heading">{{Title}}</h4>
+                
                                 <!-- Post Meta -->
                                 <div class="post-meta">
                                         <i href="#" style="color:#222">By {{Username}} </i>

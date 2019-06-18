@@ -149,10 +149,17 @@ app.get('/post/:id',(req,res)=>{
     var countComments=commentsModel.countComment(id);
 
     Promise.all([rows,TagsRows,cmtRows,similarPost,countComments]).then(([rows,TagsRows,cmtRows,similarPost,countComments])=>{
-
+        isVip=null;
         var pages = [];
         var total = countComments[0].total;
-
+        if(rows.length>0)
+        {
+            if(rows[0].Type_of_post==1)
+            {
+                isVip=true;
+            }
+        }
+        console.log(isVip);
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         first=1;
@@ -168,8 +175,8 @@ app.get('/post/:id',(req,res)=>{
           }
           pages.push(obj);
         }
-        
-        res.render('guest/vwSinglePost/SinglePost',{post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
+        console.log(rows);
+        res.render('guest/vwSinglePost/SinglePost',{isVip,post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
 
     })
     .catch(err=>{

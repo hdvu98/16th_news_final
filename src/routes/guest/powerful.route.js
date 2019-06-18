@@ -96,7 +96,49 @@ router.get('/postMagWriter', (req, res, next) => {
   }
  
 })
+router.get('/vip',(req,res,next)=>{
+  if(req.isAuthenticated())
+  {
+    if(req.user.Vip==1 & req.user.VipExp<=7)
+    {
+      var limit = 10; 
+      var page = req.query.page || 1;
+      if (page < 1) page = 1;
+      var offset = (page - 1) * limit;
+      var posts=postModel.allVipPost('0','1',limit,offset);
+      Promise.all([posts]).then(([posts])=>{
+        var pages = [];
+        var total = posts.length;
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        first=1;
+        last=nPages;
+        for (i = 1; i <= nPages; i++) {
+            
+          var active = false;
+          if (+page === i) active = true;
+    
+          var obj = {
+            value: i,
+            active
+          }
+          pages.push(obj);
+        }
+        res.render('guest/vwPowerful/vwVip/vwVip',{posts,pages,first,last});
 
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+      });
+    
+    }
+    else{
+      res.redirect('/');
+    }
+  }else{
+    res.redirect('/account/login');
+  }
+})
 router.get('/submitPost', (req, res, next) => {
   if(req.isAuthenticated())
   {
