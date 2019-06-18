@@ -237,6 +237,8 @@ router.post('/postMagWriter/delete/:id',(req, res, next) => {
 //route admin category management page
 
 router.get('/adminCateMag', (req, res, next) => {
+  if(req.isAuthenticated() && req.isAdmin){
+    
     var p = categoryModel.all();
     p.then(rows => {
       // console.log(rows);
@@ -247,11 +249,17 @@ router.get('/adminCateMag', (req, res, next) => {
       console.log(err);
     });
     
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
 })
 
 //add topics
 
 router.get('/adminTopicsMag/:id', (req, res) => {
+  if(req.isAuthenticated() && req.isAdmin){
     var id = req.params.id;
     if (isNaN(id)) {
       res.render('guest/vwPowerful/adminTopicsMag', { error: true });
@@ -276,107 +284,142 @@ router.get('/adminTopicsMag/:id', (req, res) => {
         }
       }).catch(err => {
         console.log(err);
-      });
+      });    
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
   })
 
   
 
 router.get('/addTopic/:id', (req, res,next) => {
-  var id = req.params.id;
-  if (isNaN(id)) {
-    res.render('guest/vwPowerful/addTopic', { error: true });
-    return;
-  }
-  categoryModel.single(id).then(rows => {
-    if (rows.length > 0) {
-      
-      res.render('guest/vwPowerful/addTopic', {
-        error: false,
-        category: rows[0]
-      });
-    } else {
-       
+  if(req.isAuthenticated() && req.isAdmin){
+    var id = req.params.id;
+    if (isNaN(id)) {
       res.render('guest/vwPowerful/addTopic', { error: true });
+      return;
     }
-  }).catch(err => {
-    console.log(err);
-  });
-    
+    categoryModel.single(id).then(rows => {
+      if (rows.length > 0) {
+        
+        res.render('guest/vwPowerful/addTopic', {
+          error: false,
+          category: rows[0]
+        });
+      } else {
+         
+        res.render('guest/vwPowerful/addTopic', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    });
+      
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+  
 })
 router.post('/addTopic/:id', (req, res, next) => {
-  var id=req.body.IDCate_Parents;
+  try{
+    var id=req.body.IDCate_Parents;
 
-  var entity={
-    Name_childcate:req.body.topicName,
-    Status_childcate:0,
-    FKIDCate_Parents:id
+    var entity={
+      Name_childcate:req.body.topicName,
+      Status_childcate:0,
+      FKIDCate_Parents:id
+    }
+    topicModel.add(entity)
+    .then(id => {
+      console.log(id);
+      res.redirect('/powerful/adminCateMag');
+    }).catch(err => {
+      console.log(err);
+    }) 
+  }catch(error){
+    next(error);
   }
-  topicModel.add(entity)
-  .then(id => {
-    console.log(id);
-    res.redirect('/powerful/adminCateMag');
-  }).catch(err => {
-    console.log(err);
-  }) 
 })
 //edit topics
 router.get('/editTopics/:id', (req, res) => {
-  var id = req.params.id;
+  if(req.isAuthenticated() && req.isAdmin){
+    var id = req.params.id;
   
-  if (isNaN(id)) {
-    res.render('guest/vwPowerful/editTopics', { error: true });
-    return;
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/editTopics', { error: true });
+      return;
+    }
+    
+    topicModel.parent(id).then(rows=>{
+      res.locals.nameCate=rows[0];
+      
+    });
+    topicModel.single(id).then(rows => {
+      if (rows.length > 0) {
+        
+        res.render('guest/vwPowerful/editTopics', {
+          error: false,
+          topics: rows[0]
+        });
+      } else {
+         
+        res.render('guest/vwPowerful/editTopics', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    }); 
+
+  }
+  else{
+    res.redirect('/account/login');
   }
   
-  topicModel.parent(id).then(rows=>{
-    res.locals.nameCate=rows[0];
-    
-  });
-  topicModel.single(id).then(rows => {
-    if (rows.length > 0) {
-      
-      res.render('guest/vwPowerful/editTopics', {
-        error: false,
-        topics: rows[0]
-      });
-    } else {
-       
-      res.render('guest/vwPowerful/editTopics', { error: true });
-    }
-  }).catch(err => {
-    console.log(err);
-  });
 })
 
 router.post('/updateTopic', (req, res) => {
-  var idCat=req.body.IDCate_Parents;
-  var url="/powerful/adminTopicsMag/"+idCat;
-  var entity={
-    IDCate_Child:req.body.IDCate_Child,
-    Name_childcate:req.body.Name_childcate
+  try{
+    var idCat=req.body.IDCate_Parents;
+    var url="/powerful/adminTopicsMag/"+idCat;
+    var entity={
+      IDCate_Child:req.body.IDCate_Child,
+      Name_childcate:req.body.Name_childcate
+    }
+    topicModel.update(entity)
+      .then(n => {
+       
+        res.redirect(url);
+      }).catch(err => {
+        console.log(err);
+      })    
+  
+  }catch(error){
+    next(error);
   }
-  topicModel.update(entity)
-    .then(n => {
-     
-      res.redirect(url);
-    }).catch(err => {
-      console.log(err);
-    })
 })
 router.post('/deleteTopic', (req, res) => {
-  var idCat=req.body.IDCate_Parents;
+
+  try{
+    var idCat=req.body.IDCate_Parents;
   var url="/powerful/adminTopicsMag/"+idCat;
   topicModel.delete(req.body.IDCate_Child)
     .then(n => {
       res.redirect(url);
     }).catch(err => {
       console.log(err);
-    })
+    })   
+  }catch(error){
+    next(error);
+  }
 })
 
 //edit categories
 
 router.get('/editCategory/:id', (req, res) => {
+  if(req.isAuthenticated() && req.isAdmin){
     var id = req.params.id;
     if (isNaN(id)) {
       res.render('guest/vwPowerful/editCategory', { error: true });
@@ -396,41 +439,66 @@ router.get('/editCategory/:id', (req, res) => {
       }
     }).catch(err => {
       console.log(err);
-    });
+    });    
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
   })
 router.post('/update', (req, res) => {
+  try{
     categoryModel.update(req.body)
-      .then(n => {
-       
-        res.redirect('/powerful/adminCateMag');
-      }).catch(err => {
-        console.log(err);
-      })
+    .then(n => {
+     
+      res.redirect('/powerful/adminCateMag');
+    }).catch(err => {
+      console.log(err);
+    })    
+  }catch(error){
+    next(error);
+  }
   })
 router.post('/delete', (req, res) => {
+  try{
     categoryModel.delete(req.body.IDCate_Parents)
       .then(n => {
         res.redirect('/powerful/adminCateMag');
       }).catch(err => {
         console.log(err);
-      })
+      })  
+  }catch(error){
+    next(error);
+  }
   })
     
 router.get('/addCategory', (req, res, next) => {
-    res.render('guest/vwPowerful/addCategory');
+  if(req.isAuthenticated() && req.isAdmin){
+    res.render('guest/vwPowerful/addCategory'); 
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
 })
 router.post('/addCategory', (req, res, next) => {
+  try{
     var entity={
-        Name_parentscate:req.body.CatName,
-        Status_parentscate:0
-    }
-    categoryModel.add(entity)
-    .then(id => {
-      console.log(id);
-      res.render('guest/vwPowerful/addCategory');
-    }).catch(err => {
-      console.log(err);
-    }) 
+      Name_parentscate:req.body.CatName,
+      Status_parentscate:0
+  }
+  categoryModel.add(entity)
+  .then(id => {
+    console.log(id);
+    res.render('guest/vwPowerful/addCategory');
+  }).catch(err => {
+    console.log(err);
+  })
+  }catch(error){
+    next(error);
+  }
 })
 
 router.get('/adminEditorMag', (req, res, next) => {

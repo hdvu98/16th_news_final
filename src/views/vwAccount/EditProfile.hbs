@@ -1,7 +1,3 @@
-{{#section 'css'}}
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-{{/section}}
  {{#section 'js'}}
  <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
@@ -15,17 +11,7 @@
       });
     $('#frmRegister').validate({
       rules: {
-        username: {
-          required: true,
-          remote: {
-            url: '/account/is-availablesameusername',
-            // data: {
-            //   user: function () {
-            //     return $('#txtUsername').val();
-            //   }
-            // }
-          }
-        },
+      
         
         email: {
           required: true,
@@ -37,10 +23,7 @@
         },
       },
       messages: {
-        username: {
-          required: 'Your username is required.',
-          remote: 'Your username has been taken, please take another.'
-        },
+       
         
         email: {
           required: 'Please enter a valid email address.',
@@ -78,8 +61,8 @@
             <div class="bg-dark border-right" id="sidebar-wrapper">
               <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
               <div class="list-group list-group-flush">
-                <a href="EditProfile" class="list-group-item list-group-item-action bg-dark">Personal Information</a>
-                <a href="changePassword" class="list-group-item list-group-item-action bg-dark">Change Password</a>
+                <a href="/account/profile" class="list-group-item list-group-item-action bg-dark">Personal Information</a>
+                <a href="/account/changePassword" class="list-group-item list-group-item-action bg-dark">Change Password</a>
                 
               </div>
             </div>
@@ -99,24 +82,13 @@
         
               <div class="container-fluid">
                     <div class="w3layoutscontaineragileits" style="margin-right: 20%;width: 50%">
-                            <div class="section-heading">
-                                 <h5 class="header-area">Account Information</h5>
-                            </div>
-                            
-                            <form method="POST" id="frmRegister" novalidate >
-                                
-                                <div class="form-group">
-                                    <label style="float: left;">Username: </label>
-                                    <input  type="text" class="form-control" name="username" id="exampleUsername" placeholder="Username" value="{{this.inforUser.Username}}"> 
-                                </div>
-                               
-                                
+                          
                                
                            
                                 <div class="section-heading">
                                     <h5 class="header-area">Contact Information</h5>
                                 </div>
-                                
+                                <form method="POST" id="frmRegister" novalidate >
                                 <div class="form-group">
                                      <label style="float: left;">Email: </label>
                                     <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="abc@example.com" value="{{this.inforUser.Email}}">

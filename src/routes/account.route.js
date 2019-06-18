@@ -3,7 +3,6 @@ var bcrypt = require('bcrypt');
 var moment = require('moment');
 var userModel = require('../models/user.model');
 var passport = require('passport');
-
 var auth = require('../middlewares/auth');
 
 var router = express.Router();
@@ -25,7 +24,7 @@ router.post('/register', (req, res, next) => {
     DOB:dob,
     Phone:req.body.phone,
     Status_account:0,
-    Type_account:1,
+    Type_account:0,
     Vip: 0
    }
    console.log(entity);
@@ -50,8 +49,27 @@ router.get('/is-available', (req, res, next) => {
     return res.json(true);
   });
 })
+router.get('/is-password', (req, res, next) => {
+  var id = req.user.IDAccount;
+  var yourPassword=req.query.current;
+  userModel.checkyourPassword(id).then(rows => {
+    console.log(rows.length);
+    var user = rows[0];
+    console.log(yourPassword);
+    console.log(user);
+      var ret = bcrypt.compareSync(yourPassword, user.Pass);
+    if (ret)
+      {
+        
+        return res.json(true);
+      }
+
+    return res.json(false);
+  });
+  
+})
 router.get('/is-availablesameusername', (req, res, next) => {
-  var user = req.query.exampleInputUserName1;
+  var user = req.query.username;
   userModel.singleSameAsUserName(user,req.user.IDAccount).then(rows => {
     console.log(rows.length);
     if (rows.length > 0)
@@ -119,10 +137,50 @@ else{
   res.redirect('/account/login');
 }
 
+router.post('/profile', (req, res, next) => {
+  try{
+  var entity = {
+    IDAccount:req.user.IDAccount,
+    Email: req.body.email,
+    Phone:req.body.phone,
+   }
+   console.log(entity);
+  userModel.update(entity).then(id => {
+    res.redirect('/account/profile');
+  })
+  }catch(error){
+    next(error);
+  }
+})
+
   
 })
-router.get('/changepassword', (req, res, next) => {
-  res.render('vwAccount/changePassword');
+router.get('/changePassword', (req, res, next) => {
+  if(req.isAuthenticated()){
+    res.render('vwAccount/changePassword');    
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+  
+})
+router.post('/changePassword', (req, res, next) => {
+  try{
+    var saltRounds = 10;
+  var hash = bcrypt.hashSync(req.body.new, saltRounds);
+
+  var entity = {
+    IDAccount:req.user.IDAccount,
+    Pass: hash
+   }
+   console.log(entity);
+   userModel.update(entity).then(id => {
+    res.redirect('/account/login');
+  })
+  }catch(error){
+    next(error);
+  }
 })
 router.get('/submitPost', (req, res, next) => {
   res.render('/writer/submitPost');
