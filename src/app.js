@@ -47,8 +47,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(require('./middlewares/auth-locals.mdw'));
 
-
-
 app.get('/',(req,res)=>{
     postModel.topLasted().then(topLasted=>{
 
