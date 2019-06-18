@@ -89,13 +89,16 @@
                                                 <input id="title"type="text" class="form-control" name="title" value="{{Title}}">
                                             </div>
                                             <textarea name="content">{{Content}}</textarea>
+                                            {{/each}}
                                             <div class="form-group">
-                                              {{/each}}
                                                 <label for="upload-file">Catagory</label>
-                                                 
-                                                <select  id="category" name="category" class="form-control" >
-                                                   {{#each lcTopics}}
-                                                    <option value={{IDCate_Child}}>{{Name_parentscate}}/{{Name_childcate}}</option>                                                   
+                                                {{#each category}}
+                                                <input id="title"type="text" disabled class="form-control" name="title" value={{Name_parentscate}}>
+                                                 <label for="upload-file">Topic</label>
+                                                {{/each}}
+                                                <select  id="category" name="category" class="form-control">
+                                                   {{#each topics}}
+                                                    <option value={{IDCate_Child}}>{{Name_childcate}}</option>                                                   
                                                    {{/each}}
                                                 </select>
                                                  

@@ -34,6 +34,7 @@
  {{/section}}
 
 
+
   <div class="d-flex" id="wrapper">
 
         <!-- Sidebar -->
@@ -90,10 +91,13 @@
                                             <textarea name="content">Next, use our Get Started docs to setup Tiny!</textarea>
                                             <div class="form-group">
                                                 <label for="upload-file">Catagory</label>
-                                                 
+                                                {{#each category}}
+                                                <input id="title"type="text" disabled class="form-control" name="title" value={{Name_parentscate}}>
+                                                 <label for="upload-file">Topic</label>
+                                                {{/each}}
                                                 <select  id="category" name="category" class="form-control">
-                                                   {{#each lcTopics}}
-                                                    <option value={{IDCate_Child}}>{{Name_parentscate}}/{{Name_childcate}}</option>                                                   
+                                                   {{#each topics}}
+                                                    <option value={{IDCate_Child}}>{{Name_childcate}}</option>                                                   
                                                    {{/each}}
                                                 </select>
                                                  
@@ -108,9 +112,7 @@
                                                     <option value=1>Vip</option>                                                   
                                                 </select>
                                                  
-                                            </div>
-                                    
-                                      
+                                            </div>                                 
                 <button type="submit" class="btn mag-btn mt-30 "><i class="fa fa-cloud-upload"></i> Upload your post</button>
                                         </form>
                                     </div>

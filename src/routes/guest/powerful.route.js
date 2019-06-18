@@ -7,7 +7,6 @@ var topicModel = require('../../models/Topic.model');
 var postModel=require('../../models/Post.model');
 //require('../../middlewares/upload')(router);
 
-
 // post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt /4 xóa
 router.get('/editorMag', (req, res, next) => {
     res.render('guest/vwPowerful/editorMag');
@@ -48,7 +47,7 @@ router.get('/postMagWriter', (req, res, next) => {
         //phân trang
 
         var post_status=[];
-        nPosts=count[0].total;
+        nPosts=posts.length;
         for (i = 0; i <nPosts ; i++) {
           Accepted = false;
           Denied=false;
@@ -101,7 +100,26 @@ router.get('/submitPost', (req, res, next) => {
   if(req.isAuthenticated())
   {
     if(req.user.Type_account==1){
-      res.render('guest/vwPowerful/submitPost');
+      var category=categoryModel.cateByUser(req.user.IDAccount);
+      var topic=topicModel.all();
+      Promise.all([category,topic]).then(([category,topic])=>{
+        var topics=[];
+        console.log(category);
+        console.log(topic);
+        if(category.length>0)
+          {
+            for(i=0;i<topic.length;i++)
+            {
+              
+                if(topic[i].FKIDCate_Parents==category[0].IDCate_Parents)
+                {
+                  topics.push(topic[i]);
+                }            
+            }
+          }
+        res.render('guest/vwPowerful/submitPost',{category,topics});
+      })
+     
     }
     else{
       res.redirect('/');
@@ -116,6 +134,7 @@ router.get('/submitPost', (req, res, next) => {
 router.post('/submitPost',(req,res,next)=>{
 
     try{
+      console.log(req.file);
       var entity = {
         Title: req.body.title,
         Thumbnail: "/imgs/1.jpg",
@@ -150,8 +169,24 @@ router.get('/postMagWriter/raw/:id',(req, res, next) => {
 router.get('/postMagWriter/edit/:id',(req, res, next) => {
   var id=req.params.id;
   var post=postModel.singleRaw(id);
-  Promise.all([post]).then(([post])=>{
-    res.render('guest/vwPowerful/vwWriter/editPost',{post:post});
+  var category=categoryModel.cateByUser(req.user.IDAccount);
+  var topic=topicModel.all();
+  Promise.all([post,category,topic]).then(([post,category,topic])=>{
+    var topics=[];
+    console.log(category);
+    console.log(topic);
+    if(category.length>0)
+      {
+        for(i=0;i<topic.length;i++)
+        {
+          
+            if(topic[i].FKIDCate_Parents==category[0].IDCate_Parents)
+            {
+              topics.push(topic[i]);
+            }            
+        }
+      }
+    res.render('guest/vwPowerful/vwWriter/editPost',{post:post,category,topics});
   }).catch(err => {
     console.log(err);
   });
@@ -162,7 +197,7 @@ router.post('/postMagWriter/edit/:id',(req, res, next) => {
     var id=req.params.id;
     var url="/powerful/postMagWriter/raw/"+id;
     var entity = {
-      ID:id,
+      IDPost:id,
       Title: req.body.title,
       Thumbnail: "/imgs/1.jpg",
       Status_post: 2,
@@ -187,7 +222,7 @@ router.post('/postMagWriter/delete/:id',(req, res, next) => {
   try{
     var id=req.params.id;
     var entity = {
-      ID:id,
+      IDPost:id,
       Status_post: 4,
      }
     postModel.update(entity).then(rows => {
@@ -270,6 +305,7 @@ router.get('/addTopic/:id', (req, res,next) => {
 })
 router.post('/addTopic/:id', (req, res, next) => {
   var id=req.body.IDCate_Parents;
+
   var entity={
     Name_childcate:req.body.topicName,
     Status_childcate:0,

@@ -13,7 +13,7 @@ module.exports={
         limit ${limit} offset ${offset}`);
     },
     allByWriter:(id,limit,offset)=>{
-        return db.load(`Select * from post where FKIDWritter_post = '${id}' 
+        return db.load(`Select * from post  where FKIDWritter_post = '${id}' and Status_post<4
         ORDER BY datecomplete desc
         limit ${limit} offset ${offset}`);
     },
@@ -135,9 +135,7 @@ module.exports={
         where IDpost='${id}' and Status_post<4`)
     },
     update:entity=>{
-        var id = entity.ID;
-        delete entity.ID;
-        return db.update('post', 'IDPost', entity,id);
+        return db.update('post', 'IDPost', entity);
     },
     add: entity => {
         return db.add('post',  entity);

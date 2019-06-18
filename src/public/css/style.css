@@ -4164,18 +4164,30 @@ cursor:pointer;
     background-color: rgb(129, 149, 171) !important;
     border-color: #3b5998 !important;
 }
-.table-wrapper .btn.btn-primary {
+.table-wrapper .btn.btn-remove {
     margin:2px;
     color: #fff;
     background: red;
+}.table-wrapper .btn.btn-remove:hover {
+
+    background: #1a1a1a;
 }
+
 .table-wrapper .btn.btn-view {
     margin:2px;
     color: #fff;
     background: #0397d6;
 }
+.table-wrapper .btn.btn-view:hover {
+
+    background: #1a1a1a;
+}
 .table-wrapper .btn.btn-edit {
     margin:2px;
     color: #fff;
     background:#fa8231;
+}
+.table-wrapper .btn.btn-edit:hover {
+
+    background: #1a1a1a;
 }

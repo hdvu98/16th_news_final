@@ -12,7 +12,7 @@ module.exports = {
   singleByUserName: userName => {
     return db.load(`select * from account where Username = '${userName}' and Status_account=0`);
   },
-  singleSameAsUserName: userName,id => {
+  singleSameAsUserName: (userName,id)=> {
     return db.load(`select * from account where Username = '${userName}' and Status_account=0 and IDAccount !='${id}'`);
   },
   TypeByID: id => {

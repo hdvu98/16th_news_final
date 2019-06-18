@@ -8,6 +8,7 @@ var exphbs=require('express-handlebars');
 var hbs_sections = require('express-handlebars-sections');
 var morgan=require('morgan');
 const path=require('path');
+const bodyParser= require('body-parser');
 
 
 var app=express();
@@ -42,8 +43,10 @@ app.use('/account', require('./routes/account.route'));
 app.use('/powerful', require('./routes/guest/powerful.route'));
 app.use('/tag', require('./routes/guest/tags.route'));
 app.use('/search', require('./routes/guest/search.route'));
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(require('./middlewares/auth-locals.mdw'));
+
 
 
 app.get('/',(req,res)=>{

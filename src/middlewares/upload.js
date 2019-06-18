@@ -1,4 +1,7 @@
 var multer = require('multer');
+const bodyParser= require('body-parser');
+var hbs_sections = require('express-handlebars-sections');
+
 
 var storage = multer.diskStorage({
   filename: function (req, file, cb) {
@@ -20,11 +23,9 @@ module.exports = function (app) {
         })
       }
       res.json({
-      }); 
-      var sfile=req.session;
-      sfile.file=req.file;
-
-    
+        file:req.file
+      });
     })
   })
 }
+

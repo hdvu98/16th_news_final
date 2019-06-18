@@ -32,6 +32,9 @@ module.exports={
     
     delete: id => {
         return db.delete('cate_parents', 'Status_parentscate','IDCate_Parents', id);
+    },
+    cateByUser:userID=>{
+        return db.load(`Select * from news.cate_parents inner join editor_cate on IDCate_parents=FKCate    where FKEditor='${userID}' and Status_parentscate=0`);
     }
 
 }
