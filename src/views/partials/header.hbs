@@ -1,6 +1,6 @@
 
      {{#section 'css'}}
-     <link rel="stylesheet" href="/css/style.css">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
      {{/section}}
      
         <!--header-->
@@ -51,6 +51,9 @@
                                         </ul>
                                       
                                     </li>
+                                     {{#if isVip}}
+                                         <li><a class="dropdown-item" href="/powerful/vip"><i class="fa fa-star" style="color:red;"> <b>Vip</b></i></a></li>
+                                    {{/if}}
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
@@ -76,7 +79,6 @@
                                     {{#if isWriter}}
                                         <a id="writerpost" class="dropdown-item" href="/powerful/submitPost">Submit post</a>
                                         <a id="writerpost" class="dropdown-item" href="/powerful/postMagWriter">Writer Management</a>
-
                                      {{/if}}
                                      {{#if isEditor}}
                                         <a id="editorpost" class="dropdown-item" href="/powerful/editorMag">Editor Management</a>

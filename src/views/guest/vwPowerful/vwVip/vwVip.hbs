@@ -1,0 +1,96 @@
+ <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/Vote_bg.png);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>PREMIUM POST</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END HEADER -->
+    <!-- END BREADCRUMB -->
+<!--main content-->
+<div class="archive-post-area">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-12">
+                    <div class="archive-posts-area bg-white p-50 mb-30 box-shadow">
+                
+                        <div class="section-heading">
+                            <h5>PREMIUM NEWS</h5>
+                        </div>
+
+                        <!-- Single Catagory Post -->
+
+
+                        {{#each this.posts}}
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url({{Thumbnail}});">
+
+                            </div>
+
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
+                                <div class="post-meta">
+                                   <a href="#">{{Name_childcate}}</a>
+                                    <br/>
+                                    <i href="#" style="font-size: 11px;">{{DateComplete}}</i>
+                                </div>                                
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{Num_of_Comment}}</a>
+                                </div>
+                                <p class="sumary-post-area">{{{Sumary}}}</p>
+                            </div>
+                        </div>
+                        {{/each}}
+
+                        
+
+                           <div class="row">
+                        <div class="col-sm-12">
+                            <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                               
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{first}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;First</span>
+                                </a>
+                                </li>
+                                 {{#each this.pages}}
+                                {{#if active}}
+                                <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">
+                                    {{value}} <span class="sr-only">(current)</span>
+                                </a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+                                
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{last}}" aria-label="Next">
+                                    <span aria-hidden="true">Last&raquo;</span>
+                                </a>
+                                </li>
+                                
+                            </ul>
+                            </nav>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -4,6 +4,10 @@ module.exports = (req, res, next) => {
     res.locals.authUser = req.user;
     if(res.locals.authUser.Type_account =='0'){
       res.locals.isReader=true;
+      if(res.locals.authUser.Vip=='1'& res.locals.authUser.VipExp<=7)
+      {
+        res.locals.isVip=true;
+      }
     }
     else if(res.locals.authUser.Type_account =='1'){
       res.locals.isWriter=true;

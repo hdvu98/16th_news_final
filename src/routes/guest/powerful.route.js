@@ -96,6 +96,7 @@ router.get('/postMagWriter', (req, res, next) => {
   }
  
 })
+
 router.get('/submitPost', (req, res, next) => {
   if(req.isAuthenticated())
   {

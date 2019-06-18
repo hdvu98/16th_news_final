@@ -10,7 +10,7 @@ module.exports = {
   },
 
   singleByUserName: userName => {
-    return db.load(`select * from account where Username = '${userName}' and Status_account=0`);
+    return db.load(`select *,DATEDIFF(now(), vipdate) as'VipExp' from account where Username = '${userName}' and Status_account=0`);
   },
   checkyourPassword: id => {
     return db.load(`select * from account where IDAccount = '${id}' and Status_account=0`);
