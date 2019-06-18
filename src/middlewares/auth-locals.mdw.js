@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
-  if (req.user) {
-    res.locals.isAuthenticated = true;
+  if (req.isAuthenticated()) {
+    res.locals.isAuthenticated = req.isAuthenticated();
     res.locals.authUser = req.user;
     if(res.locals.authUser.Type_account =='0'){
       res.locals.isReader=true;
