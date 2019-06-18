@@ -4191,3 +4191,8 @@ cursor:pointer;
 
     background: #1a1a1a;
 }
+
+.classynav dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0 !important;
+}
