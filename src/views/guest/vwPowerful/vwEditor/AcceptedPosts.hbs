@@ -62,8 +62,8 @@
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
-            <a href="/powerful/editorMag" class="list-group-item list-group-item-action bg-dark active">Draft</a>
-            <a href="/powerful/editorAccept" class="list-group-item list-group-item-action bg-dark">Accepted Post</a>
+            <a href="/powerful/editorMag" class="list-group-item list-group-item-action bg-dark ">Draft</a>
+            <a href="/powerful/editorAccept" class="list-group-item list-group-item-action bg-dark active">Accepted Post</a>
 
         </div>
         </div>
@@ -116,48 +116,28 @@
                             <table class="table table-striped table-hover" id="managementTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>ID</th>
                                         <th>Title</th>
                                         <th>Author</th>						
-                                        <th>Date</th>											                                      
-                                        <th>Action</th>
+                                        <th>Post Date</th>		
+                                        <th>Accept Date</th>										                                      
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {{#each this.posts}}
-                                        <div class="accept-modal" id="myAcceptModal">
-                                            <div class="modal-content">
-                                                <span class="close">&times;</span>
-                                                <h3>Settings</h3>
-                                                <form method="POST" action="/powerful/editor/accept/{{IDPost}}">                
-                                                    <div class="form-group">
-                                                            <label style="float: left;">Publish date: </label>
-                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off">
-                                                    </div>
-                                                    <div class="modal-submit">
-                                                                    <button href="" type="submit" class="btn btn-view modal-btn" name="apply" value="apply">Apply</button>
-                                                                    <a href=""  class="btn btn-remove modal-btn">Close</a>
-                                                    </div>
-                                                </form>
-                                                
-                                                <ol id="subjects" type="1" class="circle"style="margin-left:32px;">
-                                                </ol>
-                                            </div>
-                                        </div>
-                                    <div class="clearfix">
+
                                      <!-- /#wrapper -->   
                                     <tr class="table-row">
                                         <td>{{IDPost}}</td>
                                         <td><a href="/Powerful/raw/{{IDPost}}">{{Title}}</a></td>
                                         <td>{{Username}}</td>
-                                        <td>{{DateComplete}}</td>                        
+                                        <td>{{DateComplete}}</td>  
+                                        <td>{{PublishDate}}</td>                      
                                         <!-- <td><span class="status text-published">&bull;</span></td> -->
                                         <td>
-                                            <form method="POST" action="/powerful/editor/deny/{{IDPost}}">
+                                            <form method="POST" action="/powerful/editor/deny/{{IDPost}}" >
                                              <a href="/Powerful/raw/{{IDPost}}" class="btn btn-sm btn-view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="btn btn-sm btn-edit" title="Accept"data-toggle="tooltip"onclick="viewSettings()"><i class="fa fa-check"></i></a>
-                                            <button href="#" class="btn tbn-sm btn-remove" title="Deny" data-toggle="tooltip"><i class="fa fa-ban"></i></button>       
-
+                                            <button href="#" class="btn tbn-sm btn-remove" title="deny" data-toggle="tooltip"><i class="fa fa-ban"></i></button>       
                                             </form>
                                         </td>
                                     </tr>

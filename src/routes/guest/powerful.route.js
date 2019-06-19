@@ -6,11 +6,58 @@ var categoryModel = require('../../models/Category.model');
 var topicModel = require('../../models/Topic.model');
 var postModel=require('../../models/Post.model');
 var tagModel=require('../../models/Tag.model');
+var AcceptInfo=require('../../models/AcceptInfo.model')
 //require('../../middlewares/upload')(router);
 
 // post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt /4 xóa
 router.get('/editorMag', (req, res, next) => {
-    res.render('guest/vwPowerful/editorMag');
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==2)
+    {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var posts=postModel.allByEditor(req.user.IDAccount,limit,offset);
+      Promise.all([posts]).then(([posts])=>{
+        //Phân trang
+        if(posts!=null)
+        { 
+          console.log(posts);
+          var pages = [];
+          var total = posts.length;
+          var nPages = Math.floor(total / limit);
+          if (total % limit > 0) nPages++;
+          first=1;
+          last=nPages;
+          for (i = 1; i <= nPages; i++) {
+              
+            var active = false;
+            if (+page === i) active = true;
+      
+            var obj = {
+              value: i,
+              active
+            }
+            pages.push(obj);
+          }
+    }      
+        res.render('guest/vwPowerful/editorMag',{posts,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+     
+    }
+   else{
+     res.redirect('/');
+   }
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
 })
 router.get('/postMagWriter', (req, res, next) => {
   if(req.isAuthenticated())
@@ -200,7 +247,7 @@ router.post('/submitPost',(req,res,next)=>{
   
 })
 
-router.get('/postMagWriter/raw/:id',(req, res, next) => {
+router.get('/raw/:id',(req, res, next) => {
   var id=req.params.id;
   var post=postModel.singleRaw(id);
   Promise.all([post]).then(([post])=>{
@@ -262,6 +309,96 @@ router.post('/postMagWriter/edit/:id',(req, res, next) => {
   
 })
 
+router.post('/Editor/accept/:id',(req,res,next)=>{
+  try{
+    var id=req.params.id;
+    var date=req.body.pdate;
+  
+     var acceptInfo={
+      FKPost:id,
+      FKEditor:req.user.IDAccount,
+      PublishDate: date
+     }
+     var entity = {
+      IDPost:id,     
+      Status_post: 1
+     }
+    var post=postModel.update(entity);
+    var info=AcceptInfo.add(acceptInfo);
+    Promise.all([post,info]).then(([post,info])=>{
+      res.redirect('/powerful/editorMag');
+    }).catch(err => {
+      console.log(err);
+    });
+    }catch(error){
+      next(error);
+    }
+})
+router.post('/Editor/deny/:id',(req,res,next)=>{
+  try{
+    var id=req.params.id;
+    var entity = {
+      IDPost:id,
+      Status_post: 3,
+     }
+    postModel.update(entity).then(rows => {
+      res.redirect(req.get('referer'));
+    }).catch(err => {
+      console.log(err);
+    });
+    }catch(error){
+      next(error);
+    }
+})
+router.get('/editorAccept',(req,res,next)=>{
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==2)
+    {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var posts=postModel.allAccepted(req.user.IDAccount,limit,offset);
+      Promise.all([posts]).then(([posts])=>{
+        //Phân trang
+        if(posts!=null)
+        { 
+          console.log(posts);
+          var pages = [];
+          var total = posts.length;
+          var nPages = Math.floor(total / limit);
+          if (total % limit > 0) nPages++;
+          first=1;
+          last=nPages;
+          for (i = 1; i <= nPages; i++) {
+              
+            var active = false;
+            if (+page === i) active = true;
+      
+            var obj = {
+              value: i,
+              active
+            }
+            pages.push(obj);
+          }
+    }      
+        res.render('guest/vwPowerful/vwEditor/AcceptedPosts',{posts,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+     
+    }
+   else{
+     res.redirect('/');
+   }
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+})
 router.post('/postMagWriter/delete/:id',(req, res, next) => {
   try{
     var id=req.params.id;
@@ -271,7 +408,9 @@ router.post('/postMagWriter/delete/:id',(req, res, next) => {
      }
     postModel.update(entity).then(rows => {
       res.redirect('/powerful/postMagWriter');
-    })
+    }).catch(err => {
+      console.log(err);
+    });
     }catch(error){
       next(error);
     }

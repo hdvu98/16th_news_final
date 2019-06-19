@@ -9,6 +9,9 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
+      function goBack() {
+        window.history.back();
+        }
     </script>
  {{/section}}
 
@@ -16,6 +19,7 @@
   <div class="d-flex" id="wrapper">
 
         <!-- Sidebar -->
+        {{#if isWriter}}
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
@@ -24,6 +28,18 @@
             
           </div>
         </div>
+        {{/if}}
+        {{#if isEditor}}
+          <div class="bg-dark border-right" id="sidebar-wrapper">
+          <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
+          <div class="list-group list-group-flush">
+            <a href="/powerful/editorMag" class="list-group-item list-group-item-action bg-dark active">Draft</a>
+            <a href="/powerful/editorAccept" class="list-group-item list-group-item-action bg-dark">Accepted Post</a>
+
+        </div>
+        </div>
+        {{/if}}
+
         <!-- /#sidebar-wrapper -->
     
         <!--Content -->
@@ -35,7 +51,7 @@
             <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button> -->
-            <a class="btn btn-primary" href="/powerful/postMagWriter" role="button" style="float:right;">
+            <a class="btn btn-primary" role="button" style="float:right;" onclick="goBack()">
                     <i class="fa fa-backward" aria-hidden="true"></i>
                     Back
                   </a>

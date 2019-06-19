@@ -17,6 +17,23 @@ module.exports={
         ORDER BY datecomplete desc
         limit ${limit} offset ${offset}`);
     },
+    allByEditor:(id,limit,offset)=>{
+        return db.load(`Select * from post join cate_child on FKCategory =IDCate_child
+        join editor_cate on FKIDCate_Parents=FKCate
+        left join account on FKIDWritter_post=IDAccount
+        where FKEditor = '${id}' and Status_post='2' 
+        ORDER BY datecomplete and type_of_post desc
+        limit ${limit} offset ${offset}`);
+    },
+    allAccepted:(id,limit,offset)=>{
+        return db.load(`Select * from post 
+        join editor_post on IDPost=FKPost
+        left join account on FKIDWritter_post=IDAccount
+        where FKEditor = '${id}' and Status_post<'2' 
+        ORDER BY datecomplete and type_of_post desc
+        limit ${limit} offset ${offset}`);
+    }
+    ,
     countByWriter:(id)=>{
         return db.load(`Select count(*) as 'total' from post where FKIDWritter_post = '${id}' 
         `);
