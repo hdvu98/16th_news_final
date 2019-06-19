@@ -24,13 +24,20 @@ module.exports = {
   add: entity => {
     return db.add('account', entity);
   },
-
+  
+  allByMem:(limit,offset)=>{
+    return db.load(`select *,DATE_FORMAT(VipDate, "%d %m %Y") as 'VipDate' from account where Type_account  = 0 and Status_account=0
+    limit ${limit} offset ${offset}`);
+  },
+  countByMem:()=>{
+    return db.load('Select count(*) as total from account where Type_account  = 0 and Status_account = 0') ;
+  },
   update: entity => {
     
     return db.update('account', 'IDAccount', entity);
   },
 
   delete: id => {
-    return db.delete('account', 'IDAccount', id);
+    return db.delete('account', 'Status_account','IDAccount', id);
   }
 };
