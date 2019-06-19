@@ -1,12 +1,16 @@
 var express = require('express');
 var multer=require('multer');
 var router = express.Router();
-
+var moment = require('moment');
 var categoryModel = require('../../models/Category.model');
 var topicModel = require('../../models/Topic.model');
 var postModel=require('../../models/Post.model');
 var tagModel=require('../../models/Tag.model');
+
 var AcceptInfo=require('../../models/AcceptInfo.model')
+
+var userModel=require('../../models/user.model');
+
 //require('../../middlewares/upload')(router);
 
 // post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt /4 xóa
@@ -689,9 +693,156 @@ router.post('/addCategory', (req, res, next) => {
 router.get('/adminEditorMag', (req, res, next) => {
     res.render('guest/vwPowerful/adminEditorMag');
 })
+
+//admin member Mag
+
 router.get('/adminMemberMag', (req, res, next) => {
-    res.render('guest/vwPowerful/adminMemberMag');
+  if(req.isAuthenticated() && req.user.Type_account==3)
+  {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var mem=userModel.allByMem(limit,offset);
+      var count=userModel.countByMem();
+      Promise.all([mem,count]).then(([mem,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+
+        //phân trang
+
+        var post_status=[];
+        nPosts=mem.length;
+        for (i = 0; i <nPosts ; i++) {
+          Yes= false;
+          No=false;
+      	  post=mem[i];
+          if(mem[i].Vip==1)
+          {
+            Yes=true;
+          }    
+          else{
+            No=true;
+          }
+          
+          var obj = {
+          post,
+          Yes,
+	        No
+          }
+          post_status.push(obj);
+        }
+        res.render('guest/vwPowerful/adminMemberMag',{post_status,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+ 
 })
+
+router.get('/editMember/:id', (req, res) => {
+  
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    
+    var id = req.params.id;
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/editMember', { error: true });
+      return;
+    }
+  
+    userModel.single(id).then(rows => {
+      if (rows.length > 0) {
+        
+        res.render('guest/vwPowerful/editMember', {
+          error: false,
+          mem: rows[0]
+        });
+      } else {
+         
+        res.render('guest/vwPowerful/editMember', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    });    
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
+  })
+
+  router.post('/updateMember', (req, res,next) => {
+    try{
+      var day = moment(req.body.dob, 'DD/MM/YYYY').format('YYYY-MM-DD');
+      console.log(day);
+      var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+      var now = new Date();
+      console.log(now);
+      var vip=0;
+      var parts = day.match(/(\d+)/g);
+      var dayEx= new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+      var diffDays = Math.round(Math.abs((dayEx.getTime() - now.getTime())/(oneDay)));
+      if((diffDays)>=7){
+        vip=1;
+      }
+      var entity={
+        IDAccount:req.body.IDAccount,
+        VipDate:day,
+        Vip:vip
+      }
+      userModel.update(entity)
+        .then(n => {
+         
+          res.redirect('/powerful/adminMemberMag');
+        }).catch(err => {
+          console.log(err);
+        })    
+    
+    }catch(error){
+      next(error);
+    }
+  })
+  router.post('/deleteMember', (req, res) => {
+  
+    try{
+      var id = req.params.id;
+    
+    userModel.delete(id)
+      .then(n => {
+        res.redirect('/powerful/adminMemberMag');
+      }).catch(err => {
+        console.log(err);
+      })   
+    }catch(error){
+      next(error);
+    }
+  })
+  
+
 router.get('/adminPostMag', (req, res, next) => {
     res.render('guest/vwPowerful/adminPostMag');
 })
@@ -701,23 +852,6 @@ router.get('/adminWriterMag', (req, res, next) => {
 
 //Admin Tag Management
 
-// router.get('/adminTagMag', (req, res, next) => {
-//   if(req.isAuthenticated() && req.user.Type_account==3){
-//     var p = tagModel.allCountPost();
-//     p.then(rows => {
-//       // console.log(rows);
-//       res.render('guest/vwPowerful/adminTagMag', {
-//         tagpost: rows
-//       });
-//     }).catch(err => {
-//       console.log(err);
-//     });
-//   }
-//   else{
-//     res.redirect('/account/login');
-//   }
-    
-// })
 router.get('/adminTagMag', (req, res, next) => {
   if(req.isAuthenticated() && req.user.Type_account==3)
   {

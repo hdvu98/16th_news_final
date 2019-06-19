@@ -14,20 +14,13 @@
       rules: {
         Name_tag: {
           required: true,
-          remote: {
-            url: '/powerful/is-exitsEditTag',
-            // data: {
-            //   user: function () {
-            //     return $('#txtUsername').val();
-            //   }
-            // }
-          }
+          
         },
       },
       messages: {
         Name_tag: {
             required: 'Tag name is required.',
-          remote: 'Tag name has been taken, please take another.'
+          
         }
         
       },
@@ -89,7 +82,7 @@
     </div>
     {{else}}
     
-    <form method="POST" action="/powerful/updateTag">
+    <form method="POST" action="/powerful/updateTag" id="frmRegister" novalidate>
       <div class="form-group">
         <label for="txtCatID">#</label>
         <input readonly type="text" class="form-control" id="txtCatID" name="IDTAG" value="{{this.tags.IDTAG}}">

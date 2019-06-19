@@ -92,7 +92,7 @@
                                             <h2>Member <b>Management</b></h2>
                                         </div>
                                         <div class="col-sm-8">						
-                                            <a href="#" class="btn btn-primary"><i class="material-icons"></i> <span>Refresh List</span></a>
+                                            <a href="/powerful/adminMemberMag" class="btn btn-primary"><i class="material-icons"></i> <span>Refresh List</span></a>
                                         </div>
                                     </div>
                                 </div>    
@@ -104,12 +104,7 @@
                                   <!-- end filter -->  
                                   <div class="col">
                                           <!-- search -->
-                                    <div class="filter-group">
-                                            <label>Search</label>
-                                            <input type="text" class="form-control" id="searchInput">
-                                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                        </div> 
-                                        <!-- search -->       
+                                          
 
                                   </div>
                                             
@@ -128,50 +123,61 @@
                                 </tr>
                             </thead>
                             <tbody>
+                               {{#each this.post_status}}
                                 <tr class="table-row">
-                                    <td>1</td>
-                                    <td>hdvu98</td>
-                                    <td>Yes</td>     
-                                    <td>31/05/2019</td>                                          
+                                    <td>{{post.IDAccount}}</td>
+                                    <td>{{post.Username}}</td>
+                                    {{#if Yes}}
+                                    <td>Yes</td>
+                                    {{/if}}
+                                    {{#if No}}
+                                    <td>No</td>  
+                                    {{/if}}
+                                    <td>{{post.VipDate}}</td>                                          
                                     <!-- <td><span class="status text-published">&bull;</span></td> -->
                                     <td></a>
-                                        <a href="#" class="accept" title="Set To Vip Member"data-toggle="tooltip"onclick="viewSettings()"><i class="fa fa-plus"></i></a>
-                                        <a href="#" class="remove" title="Ban" data-toggle="tooltip"><i class="fa fa-ban"></i></a>       
+                                        <a  class="accept" title="Set To Vip Member" href="/powerful/editMember/{{post.IDAccount}}" role="button"><i class="fa fa-plus"></i></a>
+                                        <a  class="remove" title="Ban" data-toggle="tooltip"><i class="fa fa-ban"></i></a>       
                                     </td>
                                 </tr>
-                                <tr  class="table-row">
-                                        <td>2</td>
-                                       <td>dungle</td>
-                                       <td>No</td>
-                                        <td>null</td>                        
-                                        <!-- <td><span class="status text-approved" >&bull;</span></td> -->
-                                        <td></a>
-                                            <a href="#" class="accept" title="Set To Vip Member"data-toggle="tooltip"onclick="viewSettings()"><i class="fa fa-plus"></i></a>
-                                            <a href="#" class="remove" title="Ban" data-toggle="tooltip"><i class="fa fa-ban"></i></a>       
-                                        </td>
-                                    <tr class="table-row">
-                                        <td>3</td>
-                                        <td>hoanggiang</td>
-                                        <td>Yes</td>
-                                        <td>29/05/2019</td>                        
-                                        <!-- <td><span class="status text-denied">&bull;</span></td> -->
-                                        <td></a>
-                                            <a href="#" class="accept" title="Set To Vip Member"data-toggle="tooltip"onclick="viewSettings()"><i class="fa fa-plus"></i></a>
-                                            <a href="#" class="remove" title="Ban" data-toggle="tooltip"><i class="fa fa-ban"></i></a>       
-                                        </td>
-                                    </tr>                       
+                                {{/each}}
+                                  
                             </tbody>
                         </table>
-                            <!-- <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div> -->
-                            <ul class="pagination mt-5">
-                                <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
-                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            <div class="row">
+                        <div class="col-sm-12">
+                            <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                               
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{first}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;First</span>
+                                </a>
+                                </li>
+                                 {{#each this.pages}}
+                                {{#if active}}
+                                <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">
+                                    {{value}} <span class="sr-only">(current)</span>
+                                </a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+                                
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{last}}" aria-label="Next">
+                                    <span aria-hidden="true">Last&raquo;</span>
+                                </a>
+                                </li>
+                                
                             </ul>
+                            </nav>
+                        </div>
+                        </div>
                         </div>    
              </div>
         </div>

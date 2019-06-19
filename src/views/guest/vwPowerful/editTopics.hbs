@@ -16,20 +16,13 @@
       rules: {
         Name_childcate: {
           required: true,
-          remote: {
-            url: '/powerful/is-exitsEditTopic',
-            // data: {
-            //   user: function () {
-            //     return $('#txtUsername').val();
-            //   }
-            // }
-          }
+          
         },
       },
       messages: {
         Name_childcate: {
             required: 'Topic name is required.',
-          remote: 'Topic name has been taken, please take another.'
+         
         }
         
       },
@@ -91,7 +84,7 @@
     </div>
     {{else}}
     
-    <form method="POST" action="/powerful/updateTopic" >
+    <form method="POST" action="/powerful/updateTopic" id="frmRegister" novalidate >
       <div class="form-group">
         <label for="txtCatID">#</label>
         <input readonly type="text" class="form-control" id="txtCatId" name="IDCate_Parents" value="{{nameCate.IDCate_Parents}}">
