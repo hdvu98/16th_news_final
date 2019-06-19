@@ -9,7 +9,7 @@ module.exports={
     },
     alllByTopic:(id,limit,offset)=>{
         return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0 
-        ORDER BY datecomplete desc
+        ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
     },
     allByWriter:(id,limit,offset)=>{
@@ -34,8 +34,8 @@ module.exports={
         SELECT *FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
-        where Name_parentscate='${Name}' and Status_post=0
-        ORDER BY datecomplete desc limit ${limit} offset ${offset}`);
+        where Name_parentscate='${Name}' and Status_post=0 
+        ORDER BY datecomplete  and type_of_post desc limit ${limit} offset ${offset}`);
     },
     countPostByCate:Name=>{
         return db.load(`
@@ -127,6 +127,14 @@ module.exports={
             left JOIN news.account On FKIDWritter_post=IDAccount
         where IDpost='${id}' and Status_post=0`)
     },
+    singleFullInfoGuest:id=>{
+        return db.load(`SELECT * FROM post
+            INNER JOIN cate_child ON FKCategory =IDCate_child 
+            INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+            left JOIN news.account On FKIDWritter_post=IDAccount
+        where IDpost='${id}' and Status_post=0 and type_of_post='0'`)
+    }
+    ,
     singleRaw:id=>{
         return db.load(`SELECT * FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
@@ -152,7 +160,7 @@ module.exports={
       searchTitle:(key)=>{
         return db.load(`SELECT * FROM news.post WHERE MATCH (title) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
         and Status_post=0
-        ORDER BY datecomplete desc`);
+        ORDER BY datecomplete and Type_of_post desc`);
       },
       countSearchTitle:(key)=>{
         return db.load(`SELECT count(*) as 'total' FROM news.post WHERE MATCH (title) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
@@ -168,19 +176,34 @@ module.exports={
       ,
       searchContent:(key)=>{
         return db.load(`SELECT * FROM news.post WHERE MATCH (content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
-        and Status_post=0
-        ORDER BY datecomplete desc `);
+        and Status_post=0 
+        ORDER BY datecomplete and Type_of_post desc `);
       },
       searchDefault:(key)=>{
         return db.load(`SELECT * FROM news.post WHERE MATCH (title,content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
-        and Status_post=0
-        ORDER BY datecomplete desc `);
+        and Status_post=0 
+        ORDER BY datecomplete and Type_of_post desc `);
       },
       allVipPost:(status,Type,limit,offset)=>{
         return db.load(`Select * from post join cate_child on FKCategory =IDCate_child where 
         Type_of_post= '${Type}' and Status_post='${status}'
         ORDER BY datecomplete desc
         limit ${limit} offset ${offset}`);
+      },
+      searchVipContent:(key)=>{
+        return db.load(`SELECT * FROM news.post WHERE MATCH (content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0
+        ORDER BY datecomplete and Type_of_post desc `);
+      },
+      searchVipDefault:(key)=>{
+        return db.load(`SELECT * FROM news.post WHERE MATCH (title,content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0
+        ORDER BY datecomplete and Type_of_post desc `);
+      },
+      searchVipTitle:(key)=>{
+        return db.load(`SELECT * FROM news.post WHERE MATCH (title) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
+        and Status_post=0
+        ORDER BY datecomplete and Type_of_post desc`);
       }
 
 }

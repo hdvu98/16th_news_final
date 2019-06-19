@@ -20,7 +20,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             {{#each this.topics}}
-                            <li class="breadcrumb-item"><a href="/><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
                             <li class="breadcrumb-item"><a href="/{{Name_parentscate}}">{{Name_parentscate}}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{Name_childcate}}</li>
                             {{/each}}
@@ -73,25 +73,29 @@
                         <!-- Single Catagory Post -->
                         <div class="single-catagory-post d-flex flex-wrap">
                             <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url({{Thumbnail}});">
+                            <div class="post-thumbnail bg-img" style="background-image: url({{post.Thumbnail}});">
 
                             </div>
 
                             <!-- Post Contetnt -->
                             <div class="post-content">
-                                <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
+                                <a href="/post/{{post.IDPost}}" class="post-title">{{post.Title}}</a>
                                 <div class="post-meta">
-                                   <a href="#">{{Name_childcate}}</a>
+                                   <a href="#">{{post.Name_childcate}}</a>
+                                    {{#if isVipPost}}
+                                    <i  style="font-size: 13px; color:darkorange" class="fa fa-star"> VIP</i>
+
+                                    {{/if}}
                                     <br/>
-                                    <i href="#" style="font-size: 11px;">{{DateComplete}}</i>
+                                    <i href="#" style="font-size: 11px;">{{post.DateComplete}}</i>
                                 </div>                                
                                 <!-- Post Meta -->
                                 <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{Num_of_View}}</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{Num_of_Comment}}</a>
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{post.Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{post.Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{post.Num_of_Comment}}</a>
                                 </div>
-                                <p class="sumary-post-area">{{{Sumary}}}</p>
+                                <p class="sumary-post-area">{{{post.Sumary}}}</p>
                             </div>
                         </div>
                         {{/each}}
