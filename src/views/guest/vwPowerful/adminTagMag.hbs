@@ -1,25 +1,6 @@
 {{#section 'js'}}
  
-<script>
-    var modal = document.getElementById('myAcceptModal');
-    var span = document.getElementsByClassName('close')[0];
-    function viewSettings(){
-		 modal.style.display = "block";
-    }
-    span.onclick = function() {
-        modal.style.display = "none";
-        }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    </script>
-    <!-- end-modal -->
-    
-
-        <!-- search -->
+       <!-- search -->
         <script>
                 $(document).ready(function(){
                   $("#searchInput").on("keyup", function() {
@@ -81,7 +62,7 @@
                                             <h2>Member <b>Management</b></h2>
                                         </div>
                                         <div class="col-sm-8">						
-                                            <a href="#" class="btn btn-primary"><i class="material-icons"></i> <span>Refresh List</span></a>
+                                            <a href="/powerful/adminTagMag" class="btn btn-primary"><i class="material-icons"></i> <span>Refresh List</span></a>
                                         </div>
                                     </div>
                                 </div>    
@@ -90,7 +71,7 @@
                               <div class="row  mt-1">
                                   <div class="col">
                                         <div class="col addUser">
-                                                <a onclick="viewSettings()" class="btn btn-primary">
+                                                <a href="/powerful/addTag" class="btn btn-primary">
                                                     <i class="fa fa-plus">
                                                     </i>
                                                     Create A New Tag
@@ -123,50 +104,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="table-row">
-                                    <td>1</td>
-                                    <td>#Trump</td> 
-                                    <td>1234</td>                                     
+                                 {{#each this.tagpost}}
+                                        <tr class="table-row">
+                                    <td>{{ID}}</td>
+                                    <td>{{Name}}</td> 
+                                    <td>{{countpost}}</td>                                     
                                     <!-- <td><span class="status text-published">&bull;</span></td> -->
-                                    <td></a>
-                                        <a href="#" class="remove" title="Remove" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
+                                    <td>
+                                    <a class="btn btn-primary btn-sm" href="/powerful/editTag/{{ID}}" role="button">
+    
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                   
                                     </td>
                                 </tr>
-                                <tr  class="table-row">
-                                        <td>2</td>
-                                       <td>#U23VietNam</td> 
-                                       <td>123</td>                       
-                                        <!-- <td><span class="status text-approved" >&bull;</span></td> -->
-                                        <td></a>
-                                            <a href="#" class="remove" title="Remove" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                        </td>
-                                    <tr class="table-row">
-                                        <td>3</td>
-                                       <td>#SonTungMTP</td>
-                                       <td>500</td>                        
-                                        <!-- <td><span class="status text-denied">&bull;</span></td> -->
-                                        <td></a>
-                                            <a href="#" class="remove" title="Remove" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                        </td>
-                                    </tr>     
-                                    <tr class="table-row">
-                                            <td>4</td>
-                                           <td>#HCMUS</td> 
-                                           <td>2016</td>                       
-                                            <!-- <td><span class="status text-denied">&bull;</span></td> -->
-                                            <td></a>
-                                                <a href="#" class="remove" title="Remove" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                            </td>
-                                        </tr>   
-                                        <tr class="table-row">
-                                                <td>5</td>
-                                               <td>#Sports</td>                      
-                                               <td>1500</td>  
-                                                <!-- <td><span class="status text-denied">&bull;</span></td> -->
-                                                <td></a>
-                                                    <a href="#" class="remove" title="Remove" data-toggle="tooltip"><i class="fa fa-remove"></i></a>       
-                                                </td>
-                                            </tr>                         
+                                  {{/each}}
+                                            
                             </tbody>
                         </table>
                             <!-- <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div> -->
@@ -186,23 +139,7 @@
         <!-- /#page-content-wrapper -->
     
       </div>
-      <div class="accept-modal" id="myAcceptModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3>Create A New Tags</h3>     
-                 
-                <div class="form-group">
-                        <label style="float: left;">Tag Name: </label>
-                        <input  type="text" class="form-control" id="exampleUsername" placeholder="#DuongDepTrai">
-                 </div>
-
-                 <div class="modal-submit">
-                        <a href="" class="btn btn-success modal-btn">Apply</a>
-                        <a href="" class="btn btn-danger modal-btn">Close</a>
-        </div>
-                
-            </div>
-        </div>
+     
     <div class="clearfix">
       <!-- /#wrapper -->   
 

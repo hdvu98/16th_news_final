@@ -7,7 +7,15 @@ module.exports={
     count:()=>{
         return db.load(`Select count(*) as 'total' from news.cate_child where Status_childcate=0`);
     },
-
+    count:()=>{
+        return db.load(`Select count(*) as 'total' from news.cate_child where Status_childcate=0`);
+    },
+    singleByName: name=>{
+        return db.load(`Select * from news.cate_child where  Name_childcate = '${name}' and Status_childcate =0`);
+    },
+    singleByEditName: name=>{
+        return db.load(`Select * from news.cate_child where  Name_childcate = '${name}'  and Status_childcate =0`);
+    },
     topicByID:(id)=>{
         return db.load(`Select * from news.cate_child where IDCate_Child='${id}' and Status_childcate=0`);
     },

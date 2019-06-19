@@ -17,6 +17,9 @@ module.exports={
     singleByName: name=>{
         return db.load(`Select * from news.cate_parents where  Name_parentscate = '${name}' and Status_parentscate=0`);
     },
+    singleByEditName: name=>{
+        return db.load(`Select * from news.cate_parents where  Name_parentscate = '${name}' and Status_parentscate=0`);
+    },
     categoryWithTopicsByName: name=>{
         return db.load(`Select * from news.cate_parents left join news.cate_child on IDCate_Parents=FKIDCate_Parents where Name_parentscate = '${name}' and Status_parentscate=0`);
     },

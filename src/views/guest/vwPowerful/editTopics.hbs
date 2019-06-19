@@ -1,29 +1,50 @@
 {{#section 'js'}}
- 
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+  $(function () {
 
-    
-
-        <!-- search -->
-        <script>
-                $(document).ready(function(){
-                  $("#searchInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#managementTable tr").filter(function() {
-                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                  });
-                });
-             </script>
-        <!-- end search -->
-
-    <script>
-            $("#menu-toggle").click(function(e) {
+     $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
               });
-    </script>     
-    
- {{/section}}
+
+    $('#frmRegister').validate({
+      rules: {
+        Name_childcate: {
+          required: true,
+          remote: {
+            url: '/powerful/is-exitsEditTopic',
+            // data: {
+            //   user: function () {
+            //     return $('#txtUsername').val();
+            //   }
+            // }
+          }
+        },
+      },
+      messages: {
+        Name_childcate: {
+            required: 'Topic name is required.',
+          remote: 'Topic name has been taken, please take another.'
+        }
+        
+      },
+
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      validClass: 'is-valid',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      }
+    });
+  })
+</script>
+{{/section}}
 
 
   <div class="d-flex" id="wrapper">
@@ -67,7 +88,8 @@
       <a href="/powerful/adminTopicsMag/{{nameCate.IDCate_Parents}}" class="alert-link">Go Back</a>
     </div>
     {{else}}
-    <form method="POST" action="/powerful/updateTopic">
+    
+    <form method="POST" action="/powerful/updateTopic" id="frmRegister" novalidate >
       <div class="form-group">
         <label for="txtCatID">#</label>
         <input readonly type="text" class="form-control" id="txtCatId" name="IDCate_Parents" value="{{nameCate.IDCate_Parents}}">

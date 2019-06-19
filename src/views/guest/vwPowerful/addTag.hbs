@@ -12,10 +12,10 @@
 
     $('#frmRegister').validate({
       rules: {
-        CatName: {
+        tagName: {
           required: true,
           remote: {
-            url: '/powerful/is-exitsCat',
+            url: '/powerful/is-exitsTag',
             // data: {
             //   user: function () {
             //     return $('#txtUsername').val();
@@ -25,9 +25,9 @@
         },
       },
       messages: {
-        CatName: {
-            required: 'Category name is required.',
-          remote: 'Category name has been taken, please take another.'
+        tagName: {
+            required: 'Name tag is required.',
+          remote: 'Name tag has been taken, please take another.'
         }
         
       },
@@ -46,13 +46,14 @@
 </script>
 {{/section}}
 
+
   <div class="d-flex" id="wrapper">
 
         <!-- Sidebar -->
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
-            <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
+           <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
             <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
             <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
             <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
@@ -77,15 +78,17 @@
           </nav>
          <div class="card shadow" >
   <h4 class="card-header">
-    New Category
+    New Tag
   </h4>
   <div class="card-body">
     <form method="POST" id="frmRegister" novalidate >
+    
       <div class="form-group">
-        <label for="txtCatName">Category</label>
-        <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus placeholder="Enter category name">
+        <label for="txtTopicName">Tag</label>
+        <input type="text" class="form-control" id="txtTagName" name="tagName" autofocus placeholder="Enter tag name">
       </div>
-      <a class="btn btn-primary" href="/powerful/adminCateMag" role="button">
+      
+      <a class="btn btn-primary" href="/powerful/adminTagMag" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back To List
       </a>

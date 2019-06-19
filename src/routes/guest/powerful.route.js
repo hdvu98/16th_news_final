@@ -5,6 +5,7 @@ var router = express.Router();
 var categoryModel = require('../../models/Category.model');
 var topicModel = require('../../models/Topic.model');
 var postModel=require('../../models/Post.model');
+var tagModel=require('../../models/Tag.model');
 //require('../../middlewares/upload')(router);
 
 // post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt /4 xóa
@@ -237,7 +238,7 @@ router.post('/postMagWriter/delete/:id',(req, res, next) => {
 //route admin category management page
 
 router.get('/adminCateMag', (req, res, next) => {
-  if(req.isAuthenticated() && req.isAdmin){
+  if(req.isAuthenticated() && req.user.Type_account==3){
     
     var p = categoryModel.all();
     p.then(rows => {
@@ -259,7 +260,7 @@ router.get('/adminCateMag', (req, res, next) => {
 //add topics
 
 router.get('/adminTopicsMag/:id', (req, res) => {
-  if(req.isAuthenticated() && req.isAdmin){
+  if(req.isAuthenticated() && req.user.Type_account==3){
     var id = req.params.id;
     if (isNaN(id)) {
       res.render('guest/vwPowerful/adminTopicsMag', { error: true });
@@ -296,7 +297,7 @@ router.get('/adminTopicsMag/:id', (req, res) => {
   
 
 router.get('/addTopic/:id', (req, res,next) => {
-  if(req.isAuthenticated() && req.isAdmin){
+  if(req.isAuthenticated() && req.user.Type_account==3){
     var id = req.params.id;
     if (isNaN(id)) {
       res.render('guest/vwPowerful/addTopic', { error: true });
@@ -346,7 +347,7 @@ router.post('/addTopic/:id', (req, res, next) => {
 })
 //edit topics
 router.get('/editTopics/:id', (req, res) => {
-  if(req.isAuthenticated() && req.isAdmin){
+  if(req.isAuthenticated() && req.user.Type_account==3){
     var id = req.params.id;
   
     if (isNaN(id)) {
@@ -419,7 +420,9 @@ router.post('/deleteTopic', (req, res) => {
 //edit categories
 
 router.get('/editCategory/:id', (req, res) => {
-  if(req.isAuthenticated() && req.isAdmin){
+  
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    
     var id = req.params.id;
     if (isNaN(id)) {
       res.render('guest/vwPowerful/editCategory', { error: true });
@@ -474,7 +477,7 @@ router.post('/delete', (req, res) => {
   })
     
 router.get('/addCategory', (req, res, next) => {
-  if(req.isAuthenticated() && req.isAdmin){
+  if(req.isAuthenticated() && req.user.Type_account==3){
     res.render('guest/vwPowerful/addCategory'); 
 
   }
@@ -513,7 +516,203 @@ router.get('/adminPostMag', (req, res, next) => {
 router.get('/adminWriterMag', (req, res, next) => {
     res.render('guest/vwPowerful/adminWriterMag');
 })
+
+//Admin Tag Management
+
 router.get('/adminTagMag', (req, res, next) => {
-    res.render('guest/vwPowerful/adminTagMag');
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    var p = tagModel.allCountPost();
+    p.then(rows => {
+      // console.log(rows);
+      res.render('guest/vwPowerful/adminTagMag', {
+        tagpost: rows
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
 })
+
+router.get('/addTag', (req, res, next) => {
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    res.render('guest/vwPowerful/addTag'); 
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
+})
+router.get('/is-exitsTag', (req, res, next) => {
+  var nameTag = req.query.tagName;
+  tagModel.singleByNameTag(nameTag).then(rows => {
+    console.log(rows.length);
+    if (rows.length > 0)
+      {
+        
+        return res.json(false);
+      }
+
+    return res.json(true);
+  });
+})
+router.get('/is-exitsTopic', (req, res, next) => {
+
+  var name = req.query.topicName;
+  
+  topicModel.singleByName(name).then(rows => {
+    console.log(rows.length);
+    if (rows.length > 0)
+      {
+        
+        return res.json(false);
+      }
+
+    return res.json(true);
+  });
+})
+router.get('/is-exitsCat', (req, res, next) => {
+  var name = req.query.CatName;
+  categoryModel.singleByName(name).then(rows => {
+    console.log(rows.length);
+    if (rows.length >0 )
+      {
+        
+        return res.json(false);
+      }
+
+    return res.json(true);
+  });
+})
+router.get('/is-exitsEditCat', (req, res, next) => {
+  
+  var name = req.query.Name_parentscate;
+  console.log(name);
+  categoryModel.singleByEditName(name).then(rows => {
+    console.log(rows.length);
+    if (rows.length > 0)
+      {
+        
+        return res.json(false);
+      }
+
+    return res.json(true);
+  });
+})
+router.get('/is-exitsEditTag', (req, res, next) => {
+  
+  var name = req.query.Name_tag;
+  
+  tagModel.singleByEditName(name).then(rows => {
+    console.log(rows.length);
+    if (rows.length > 0)
+      {
+        
+        return res.json(false);
+      }
+
+    return res.json(true);
+  });
+})
+router.get('/is-exitsEditTopic', (req, res, next) => {
+  
+  var name = req.query.Name_childcate;
+  
+  topicModel.singleByEditName(name).then(rows => {
+    //console.log(rows.length);
+    if (rows.length > 0)
+      {
+        
+        return res.json(false);
+      }
+
+    return res.json(true);
+  });
+})
+router.post('/addTag', (req, res, next) => {
+  try{
+    var entity={
+      Name_tag:req.body.tagName,
+      Status_Tag:0
+  }
+  tagModel.add(entity)
+  .then(id => {
+    console.log(id);
+    res.render('guest/vwPowerful/addTag');
+  }).catch(err => {
+    console.log(err);
+  })
+  }catch(error){
+    next(error);
+  }
+})
+
+router.get('/editTag/:id', (req, res) => {
+  
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    
+    var id = req.params.id;
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/editTag', { error: true });
+      return;
+    }
+  
+    tagModel.singleByID(id).then(rows => {
+      if (rows.length > 0) {
+        
+        res.render('guest/vwPowerful/editTag', {
+          error: false,
+          tags: rows[0]
+        });
+      } else {
+         
+        res.render('guest/vwPowerful/editTag', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    });    
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
+  })
+
+  router.post('/updateTag', (req, res) => {
+    try{
+      
+     
+      var entity={
+        IDTAG:req.body.IDTAG,
+        Name_tag:req.body.Name_tag
+      }
+      tagModel.update(entity)
+        .then(n => {
+         
+          res.redirect('/powerful/adminTagMag');
+        }).catch(err => {
+          console.log(err);
+        })    
+    
+    }catch(error){
+      next(error);
+    }
+  })
+  router.post('/deleteTag', (req, res) => {
+    try{
+      tagModel.delete(req.body.IDTAG)
+        .then(n => {
+          res.redirect('/powerful/adminTagMag');
+        }).catch(err => {
+          console.log(err);
+        })  
+    }catch(error){
+      next(error);
+    }
+    })
 module.exports = router;
