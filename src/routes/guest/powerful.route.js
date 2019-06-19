@@ -232,7 +232,7 @@ router.post('/submitPost',(req,res,next)=>{
       console.log(req.file);
       var entity = {
         Title: req.body.title,
-        Thumbnail: "/imgs/1.jpg",
+        Thumbnail: req.body.fileName,
         Status_post: 2,
         FKCategory:req.body.category,
         FKIDWritter_post:req.user.IDAccount,
@@ -294,7 +294,7 @@ router.post('/postMagWriter/edit/:id',(req, res, next) => {
     var entity = {
       IDPost:id,
       Title: req.body.title,
-      Thumbnail: "/imgs/1.jpg",
+      Thumbnail: req.body.fileName,
       Status_post: 2,
       FKCategory:req.body.category,
       FKIDWritter_post:req.user.IDAccount,

@@ -8,6 +8,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 <script>
+  var file=document.getElementById('fuMain').onchange=uploadOnChange;
+  function uploadOnChange()
+  {
+    var filename=this.value;
+    var lastIndex=filename.lastIndexOf("\\");
+    if(lastIndex>=0)
+    {
+      filename=filename.substring(lastIndex+1);
+    }
+    document.getElementById('fileName').value="/imgs/"+filename;
+  }
+</script>
+<script>
   $(function () {
     $('#fuMain').fileinput({
       theme: 'fa',
@@ -78,13 +91,16 @@
                                                    <div class="card-body">
                                                     <div class="form-group">
                                                         <div class="file-loading">
-                                                        <input id="fuMain" name="fuMain" type="file">
+                                                        <input id="fuMain" name="fuMain" type="file" required>
                                                         </div>
                                                     </div>
                                                     </div>
                                                     <div class="card-footer text-right"></div>
                                             {{#each this.post}}
                                             <div class="form-group">
+                                                <label for="upload-file">Thumbnail</label>
+                                                <input id="fileName" name="fileName" type="text" readonly>
+
                                                 <label for="upload-file">Post Title</label>
                                                 <input id="title"type="text" class="form-control" name="title" value="{{Title}}">
                                             </div>
