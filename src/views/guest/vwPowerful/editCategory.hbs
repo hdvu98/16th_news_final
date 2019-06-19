@@ -1,3 +1,6 @@
+ {{#section 'css'}}
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{{/section}} 
 {{#section 'js'}}
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
@@ -5,7 +8,8 @@
 <script>
   $(function () {
 
-     $("#menu-toggle").click(function(e) {
+    
+            $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
               });
@@ -89,7 +93,7 @@
     </div>
     {{else}}
     
-    <form method="POST" action="/powerful/update" id="frmRegister" novalidate>
+    <form method="POST" action="/powerful/update" >
       <div class="form-group">
         <label for="txtCatID">#</label>
         <input readonly type="text" class="form-control" id="txtCatID" name="IDCate_Parents" value="{{this.category.IDCate_Parents}}">

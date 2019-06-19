@@ -97,6 +97,49 @@ router.get('/postMagWriter', (req, res, next) => {
   }
  
 })
+router.get('/vip',(req,res,next)=>{
+  if(req.isAuthenticated())
+  {
+    if(req.user.Vip==1 & req.user.VipExp<=7)
+    {
+      var limit = 10; 
+      var page = req.query.page || 1;
+      if (page < 1) page = 1;
+      var offset = (page - 1) * limit;
+      var posts=postModel.allVipPost('0','1',limit,offset);
+      Promise.all([posts]).then(([posts])=>{
+        var pages = [];
+        var total = posts.length;
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        first=1;
+        last=nPages;
+        for (i = 1; i <= nPages; i++) {
+            
+          var active = false;
+          if (+page === i) active = true;
+    
+          var obj = {
+            value: i,
+            active
+          }
+          pages.push(obj);
+        }
+        res.render('guest/vwPowerful/vwVip/vwVip',{posts,pages,first,last});
+
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+      });
+    
+    }
+    else{
+      res.redirect('/');
+    }
+  }else{
+    res.redirect('/account/login');
+  }
+})
 router.get('/submitPost', (req, res, next) => {
   if(req.isAuthenticated())
   {
@@ -519,22 +562,70 @@ router.get('/adminWriterMag', (req, res, next) => {
 
 //Admin Tag Management
 
+// router.get('/adminTagMag', (req, res, next) => {
+//   if(req.isAuthenticated() && req.user.Type_account==3){
+//     var p = tagModel.allCountPost();
+//     p.then(rows => {
+//       // console.log(rows);
+//       res.render('guest/vwPowerful/adminTagMag', {
+//         tagpost: rows
+//       });
+//     }).catch(err => {
+//       console.log(err);
+//     });
+//   }
+//   else{
+//     res.redirect('/account/login');
+//   }
+    
+// })
 router.get('/adminTagMag', (req, res, next) => {
-  if(req.isAuthenticated() && req.user.Type_account==3){
-    var p = tagModel.allCountPost();
-    p.then(rows => {
-      // console.log(rows);
-      res.render('guest/vwPowerful/adminTagMag', {
-        tagpost: rows
-      });
-    }).catch(err => {
-      console.log(err);
+  if(req.isAuthenticated() && req.user.Type_account==3)
+  {
+    
+    var limit = 5; 
+    var page=req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var tagpost=tagModel.allByTag(limit,offset);
+      var count=tagModel.countByTag();
+      Promise.all([tagpost,count]).then(([tagpost,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+
+        
+              
+ 
+        res.render('guest/vwPowerful/adminTagMag',{tagpost,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
     });
+     
+
   }
   else{
     res.redirect('/account/login');
   }
-    
+ 
 })
 
 router.get('/addTag', (req, res, next) => {

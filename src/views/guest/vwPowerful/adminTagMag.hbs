@@ -1,17 +1,9 @@
+ {{#section 'css'}}
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{{/section}} 
 {{#section 'js'}}
  
-       <!-- search -->
-        <script>
-                $(document).ready(function(){
-                  $("#searchInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#managementTable tr").filter(function() {
-                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                  });
-                });
-             </script>
-        <!-- end search -->
+       
 
     <script>
             $("#menu-toggle").click(function(e) {
@@ -21,8 +13,6 @@
     </script>     
     
  {{/section}}
-
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="d-flex" id="wrapper">
 
@@ -66,29 +56,9 @@
                                         </div>
                                     </div>
                                 </div>    
-                        <div class="table-filter">
-                              <!-- filter -->
-                              <div class="row  mt-1">
-                                  <div class="col">
-                                        <div class="col addUser">
-                                                <a href="/powerful/addTag" class="btn btn-primary">
-                                                    <i class="fa fa-plus">
-                                                    </i>
-                                                    Create A New Tag
-                                                </a>
-                                            </div>
-                                  </div>
-                                  <!-- end filter -->  
-                                  <div class="col">
-                                          <!-- search -->
-                                    <div class="filter-group">
-                                            <label>Search</label>
-                                            <input type="text" class="form-control" id="searchInput">
-                                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                        </div> 
-                                        <!-- search -->       
-
-                                  </div>
+                      
+                                  
+                                 
                                             
                             </div>
             
@@ -122,16 +92,40 @@
                                             
                             </tbody>
                         </table>
-                            <!-- <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div> -->
-                            <ul class="pagination mt-5">
-                                <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
-                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            <div class="row">
+                        <div class="col-sm-12">
+                            <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                               
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{first}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;First</span>
+                                </a>
+                                </li>
+                                 {{#each this.pages}}
+                                {{#if active}}
+                                <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">
+                                    {{value}} <span class="sr-only">(current)</span>
+                                </a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+                                
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{last}}" aria-label="Next">
+                                    <span aria-hidden="true">Last&raquo;</span>
+                                </a>
+                                </li>
+                                
                             </ul>
+                            </nav>
+                        </div>
+                        </div>
                         </div>     
                
              </div>

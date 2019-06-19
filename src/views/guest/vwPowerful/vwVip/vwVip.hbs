@@ -3,34 +3,13 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcrumb-content">
-                        {{#each this.topics}}
-                        <h2>{{Name_childcate}}</h2>
-                        {{/each}}
+                        <h2>PREMIUM POST</h2>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- END HEADER -->
-    <!-- <BREADCRUMB -->
-    <div class="mag-breadcrumb py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            {{#each this.topics}}
-                            <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="/{{Name_parentscate}}">{{Name_parentscate}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{Name_childcate}}</li>
-                            {{/each}}
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- END BREADCRUMB -->
 <!--main content-->
 <div class="archive-post-area">
@@ -39,31 +18,9 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-xl-12">
                     <div class="archive-posts-area bg-white p-50 mb-30 box-shadow">
-                        <!-- Trending Now Posts Area -->
-                        <div class="trending-now-posts mb-30">
-                            <!-- Section Title -->
-                            <div class="section-heading">
-                                <h5>TRENDING NOW</h5>
-                            </div>
-
-                           
-                            <div class="trending-post-slides owl-carousel">
-                                <!-- Single Trending Post -->
-                                 {{#each this.trending}}
-                                <div class="single-trending-post">
-                                    <img src="{{Thumbnail}}" alt="">
-                                    <div class="post-content">
-                                        <a href="#" class="post-cata">{{Name_childcate}}</a>
-                                        <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-
-                               
-                            </div>
-                        </div>
+                
                         <div class="section-heading">
-                            <h5>LATEST NEWS</h5>
+                            <h5>PREMIUM NEWS</h5>
                         </div>
 
                         <!-- Single Catagory Post -->
@@ -73,29 +30,26 @@
                         <!-- Single Catagory Post -->
                         <div class="single-catagory-post d-flex flex-wrap">
                             <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url({{post.Thumbnail}});">
+                            <div class="post-thumbnail bg-img" style="background-image: url({{Thumbnail}});">
 
                             </div>
 
                             <!-- Post Contetnt -->
                             <div class="post-content">
-                                <a href="/post/{{post.IDPost}}" class="post-title">{{post.Title}}</a>
+                                <a href="/post/{{IDPost}}" class="post-title">{{Title}}</a>
                                 <div class="post-meta">
-                                   <a href="#">{{post.Name_childcate}}</a>
-                                    {{#if isVipPost}}
-                                    <i  style="font-size: 13px; color:darkorange" class="fa fa-star"> VIP</i>
-
-                                    {{/if}}
+                                   <a href="#">{{Name_childcate}}</a>
+                                   <i  style="font-size: 11px; color:darkorange" class="fa fa-star"> VIP</i>
                                     <br/>
-                                    <i href="#" style="font-size: 11px;">{{post.DateComplete}}</i>
+                                    <i href="#" style="font-size: 11px;">{{DateComplete}}</i>
                                 </div>                                
                                 <!-- Post Meta -->
                                 <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{post.Num_of_View}}</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{post.Num_of_Like}}</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{post.Num_of_Comment}}</a>
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>{{Num_of_View}}</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>{{Num_of_Like}}</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>{{Num_of_Comment}}</a>
                                 </div>
-                                <p class="sumary-post-area">{{{post.Sumary}}}</p>
+                                <p class="sumary-post-area">{{{Sumary}}}</p>
                             </div>
                         </div>
                         {{/each}}

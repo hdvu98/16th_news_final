@@ -104,7 +104,29 @@ app.get('/:category',(req,res)=>{
     var trends=postModel.topTrendingCate(category);
     var count_rows = postModel.countPostByCate(category);
     Promise.all([rows,cate,postsCate,trends,count_rows]).then(([rows,cate,postsCate,trends,count_rows])=>{
+        //vip
 
+        posts=[];
+        if(postsCate!=null)
+        {
+            for(i=0;i<postsCate.length;i++)
+            {
+                isVipPost=null;
+                if(postsCate[i].Type_of_post=='1')
+                {
+                    isVipPost=true;
+                }
+                obj={
+                    isVipPost:isVipPost,
+                    post:postsCate[i]
+                }
+                posts.push(obj);
+    
+            }
+        }
+
+
+        //phan trang
         var pages = [];
         var total = count_rows[0].total;
 
@@ -125,7 +147,7 @@ app.get('/:category',(req,res)=>{
         }
     
 
-        res.render('guest/vwCategory/Category',{topics:rows,category:cate,posts:postsCate,trending:trends,pages,first,last});
+        res.render('guest/vwCategory/Category',{topics:rows,category:cate,posts,trending:trends,pages,first,last});
     }).catch(err=>{
         console.log(err);
         res.end('error occured');
@@ -133,15 +155,13 @@ app.get('/:category',(req,res)=>{
 });
 
 app.get('/post/:id',(req,res)=>{
-
+    var id=req.params.id;
     var limit = 10;
   
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var offset = (page - 1) * limit;
     var category=req.params.category;
-
-    var id=req.params.id;
     var rows=postModel.singleFullInfo(id);
     var TagsRows=tagsModel.allPostTags(id);
     var cmtRows= commentsModel.allPostComments(id,limit,offset);
@@ -149,10 +169,16 @@ app.get('/post/:id',(req,res)=>{
     var countComments=commentsModel.countComment(id);
 
     Promise.all([rows,TagsRows,cmtRows,similarPost,countComments]).then(([rows,TagsRows,cmtRows,similarPost,countComments])=>{
-
+        isVipPost=null;
         var pages = [];
         var total = countComments[0].total;
-
+        if(rows.length>0)
+        {
+            if(rows[0].Type_of_post==1)
+            {
+                isVipPost=true;
+            }
+        }
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         first=1;
@@ -168,8 +194,8 @@ app.get('/post/:id',(req,res)=>{
           }
           pages.push(obj);
         }
-        
-        res.render('guest/vwSinglePost/SinglePost',{post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
+        console.log(rows);
+        res.render('guest/vwSinglePost/SinglePost',{isVipPost,post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
 
     })
     .catch(err=>{
@@ -179,6 +205,7 @@ app.get('/post/:id',(req,res)=>{
 });
 
 app.get('/:category/:topic',(req,res)=>{
+
     var limit = 10;
   
     var page = req.query.page || 1;
@@ -195,6 +222,30 @@ app.get('/:category/:topic',(req,res)=>{
     Promise.all([rows,postRows,trends,count]).then(([rows,postRows,trends,count])=>{
         var pages = [];
         var total = count[0].total;
+        //vip
+
+        posts=[];
+        if(postRows!=null)
+        {
+            for(i=0;i<postRows.length;i++)
+            {
+                isVipPost=null;
+                if(postRows[i].Type_of_post=='1')
+                {
+                    isVipPost=true;
+                }
+                obj={
+                    isVipPost:isVipPost,
+                    post:postRows[i]
+                }
+                posts.push(obj);
+    
+            }
+        }
+
+
+
+        //phân trang
 
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
@@ -211,7 +262,7 @@ app.get('/:category/:topic',(req,res)=>{
           }
           pages.push(obj);
         }
-        res.render('guest/vwTopic/Topic',{topics:rows,posts:postRows,trending:trends,pages,first,last});
+        res.render('guest/vwTopic/Topic',{topics:rows,posts,trending:trends,pages,first,last});
 
     }).catch(err=>{
         console.log(err);

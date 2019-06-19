@@ -18,7 +18,7 @@ module.exports={
         return db.load(`Select * from news.tag where  Name_tag = '${name}' and Status_Tag =0`);
     },
     allCountPost:()=>{
-        return db.load('select tag.IDTAG as ID, tag.Name_tag as Name, count(tp.FKPost) as countpost from tag as tag left join tag_post as tp on tp.FKTag=tag.IDTAG group by ID,Name order by ID ASC')
+        return db.load('select tag.IDTAG as ID, tag.Name_tag as Name, count(tp.FKPost) as countpost from tag as tag left join tag_post as tp on tp.FKTag=tag.IDTAG and Status_Tag =0 group by ID,Name order by ID ASC')
     },
     add: entity => {
         return db.add('tag', entity);
@@ -29,5 +29,14 @@ module.exports={
     
     delete: id => {
         return db.delete('tag', 'Status_Tag','IDTAG', id);
+    },
+    allByTag:(limit,offset)=>{
+        return db.load(`select tag.IDTAG as ID, tag.Name_tag as Name, count(tp.FKPost) as countpost from tag 
+        as tag left join tag_post as tp on tp.FKTag=tag.IDTAG where Status_Tag =0 group by ID,Name order by ID ASC
+        limit ${limit} offset ${offset}`);
+    },
+    countByTag:()=>{
+        return db.load('Select count(*) as total from tag where Status_Tag = 0') ;
+        
     }
 }

@@ -26,26 +26,24 @@ CREATE TABLE `account` (
   `IDAccount` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Email` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `Phone` varchar(15) DEFAULT NULL,
+  `DOB` date DEFAULT NULL,
   `Pass` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Status_account` int(11) NOT NULL,
   `Type_account` int(11) NOT NULL,
   `Vip` int(11) NOT NULL,
+  `VipDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`IDAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-ALTER TABLE account
-ADD COLUMN Phone VARCHAR(15) AFTER Email;
-ALTER TABLE account
-ADD COLUMN DOB datetime AFTER Phone;
-ALTER TABLE account
-MODIFY  COLUMN DOB date;
+
 --
 -- Dumping data for table `account`
 --
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'HoangDuong','duong@gmail.com','$2b$10$sC8bYUD29eEj0UsTnm29jeTG9lbFoU45FIfArAUoA4DlrIUmNriMC',0,0,1),(2,'hdvu98','hdvu98@gmail.com','$2b$10$sC8bYUD29eEj0UsTnm29jeTG9lbFoU45FIfArAUoA4DlrIUmNriMC',0,1,0),(3,'editor','hdvu98@gmail.com','$2b$10$sC8bYUD29eEj0UsTnm29jeTG9lbFoU45FIfArAUoA4DlrIUmNriMC',0,2,1),(4,'admin','hdvu98@gmail.com','$2b$10$sC8bYUD29eEj0UsTnm29jeTG9lbFoU45FIfArAUoA4DlrIUmNriMC',0,3,1),(5,'acc4','hdvu98@gmail.com','$2b$10$sC8bYUD29eEj0UsTnm29jeTG9lbFoU45FIfArAUoA4DlrIUmNriMC',0,0,0);
+INSERT INTO `account` VALUES (6,'hdvu98','hdvu98@gmail.com','0123456','1998-10-18','$2b$10$Cl61BCfp2mTNY9sHLFDq2ur36xhOFwLVyz36cME4MjKlSkQRu.KAC',0,1,0,'0000-00-00 00:00:00'),(7,'vip','vipmember@gmail.com','0123456789','1997-06-16','$2b$10$Cl61BCfp2mTNY9sHLFDq2ur36xhOFwLVyz36cME4MjKlSkQRu.KAC',0,0,1,'2019-06-18 00:50:00'),(8,'account1','hdvu98@gmail.com','0123456','2019-06-14','$2b$10$CgKnnStu3EHUXmNsQ03gjeKKsd3/TCgVgkAvTKNw1Wk67AMoUNtCu',0,0,0,'0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +116,7 @@ CREATE TABLE `editor_cate` (
   KEY `FK_Editor_idx` (`FKEditor`),
   CONSTRAINT `FK_Cate` FOREIGN KEY (`FKCate`) REFERENCES `cate_parents` (`IDCate_Parents`),
   CONSTRAINT `FK_Editor` FOREIGN KEY (`FKEditor`) REFERENCES `account` (`IDAccount`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,8 +125,37 @@ CREATE TABLE `editor_cate` (
 
 LOCK TABLES `editor_cate` WRITE;
 /*!40000 ALTER TABLE `editor_cate` DISABLE KEYS */;
-INSERT INTO `editor_cate` VALUES (1,3,1);
+INSERT INTO `editor_cate` VALUES (1,3,1),(2,6,1);
 /*!40000 ALTER TABLE `editor_cate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `editor_post`
+--
+
+DROP TABLE IF EXISTS `editor_post`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `editor_post` (
+  `ID_EPost` int(11) NOT NULL AUTO_INCREMENT,
+  `FKEditor` int(11) DEFAULT NULL,
+  `FKPost` int(11) DEFAULT NULL,
+  `PublishDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID_EPost`),
+  KEY `FKPost_idx` (`FKPost`),
+  KEY `FKEditor_idx` (`FKEditor`),
+  CONSTRAINT `FKEditor` FOREIGN KEY (`FKEditor`) REFERENCES `account` (`IDAccount`),
+  CONSTRAINT `FKPost` FOREIGN KEY (`FKPost`) REFERENCES `post` (`IDPost`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `editor_post`
+--
+
+LOCK TABLES `editor_post` WRITE;
+/*!40000 ALTER TABLE `editor_post` DISABLE KEYS */;
+/*!40000 ALTER TABLE `editor_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -195,7 +222,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'Coventry City Guide Including Coventry','/img/imgs/post/1/main_thumb.jpg',0,1,1,'2019-01-01 00:00:00','Hello world',10,20,30,0,'Tóm tắt'),(2,'Coventry City Guide Including Coventry','/img/imgs/post/2/main_thumb.jpg',0,1,1,'2019-01-02 00:00:00','Hello world',10,20,30,0,NULL),(3,'Coventry City Guide Including Coventry','/img/imgs/post/3/main_thumb.jpg',0,2,1,'2019-01-03 00:00:00','Hello world',10,20,30,0,NULL),(4,'Coventry City Guide Including Coventry','/img/imgs/post/4/main_thumb.jpg',0,2,1,'2019-01-04 00:00:00','Hello world',10,20,30,0,NULL),(5,'Coventry City Guide Including Coventry','/img/imgs/post/5/main_thumb.jpg',0,3,1,'2019-01-05 00:00:00','Hello world',10,20,30,0,NULL),(6,'Coventry City Guide Including Coventry','/img/imgs/post/6/main_thumb.jpg',0,3,1,'2019-01-06 00:00:00','Hello world',10,20,30,0,NULL),(7,'Coventry City Guide Including Coventry','/img/imgs/post/7/main_thumb.jpg',0,4,1,'2019-01-07 00:00:00','Hello world',10,20,30,0,NULL),(8,'Coventry City Guide Including Coventry','/img/imgs/post/8/main_thumb.jpg',0,4,1,'2019-01-08 00:00:00','Hello world',10,20,30,0,NULL),(9,'Coventry City Guide Including Coventry','/img/imgs/post/9/main_thumb.jpg',0,5,1,'2019-01-09 00:00:00','Hello world',10,20,30,0,NULL),(10,'Coventry City Guide Including Coventry','/img/imgs/post/10/main_thumb.jpg',0,5,1,'2019-01-10 00:00:00','Hello world',10,20,30,0,NULL),(11,'Coventry City Guide Including Coventry','/img/imgs/post/11/main_thumb.jpg',0,6,1,'2019-01-11 00:00:00','Hello world',10,20,30,0,NULL),(12,'Coventry City Guide Including Coventry','/img/imgs/post/12/main_thumb.jpg',0,6,1,'2019-01-12 00:00:00','Hello world',10,20,30,0,NULL),(13,'Coventry City Guide Including Coventry','/img/imgs/post/13/main_thumb.jpg',0,7,1,'2019-01-13 00:00:00','Hello world',10,20,30,0,NULL),(14,'Coventry City Guide Including Coventry','/img/imgs/post/14/main_thumb.jpg',0,7,1,'2019-01-14 00:00:00','Hello world',10,20,30,0,NULL),(15,'Coventry City Guide Including Coventry','/img/imgs/post/15/main_thumb.jpg',0,8,1,'2019-01-15 00:00:00','Hello world',10,20,30,0,NULL),(16,'Coventry City Guide Including Coventry','/img/imgs/post/16/main_thumb.jpg',0,8,1,'2019-01-16 00:00:00','Hello world',10,20,30,0,NULL),(17,'Coventry City Guide Including Coventry','/img/imgs/post/17/main_thumb.jpg',0,9,1,'2019-01-17 00:00:00','Hello world',10,20,30,0,NULL),(18,'Coventry City Guide Including Coventry','/img/imgs/post/18/main_thumb.jpg',0,9,1,'2019-01-18 00:00:00','Hello world',10,20,30,0,NULL),(19,'Coventry City Guide Including Coventry','/img/imgs/post/19/main_thumb.jpg',0,10,1,'2019-01-19 00:00:00','Hello world',10,20,30,0,NULL),(20,'Coventry City Guide Including Coventry','/img/imgs/post/20/main_thumb.jpg',0,10,1,'2019-01-20 00:00:00','Hello world',10,20,30,0,NULL),(21,'Coventry City Guide Including Coventry','/img/imgs/post/21/main_thumb.jpg',0,11,1,'2019-01-21 00:00:00','Hello world',10,20,30,0,NULL),(22,'Coventry City Guide Including Coventry','/img/imgs/post/22/main_thumb.jpg',0,12,1,'2019-01-22 00:00:00','Hello world',10,20,30,0,NULL),(23,'Coventry City Guide Including Coventry','/img/imgs/post/23/main_thumb.jpg',0,13,1,'2019-01-23 00:00:00','Hello world',10,20,30,0,NULL),(24,'\'Biển người áo đen\' biểu tình, lãnh đạo Hong Kong xin lỗi','/imgs/1.jpg',2,6,2,'2019-01-23 00:00:00','<div class=\"the-article-body\">\r\n<p>&nbsp;</p>\r\n<table class=\"picture\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td class=\"pic\"><img class=\"loaded\" src=\"https://znews-photo.zadn.vn/w660/Uploaded/pgi_dhbpgunat/2019_06_16/hongkongprotestsbannersjun162019.jpg\" alt=\"\'Bien nguoi ao den\' bieu tinh, lanh dao Hong Kong xin loi hinh anh 1 \" width=\"1024\" height=\"681\" /></td>\r\n</tr>\r\n<tr>\r\n<td class=\"pCaption caption\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p>&nbsp;</p>\r\n</div>',0,0,0,0,'Tóm tắt');
+INSERT INTO `post` VALUES (1,'Coventry City Guide Including Coventry','/img/imgs/post/1/main_thumb.jpg',0,1,1,'2019-01-01 00:00:00','Hello world',10,20,30,0,'Tóm tắt'),(2,'Coventry City Guide Including Coventry','/img/imgs/post/2/main_thumb.jpg',0,1,1,'2019-01-02 00:00:00','Hello world',10,20,30,0,NULL),(3,'Coventry City Guide Including Coventry','/img/imgs/post/3/main_thumb.jpg',0,2,1,'2019-01-03 00:00:00','Hello world',10,20,30,0,NULL),(4,'Coventry City Guide Including Coventry','/img/imgs/post/4/main_thumb.jpg',0,2,1,'2019-01-04 00:00:00','Hello world',10,20,30,0,NULL),(5,'Coventry City Guide Including Coventry','/img/imgs/post/5/main_thumb.jpg',0,3,1,'2019-01-05 00:00:00','Hello world',10,20,30,0,NULL),(6,'Coventry City Guide Including Coventry','/img/imgs/post/6/main_thumb.jpg',0,3,1,'2019-01-06 00:00:00','Hello world',10,20,30,0,NULL),(7,'Coventry City Guide Including Coventry','/img/imgs/post/7/main_thumb.jpg',0,4,1,'2019-01-07 00:00:00','Hello world',10,20,30,0,NULL),(8,'Coventry City Guide Including Coventry','/img/imgs/post/8/main_thumb.jpg',0,4,1,'2019-01-08 00:00:00','Hello world',10,20,30,0,NULL),(9,'Coventry City Guide Including Coventry','/img/imgs/post/9/main_thumb.jpg',0,5,1,'2019-01-09 00:00:00','Hello world',10,20,30,0,NULL),(10,'Coventry City Guide Including Coventry','/img/imgs/post/10/main_thumb.jpg',0,5,1,'2019-01-10 00:00:00','Hello world',10,20,30,0,NULL),(11,'Coventry City Guide Including Coventry','/img/imgs/post/11/main_thumb.jpg',0,6,1,'2019-01-11 00:00:00','Hello world',10,20,30,0,NULL),(12,'Coventry City Guide Including Coventry','/img/imgs/post/12/main_thumb.jpg',0,6,1,'2019-01-12 00:00:00','Hello world',10,20,30,0,NULL),(13,'Coventry City Guide Including Coventry','/img/imgs/post/13/main_thumb.jpg',0,7,1,'2019-01-13 00:00:00','Hello world',10,20,30,0,NULL),(14,'Coventry City Guide Including Coventry','/img/imgs/post/14/main_thumb.jpg',0,7,1,'2019-01-14 00:00:00','Hello world',10,20,30,0,NULL),(15,'Coventry City Guide Including Coventry','/img/imgs/post/15/main_thumb.jpg',0,8,1,'2019-01-15 00:00:00','Hello world',10,20,30,0,NULL),(16,'Coventry City Guide Including Coventry','/img/imgs/post/16/main_thumb.jpg',0,8,1,'2019-01-16 00:00:00','Hello world',10,20,30,0,NULL),(17,'Coventry City Guide Including Coventry','/img/imgs/post/17/main_thumb.jpg',0,9,1,'2019-01-17 00:00:00','Hello world',10,20,30,0,NULL),(18,'Coventry City Guide Including Coventry','/img/imgs/post/18/main_thumb.jpg',0,9,1,'2019-01-18 00:00:00','Hello world',10,20,30,0,NULL),(19,'Coventry City Guide Including Coventry','/img/imgs/post/19/main_thumb.jpg',0,10,1,'2019-01-19 00:00:00','Hello world',10,20,30,0,NULL),(20,'Coventry City Guide Including Coventry','/img/imgs/post/20/main_thumb.jpg',0,10,1,'2019-01-20 00:00:00','Hello world',10,20,30,0,NULL),(21,'Coventry City Guide Including Coventry','/img/imgs/post/21/main_thumb.jpg',0,11,1,'2019-01-21 00:00:00','Hello world',10,20,30,0,NULL),(22,'Coventry City Guide Including Coventry','/img/imgs/post/22/main_thumb.jpg',0,12,1,'2019-01-22 00:00:00','Hello world',10,20,30,0,NULL),(23,'Coventry City Guide Including Coventry','/img/imgs/post/23/main_thumb.jpg',0,13,6,'2019-01-23 00:00:00','Hello world',10,20,30,0,NULL),(24,'\'Biển người áo đen\' biểu tình, lãnh đạo Hong Kong xin lỗi','/imgs/1.jpg',2,1,6,'2019-01-23 00:00:00','<div class=\"the-article-body\">\r\n<p>Sửa nội dung</p>\r\n<table class=\"picture\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td class=\"pic\"><img class=\"loaded\" src=\"https://znews-photo.zadn.vn/w660/Uploaded/pgi_dhbpgunat/2019_06_16/hongkongprotestsbannersjun162019.jpg\" alt=\"\'Bien nguoi ao den\' bieu tinh, lanh dao Hong Kong xin loi hinh anh 1 \" width=\"1024\" height=\"681\" /></td>\r\n</tr>\r\n<tr>\r\n<td class=\"pCaption caption\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p>&nbsp;</p>\r\n</div>',0,0,0,0,'Tóm tắt');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,4 +358,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-17 17:16:54
+-- Dump completed on 2019-06-19  2:26:46

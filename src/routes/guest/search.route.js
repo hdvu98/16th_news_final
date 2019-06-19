@@ -4,6 +4,7 @@ var postModel=require('../../models/Post.model');
 var tagModel=require('../../models/Tag.model');
 
 router.get('/',(req,res)=>{    
+
     var key=req.query.search;
     var filter=req.query.filter;
     var posts=null;
@@ -24,9 +25,28 @@ router.get('/',(req,res)=>{
             break;
         }
     }
-   console.log(posts);
     Promise.all([posts]).then( ([rows1]) => {
-        res.render('guest/vwSearch/Search.hbs',{posts:rows1});
+        posts=[];
+        if(rows1!=null)
+        {
+            for(i=0;i<rows1.length;i++)
+            {
+                isVipPost=null;
+                if(rows1[i].Type_of_post=='1')
+                {
+                    isVipPost=true;
+                }
+                obj={
+                    isVipPost:isVipPost,
+                    post:rows1[i]
+                }
+                posts.push(obj);
+    
+            }
+        }
+   
+        console.log(posts);
+        res.render('guest/vwSearch/Search.hbs',{posts});
     }).catch(err=>{
         console.log(err);
         res.eng('error occured');
