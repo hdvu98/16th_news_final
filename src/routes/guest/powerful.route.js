@@ -798,7 +798,47 @@ router.post('/addCategory', (req, res, next) => {
 })
 
 router.get('/adminEditorMag', (req, res, next) => {
-    res.render('guest/vwPowerful/adminEditorMag');
+  if(req.isAuthenticated() && req.user.Type_account==3)
+  {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var mem=userModel.allByEditor(limit,offset);
+      var count=userModel.countByEditor();
+      Promise.all([mem,count]).then(([mem,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+        res.render('guest/vwPowerful/adminEditorMag',{mem,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+ 
+
 })
 
 //admin member Mag
@@ -1002,7 +1042,66 @@ router.get('/adminPostMag', (req, res, next) => {
 })
 
 //Admin Writer Mag
-
+router.post('/updateEditWriter', (req, res) => {
+  try{
+    var str = req.body.cmbCate;
+    var arr = str.split("-").map(function (val) { return +val + 1; });  
+   
+    var entity={
+      EC_ID:req.body.EC_ID,
+      FKCate:arr[1]
+    }
+    ecModel.update(entity)
+      .then(n => {
+       
+        res.redirect('/powerful/adminWriterMag');
+      }).catch(err => {
+        console.log(err);
+      })    
+  
+  }catch(error){
+    next(error);
+  }
+})
+router.post('/deleteWriter', (req, res) => {
+  try{
+    userModel.delete(req.body.IDAccount)
+      .then(n => {
+        res.redirect('/powerful/adminWriterMag');
+      }).catch(err => {
+        console.log(err);
+      })  
+  }catch(error){
+    next(error);
+  }
+})
+router.post('/updateNewWriter', (req, res) => {
+  
+  try{
+    
+   
+    var entityUser={
+      IDAccount:req.body.IDAccount,
+      Type_account:1
+    }
+    var str = req.body.cmbCate;
+    var arr = str.split("-").map(function (val) { return +val + 1; });
+    var entityEC={
+      FKEditor:req.body.IDAccount,
+      FKCate:arr[1]
+    }
+    var userpost=userModel.update(entityUser);
+    var ecpost=ecModel.add(entityEC);
+    Promise.all([userpost,ecpost]).then(([userpost,ecpost])=>{
+      res.redirect('/powerful/addWriter');
+    }).catch(err => {
+      console.log(err);
+    });
+  
+  }catch(error){
+    next(error);
+  }
+})
 router.get('/editWriter/:id', (req, res) => {
   
   if(req.isAuthenticated() && req.user.Type_account==3){
@@ -1037,32 +1136,7 @@ router.get('/editWriter/:id', (req, res) => {
   }
     
   })
-router.post('/updateNewWriter', (req, res) => {
-  try{
-    
-   
-    var entityUser={
-      IDAccount:req.body.IDAccount,
-      Type_account:1
-    }
-    var str = req.body.cmbCate;
-    var arr = str.split("-").map(function (val) { return +val + 1; });
-    var entityEC={
-      FKEditor:req.body.IDAccount,
-      FKCate:arr[1]
-    }
-    var userpost=userModel.update(entityUser);
-    var ecpost=ecModel.add(entityEC);
-    Promise.all([userpost,ecpost]).then(([userpost,ecpost])=>{
-      res.redirect('/powerful/addWriter');
-    }).catch(err => {
-      console.log(err);
-    });
-  
-  }catch(error){
-    next(error);
-  }
-})
+
 router.get('/chooseCateWriter/:id', (req, res) => {
   
   if(req.isAuthenticated() && req.user.Type_account==3){

@@ -89,11 +89,15 @@
     <form method="POST" action="/powerful/updateEditWriter" id="frmRegister" novalidate>
       <div class="form-group">
         <label for="txtCatID">#</label>
+        <input readonly type="text" class="form-control" id="txtCatID" name="EC_ID" value="{{writer.EC_ID}}">
+      </div>
+      <div class="form-group">
+        <label for="txtCatID">IDWriter</label>
         <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{writer.IDAccount}}">
       </div>
        <div class="form-group">
         <label for="txtCatID">Current Category</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{writer.Name_parentscate}}">
+        <input readonly type="text" class="form-control" id="txtCatID" name="Name_parentscate" value="{{writer.Name_parentscate}}">
       </div>
       <div class="form-group">
         <label for="txtCatName">Category</label>
