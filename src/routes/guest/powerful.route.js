@@ -1017,22 +1017,9 @@ router.get('/editWriter/:id', (req, res) => {
       return;
     }
   
-    userModel.singleWriterByID(id).then(rows=>{
-      res.locals.writer=rows[0];
-      console.log(res.locals.writer);
-      
-  });
-    categoryModel.all().then(rows => {
-      if (rows.length > 0) {
-        res.render('guest/vwPowerful/editWriter', {
-          error: false,
-          cate: rows
-        });
-      } else {
-         
-        res.render('guest/vwPowerful/editWriter', { error: true });
-      }
-    }).catch(err => {
+    var rows=userModel.singleWriterByID(id).then(rows=>{
+      res.render('guest/vwPowerful/editWriter',{writer:rows})
+  }).catch(err => {
       console.log(err);
     });    
   }

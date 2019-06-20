@@ -88,20 +88,22 @@
     
     <form method="POST" action="/powerful/updateEditWriter" id="frmRegister" novalidate>
       <div class="form-group">
+        {{#each this.writer}}
         <label for="txtCatID">#</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{writer.IDAccount}}">
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{IDAccount}}">
       </div>
        <div class="form-group">
         <label for="txtCatID">Current Category</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{writer.Name_parentscate}}">
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{Name_parentscate}}">
       </div>
+       {{/each}}
       <div class="form-group">
         <label for="txtCatName">Category</label>
         <select class="mdb-select md-form" name="cmbCate">
         <option value="" disabled selected>Choose category</option>
         
-         {{#each this.cate}}
-         <option value="{{Name_parentscate}}-{{IDCate_Parents}}">{{Name_parentscate}}-{{IDCate_Parents}}</option>
+         {{#each lcCategories}}
+         <option value="{{category.Name_parentscate}}-{{category.IDCate_Parents}}">{{category.Name_parentscate}}-{{category.IDCate_Parents}}</option>
          {{/each}}
         </select>
       </div>
