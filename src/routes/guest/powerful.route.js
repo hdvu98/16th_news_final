@@ -349,7 +349,7 @@ router.get('/postMagWriter/edit/:id',(req, res, next) => {
 router.post('/postMagWriter/edit/:id',(req, res, next) => {
   try{
     var id=req.params.id;
-    var url="/powerful/postMagWriter/raw/"+id;
+    var url="/powerful/raw/"+id;
     var entity = {
       IDPost:id,
       Title: req.body.title,
