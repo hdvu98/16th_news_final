@@ -53,7 +53,7 @@
             <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
             <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
             <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
-            <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
+            <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark active">Writer Management</a>
             <a href="/powerful/adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
             <a href="/powerful/adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
 
@@ -88,17 +88,18 @@
     
     <form method="POST" action="/powerful/updateNewWriter" id="frmRegister" novalidate>
       <div class="form-group">
+           {{#each this.idWriter}}
         <label for="txtCatID">#</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{idWriter.IDAccount}}">
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{IDAccount}}">
       </div>
-    
+         {{/each}}
       <div class="form-group">
         <label for="txtCatName">Category</label>
        <select class="mdb-select md-form" name="cmbCate">
         <option value="" disabled selected>Choose category</option>
         
-         {{#each this.cate}}
-         <option value="{{Name_parentscate}}-{{IDCate_Parents}}">{{Name_parentscate}}-{{IDCate_Parents}}</option>
+         {{#each lcCategories}}
+         <option value="{{category.Name_parentscate}}-{{category.IDCate_Parents}}">{{category.Name_parentscate}}-{{category.IDCate_Parents}}</option>
          {{/each}}
         </select>
       </div>

@@ -798,7 +798,47 @@ router.post('/addCategory', (req, res, next) => {
 })
 
 router.get('/adminEditorMag', (req, res, next) => {
-    res.render('guest/vwPowerful/adminEditorMag');
+  if(req.isAuthenticated() && req.user.Type_account==3)
+  {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var mem=userModel.allByEditor(limit,offset);
+      var count=userModel.countByEditor();
+      Promise.all([mem,count]).then(([mem,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+        res.render('guest/vwPowerful/adminEditorMag',{mem,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+ 
+
 })
 
 //admin member Mag
@@ -1004,21 +1044,17 @@ router.get('/adminPostMag', (req, res, next) => {
   }
    
 })
-
-//Admin Writer Mag
-
-router.get('/editWriter/:id', (req, res) => {
+router.get('/editEditor/:id', (req, res) => {
   
   if(req.isAuthenticated() && req.user.Type_account==3){
     
     var id = req.params.id;
     if (isNaN(id)) {
-      res.render('guest/vwPowerful/editWriter', { error: true });
+      res.render('guest/vwPowerful/editEditor', { error: true });
       return;
     }
-  
     var rows=userModel.singleWriterByID(id).then(rows=>{
-      res.render('guest/vwPowerful/editWriter',{writer:rows})
+      res.render('guest/vwPowerful/editEditor',{writer:rows})
   }).catch(err => {
       console.log(err);
     });    
@@ -1028,7 +1064,76 @@ router.get('/editWriter/:id', (req, res) => {
   }
     
   })
+
+router.post('/updateEditEditor', (req, res) => {
+  try{
+    var str = req.body.cmbCate;
+    var arr = str.split("-").map(function (val) { return +val ; });  
+   
+    var entity={
+      EC_ID:req.body.EC_ID,
+      FKCate:arr[1]
+    }
+    ecModel.update(entity)
+      .then(n => {
+       
+        res.redirect('/powerful/adminEditorMag');
+      }).catch(err => {
+        console.log(err);
+      })    
+  
+  }catch(error){
+    next(error);
+  }
+})
+router.post('/deleteEditor', (req, res) => {
+  try{
+    userModel.delete(req.body.IDAccount)
+      .then(n => {
+        res.redirect('/powerful/adminEditorMag');
+      }).catch(err => {
+        console.log(err);
+      })  
+  }catch(error){
+    next(error);
+  }
+})
+//Admin Writer Mag
+router.post('/updateEditWriter', (req, res) => {
+  try{
+    var str = req.body.cmbCate;
+    var arr = str.split("-").map(function (val) { return +val ; });  
+   
+    var entity={
+      EC_ID:req.body.EC_ID,
+      FKCate:arr[1]
+    }
+    ecModel.update(entity)
+      .then(n => {
+       
+        res.redirect('/powerful/adminWriterMag');
+      }).catch(err => {
+        console.log(err);
+      })    
+  
+  }catch(error){
+    next(error);
+  }
+})
+router.post('/deleteWriter', (req, res) => {
+  try{
+    userModel.delete(req.body.IDAccount)
+      .then(n => {
+        res.redirect('/powerful/adminWriterMag');
+      }).catch(err => {
+        console.log(err);
+      })  
+  }catch(error){
+    next(error);
+  }
+})
 router.post('/updateNewWriter', (req, res) => {
+  
   try{
     
    
@@ -1037,7 +1142,7 @@ router.post('/updateNewWriter', (req, res) => {
       Type_account:1
     }
     var str = req.body.cmbCate;
-    var arr = str.split("-").map(function (val) { return +val + 1; });
+    var arr = str.split("-").map(function (val) { return +val ; });
     var entityEC={
       FKEditor:req.body.IDAccount,
       FKCate:arr[1]
@@ -1054,6 +1159,58 @@ router.post('/updateNewWriter', (req, res) => {
     next(error);
   }
 })
+router.get('/editWriter/:id', (req, res) => {
+  
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    
+    var id = req.params.id;
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/editWriter', { error: true });
+      return;
+    }
+    var rows=userModel.singleWriterByID(id).then(rows=>{
+      res.render('guest/vwPowerful/editWriter',{writer:rows})
+  }).catch(err => {
+      console.log(err);
+    });    
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
+  })
+  router.get('/chooseCateEditor/:id', (req, res) => {
+  
+    if(req.isAuthenticated() && req.user.Type_account==3){
+      
+      var id = req.params.id;
+      console.log(id);
+      if (isNaN(id)) {
+        res.render('guest/vwPowerful/chooseCateEditor', { error: true });
+        return;
+      }
+      
+        
+    userModel.single(id).then(rows => {
+        if (rows.length > 0) {
+          res.render('guest/vwPowerful/chooseCateEditor', {
+            error: false,
+            idWriter: rows
+          });
+        } else {
+           
+          res.render('guest/vwPowerful/chooseCateEditor', { error: true });
+        }
+      }).catch(err => {
+        console.log(err);
+      });    
+  
+    }
+    else{
+      res.redirect('/account/login');
+    }
+      
+    })
 router.get('/chooseCateWriter/:id', (req, res) => {
   
   if(req.isAuthenticated() && req.user.Type_account==3){
@@ -1064,15 +1221,13 @@ router.get('/chooseCateWriter/:id', (req, res) => {
       res.render('guest/vwPowerful/chooseCateWriter', { error: true });
       return;
     }
-    userModel.single(id).then(rows=>{
-      res.locals.idWriter=rows[0];
+    
       
-  });
-    categoryModel.all().then(rows => {
+  userModel.single(id).then(rows => {
       if (rows.length > 0) {
         res.render('guest/vwPowerful/chooseCateWriter', {
           error: false,
-          cate: rows
+          idWriter: rows
         });
       } else {
          
@@ -1087,6 +1242,101 @@ router.get('/chooseCateWriter/:id', (req, res) => {
     res.redirect('/account/login');
   }
     
+  })
+
+
+  router.post('/updateNewEditor', (req, res) => {
+  
+    try{
+      
+     
+      var entityUser={
+        IDAccount:req.body.IDAccount,
+        Type_account:2
+      }
+      var str = req.body.cmbCate;
+      var arr = str.split("-").map(function (val) { return +val ; });
+      var entityEC={
+        FKEditor:req.body.IDAccount,
+        FKCate:arr[1]
+      }
+      var userpost=userModel.update(entityUser);
+      var ecpost=ecModel.add(entityEC);
+      Promise.all([userpost,ecpost]).then(([userpost,ecpost])=>{
+        res.redirect('/powerful/addEditor');
+      }).catch(err => {
+        console.log(err);
+      });
+    
+    }catch(error){
+      next(error);
+    }
+  })
+  router.get('/addEditor', (req, res, next) => {
+    if(req.isAuthenticated() && req.user.Type_account==3)
+    {
+      var limit = 10; 
+      var page = req.query.page || 1;
+      if (page < 1) page = 1;
+      var offset = (page - 1) * limit;
+        var mem=userModel.allByMem(limit,offset);
+        var count=userModel.countByMem();
+        Promise.all([mem,count]).then(([mem,count])=>{
+  
+          //Phân trang
+  
+          var pages = [];
+                  var total = count[0].total;
+                  var nPages = Math.floor(total / limit);
+                  if (total % limit > 0) nPages++;
+                  first=1;
+                  last=nPages;
+                  for (i = 1; i <= nPages; i++) {
+                      
+                    var active = false;
+                    if (+page === i) active = true;
+              
+                    var obj = {
+                      value: i,
+                      active
+                    }
+                    pages.push(obj);
+                  }
+  
+          //phân trang
+  
+          var post_status=[];
+          nPosts=mem.length;
+          for (i = 0; i <nPosts ; i++) {
+            Yes= false;
+            No=false;
+            post=mem[i];
+            if(mem[i].Vip==1)
+            {
+              Yes=true;
+            }    
+            else{
+              No=true;
+            }
+            
+            var obj = {
+            post,
+            Yes,
+            No
+            }
+            post_status.push(obj);
+          }
+          res.render('guest/vwPowerful/addEditor',{post_status,pages});
+        }).catch(err=>{
+          console.log(err);
+          res.eng('error occured');
+      });
+  
+    }
+    else{
+      res.redirect('/account/login');
+    }
+   
   })
 
 router.get('/addWriter', (req, res, next) => {

@@ -8,30 +8,23 @@
 <script>
   $(function () {
 
-
+    
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
               });
 
     $('#frmRegister').validate({
-      rules: {
-        topicName: {
+     rules: {
+        cmbCate: {
           required: true,
-          remote: {
-            url: '/powerful/is-exitsTopic',
-            // data: {
-            //   user: function () {
-            //     return $('#txtUsername').val();
-            //   }
-            // }
-          }
+         
         },
       },
       messages: {
-        topicName: {
-            required: 'Topic name is required.',
-          remote: 'Topic name has been taken, please take another.'
+        cmbCate: {
+            required: 'Category name is required.',
+         
         }
         
       },
@@ -57,11 +50,11 @@
         <div class="bg-dark border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
-           <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark active">Categories Management</a>
+            <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
             <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
             <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
             <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
-            <a href="/powerful/adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
+            <a href="/powerful/adminEditorMag" class="list-group-item list-group-item-action bg-dark active">Editor Management</a>
             <a href="/powerful/adminPostMag" class="list-group-item list-group-item-action bg-dark">Post Management</a>
 
             
@@ -80,32 +73,63 @@
             </button> -->
 
           </nav>
-         <div class="card shadow" >
+       
+      <div class="card shadow">
   <h4 class="card-header">
-    New Topic Of <b>{{this.category.Name_parentscate}}</b>
+    Edit Editor
   </h4>
   <div class="card-body">
-    <form method="POST" id="frmRegister" novalidate >
-        <div class="form-group">
-        <label for="txtCatID">#</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="IDCate_Parents" value="{{this.category.IDCate_Parents}}">
-      </div>
+    {{#if this.error}}
+    <div class="alert alert-danger" role="alert">
+      Invalid EditorId.
+      <a href="/powerful/adminEditorMag" class="alert-link">Go Back</a>
+    </div>
+    {{else}}
+    
+    <form method="POST" action="/powerful/updateEditEditor" id="frmRegister" novalidate>
       <div class="form-group">
-        <label for="txtTopicName">Topic</label>
-        <input type="text" class="form-control" id="txtTopicName" name="topicName" autofocus placeholder="Enter topic name">
+        {{#each this.writer}}
+        <label for="txtCatID">#</label>
+
+        <input readonly type="text" class="form-control" id="txtCatID" name="EC_ID" value="{{EC_ID}}">
       </div>
-      <a class="btn btn-primary" href="/powerful/adminCateMag" role="button">
+      
+       <div class="form-group">
+        <label for="txtCatID">EditorID</label>
+      
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{IDAccount}}">
+      </div>
+       <div class="form-group">
+        <label for="txtCatID">Current Category</label>
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{Name_parentscate}}">
+      </div>
+       {{/each}}
+      <div class="form-group">
+        <label for="txtCatName">Category</label>
+        <select class="mdb-select md-form" name="cmbCate">
+        <option value="" disabled selected>Choose category</option>
+        
+         {{#each lcCategories}}
+         <option value="{{category.Name_parentscate}}-{{category.IDCate_Parents}}">{{category.Name_parentscate}}-{{category.IDCate_Parents}}</option>
+         {{/each}}
+        </select>
+      </div>
+      <a class="btn btn-primary" href="/powerful/adminEditorMag" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
-        Back To List
+        List
       </a>
+      <button type="submit" class="btn btn-outline-danger" formaction="/powerful/deleteEditor">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete
+      </button>
       <button type="submit" class="btn btn-success">
         <i class="fa fa-check" aria-hidden="true"></i>
         Save
       </button>
     </form>
+    {{/if}}
   </div>
 </div>
-      
             
         <!-- /#page-content-wrapper -->
     
