@@ -151,7 +151,7 @@ router.get('/postMagWriter', (req, res, next) => {
 router.get('/vip',(req,res,next)=>{
   if(req.isAuthenticated())
   {
-    if(req.user.Vip==1 & req.user.VipExp<=7)
+    if((req.user.Vip==1 & req.user.VipExp<=7)||req.user.Type_account>=1)
     {
       var limit = 10; 
       var page = req.query.page || 1;
@@ -252,39 +252,98 @@ router.post('/submitPost',(req,res,next)=>{
 })
 
 router.get('/raw/:id',(req, res, next) => {
-  var id=req.params.id;
-  var post=postModel.singleRaw(id);
-  Promise.all([post]).then(([post])=>{
-        res.render('guest/vwPowerful/vwWriter/raw',{post:post});
-  }).catch(err => {
-    console.log(err);
-  });
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==1||req.user.Type_account==2||req.user.Type_account==3)
+    {
+      var id=req.params.id;
+      var post=postModel.singleRaw(id);
+      var postWriter=postModel.singleRawWriter(id,req.user.IDAccount);
+      var postEditor=postModel.singleRawEditor(id,req.user.IDAccount);
+      Promise.all([post,postWriter,postEditor]).then(([post,postWriter,postEditor])=>{
+
+          if(req.user.Type_account==1)
+          {
+            res.render('guest/vwPowerful/vwWriter/raw',{post:postWriter});
+          }
+          else if(req.user.Type_account==3){
+            res.render('guest/vwPowerful/vwWriter/raw',{post:post});
+          }
+          else if(req.user.Type_account==2){
+            console.log('tui la hai nek');
+            res.render('guest/vwPowerful/vwWriter/raw',{post:postEditor});
+          }
+          else{
+            res.redirect('/');
+          }
+        
+      }).catch(err => {
+        console.log(err);
+      }); 
   
+    }
+    else{
+      res.redirect('/');
+    }
+   
+  }
+  else{
+    res.redirect('/');
+  }
+ 
 })
+
+
 router.get('/postMagWriter/edit/:id',(req, res, next) => {
-  var id=req.params.id;
-  var post=postModel.singleRaw(id);
-  var category=categoryModel.cateByUser(req.user.IDAccount);
-  var topic=topicModel.all();
-  Promise.all([post,category,topic]).then(([post,category,topic])=>{
-    var topics=[];
-    console.log(category);
-    console.log(topic);
-    if(category.length>0)
-      {
-        for(i=0;i<topic.length;i++)
-        {
-          
-            if(topic[i].FKIDCate_Parents==category[0].IDCate_Parents)
+  
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==1)
+    {
+      var id=req.params.id;
+        var post=postModel.singleRawWriter(id,req.user.IDAccount);
+        var category=categoryModel.cateByUser(req.user.IDAccount);
+        var topic=topicModel.all();
+        Promise.all([post,category,topic]).then(([post,category,topic])=>{
+          var topics=[];
+          if(category)
+          {
+            if(category.length>0)
             {
-              topics.push(topic[i]);
-            }            
-        }
-      }
-    res.render('guest/vwPowerful/vwWriter/editPost',{post:post,category,topics});
-  }).catch(err => {
-    console.log(err);
-  });
+              if(topic)
+              {
+                for(i=0;i<topic.length;i++)
+                {
+                  
+                    if(topic[i].FKIDCate_Parents==category[0].IDCate_Parents)
+                    {
+                      topics.push(topic[i]);
+                    }            
+                }
+              }
+             
+            }
+          }
+         if(post.length>0)
+         {
+          res.render('guest/vwPowerful/vwWriter/editPost',{post:post,category,topics});
+         }
+         else{
+           res.redirect('/');
+         }
+          
+        }).catch(err => {
+          console.log(err);
+        });         
+    }
+    else{
+      res.redirect('/');
+    }
+   
+  }
+  else{
+    res.redirect('/');
+  }
   
 });
 router.post('/postMagWriter/edit/:id',(req, res, next) => {
@@ -892,7 +951,54 @@ router.get('/editMember/:id', (req, res) => {
   
 
 router.get('/adminPostMag', (req, res, next) => {
-    res.render('guest/vwPowerful/adminPostMag');
+  if(req.isAuthenticated())
+  {
+    if(req.user.Type_account==3)
+    {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var posts=postModel.allByAdmin(limit,offset);
+      Promise.all([posts]).then(([posts])=>{
+        //Phân trang
+        if(posts!=null)
+        { 
+          console.log(posts);
+          var pages = [];
+          var total = posts.length;
+          var nPages = Math.floor(total / limit);
+          if (total % limit > 0) nPages++;
+          first=1;
+          last=nPages;
+          for (i = 1; i <= nPages; i++) {
+              
+            var active = false;
+            if (+page === i) active = true;
+      
+            var obj = {
+              value: i,
+              active
+            }
+            pages.push(obj);
+          }
+    }      
+        res.render('guest/vwPowerful/adminPostMag',{posts,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+     
+    }
+   else{
+     res.redirect('/');
+   }
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+   
 })
 router.get('/adminWriterMag', (req, res, next) => {
     res.render('guest/vwPowerful/adminWriterMag');

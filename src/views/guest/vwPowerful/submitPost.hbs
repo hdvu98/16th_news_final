@@ -40,8 +40,13 @@
 
      <script src="https://cdn.tiny.cloud/1/xt1n4483v6cuvxghuuuhrpeslagu8b8vxcbzyppl6xz0sqqu/tinymce/5/tinymce.min.js"></script>
     <script>
-        tinymce.init({selector:'textarea',height:600,
-                            plugins: 'paste image link autolink lists table media',
+        tinymce.init({selector:'textarea',height:800,
+      plugins: 'paste image link autolink lists table media',
+      toolbar: [
+        'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+        'forecolor backcolor',
+        'table link image media',
+      ],
       });
     </script>
  {{/section}}

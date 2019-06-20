@@ -9,7 +9,9 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
-      function goBack() {
+    </script>
+    <script>
+              function goBack() {
         window.history.back();
         }
     </script>
@@ -18,27 +20,41 @@
 
   <div class="d-flex" id="wrapper">
 
+       <div class="bg-dark border-right" id="sidebar-wrapper">
         <!-- Sidebar -->
         {{#if isWriter}}
-        <div class="bg-dark border-right" id="sidebar-wrapper">
+ 
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
             <a href="/powerful/submitPost" class="list-group-item list-group-item-action bg-dark ">Submit Post</a>
             <a href="/powerful/postMagWriter" class="list-group-item list-group-item-action bg-dark active">Post Management</a>
             
           </div>
-        </div>
+
         {{/if}}
         {{#if isEditor}}
-          <div class="bg-dark border-right" id="sidebar-wrapper">
+    
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
             <a href="/powerful/editorMag" class="list-group-item list-group-item-action bg-dark active">Draft</a>
             <a href="/powerful/editorAccept" class="list-group-item list-group-item-action bg-dark">Accepted Post</a>
 
         </div>
+     
+        {{/if}}
+        {{#if isAdmin}}
+            <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
+          <div class="list-group list-group-flush">
+            <a href="/powerful/adminCateMag" class="list-group-item list-group-item-action bg-dark">Categories Management</a>
+            <a href="/powerful/adminTagMag" class="list-group-item list-group-item-action bg-dark">Tags Management</a>
+            <a href="/powerful/adminMemberMag" class="list-group-item list-group-item-action bg-dark">Member Management</a>
+            <a href="/powerful/adminWriterMag" class="list-group-item list-group-item-action bg-dark">Writer Management</a>
+            <a href="/powerful/adminEditorMag" class="list-group-item list-group-item-action bg-dark">Editor Management</a>
+            <a href="/powerful/adminPostMag" class="list-group-item list-group-item-action bg-dark active">Post Management</a>
+
         </div>
         {{/if}}
+         </div>
 
         <!-- /#sidebar-wrapper -->
     
