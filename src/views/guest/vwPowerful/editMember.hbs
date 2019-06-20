@@ -107,12 +107,10 @@ $('#txtDOB').datetimepicker({
         <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{this.mem.IDAccount}}">
       </div>
       <div class="form-group">
-        <label for="txtCatName">Expiration Date</label>
+        <label for="txtCatName">Current Activation Date</label>
+        <input type="text" class="form-control" id="date" name="dob" value="{{this.mem.VipDate}}" disabled>
+        <label for="txtCatName">New  Activation Date</label>
         <input type="text" class="form-control" id="txtDOB" name="dob" autocomplete="off">
-        <script>
-                    var dateControl = document.getElementById('txtDOB');
-                    dateControl.value = {{this.mem.VipDate}};
-                </script>
       </div>
       <a class="btn btn-primary" href="/powerful/adminMemberMag" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>

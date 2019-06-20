@@ -912,10 +912,14 @@ router.get('/editMember/:id', (req, res) => {
       var vip=0;
       var parts = day.match(/(\d+)/g);
       var dayEx= new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
-      var diffDays = Math.round(Math.abs((dayEx.getTime() - now.getTime())/(oneDay)));
-      if((diffDays)>=7){
+      console.log(dayEx);
+      var diffDays = Math.round((now.getTime()-dayEx.getTime())/oneDay );
+     // var diffDays = Math.round(now.getTime()-dayEx.getTime() );
+      console.log(diffDays);
+      if(diffDays<=7&diffDays>=0){
         vip=1;
       }
+      console.log(vip);
       var entity={
         IDAccount:req.body.IDAccount,
         VipDate:day,
