@@ -8,7 +8,6 @@ module.exports = {
   single: id => {
     return db.load(`select * from account where IDAccount = ${id} and Status_account=0`);
   },
-
   singleByUserName: userName => {
     return db.load(`select *,DATEDIFF(now(), vipdate) as'VipExp' from account where Username = '${userName}' and Status_account=0`);
   },
@@ -21,6 +20,7 @@ module.exports = {
   TypeByID: id => {
     return db.load(`select Type_account  from account where IDAccount  = '${id}' and Status_account=0`);
   },
+
   add: entity => {
     return db.add('account', entity);
   },
@@ -31,6 +31,18 @@ module.exports = {
   },
   countByMem:()=>{
     return db.load('Select count(*) as total from account where Type_account  = 0 and Status_account = 0') ;
+  },
+  allByWriter:(limit,offset)=>{
+    return db.load(`select acc.IDAccount as IDAccount, acc.Username as Username,cate.Name_parentscate as namecate from account 
+        as acc ,editor_cate as ec, cate_parents as cate where acc.Type_account  = 1 and acc.Status_account=0  and acc.IDAccount=ec.FKEditor and ec.FKCate=cate.IDCate_Parents order by IDAccount ASC
+        limit ${limit} offset ${offset}`);
+  },
+  countByWriter:()=>{
+    return db.load('Select count(*) as total from account where Type_account  = 1 and Status_account = 0') ;
+  },
+  singleWriterByID:(id)=>{
+    return db.load(`select acc.IDAccount as IDAccount, acc.Username as Username,cate.Name_parentscate as Name_parentscate from account 
+        as acc ,editor_cate as ec, cate_parents as cate where acc.IDAccount  = '${id}' and acc.Status_account=0  and acc.IDAccount=ec.FKEditor and ec.FKCate=cate.IDCate_Parents order by IDAccount ASC`)
   },
   update: entity => {
     

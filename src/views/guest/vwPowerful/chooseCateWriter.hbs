@@ -1,20 +1,14 @@
-{{#section 'css'}}
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-{{/section}}
+ {{#section 'css'}}
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{{/section}} 
 {{#section 'js'}}
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
   $(function () {
-$('#txtDOB').datetimepicker({
-      format: 'd/m/Y',
-      timepicker: false,
-      mask: true,
-    });  
- $('.datepicker').pickadate();
+
+    
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
@@ -22,23 +16,15 @@ $('#txtDOB').datetimepicker({
 
     $('#frmRegister').validate({
       rules: {
-        dob: {
+        cmbCate: {
           required: true,
-           remote: {
-            url: '/powerful/is-emptyDate',
-            // data: {
-            //   user: function () {
-            //     return $('#txtUsername').val();
-            //   }
-            // }
-          }
+         
         },
-        
       },
       messages: {
-        dob: {
-            required: 'Date is required.',
-         remote: 'Date is required.'
+        cmbCate: {
+            required: 'Category name is required.',
+         
         }
         
       },
@@ -54,7 +40,6 @@ $('#txtDOB').datetimepicker({
       }
     });
   })
-  
 </script>
 {{/section}}
 
@@ -91,38 +76,37 @@ $('#txtDOB').datetimepicker({
        
       <div class="card shadow">
   <h4 class="card-header">
-    Expiration Date
+    Choose Category
   </h4>
   <div class="card-body">
     {{#if this.error}}
     <div class="alert alert-danger" role="alert">
-      Invalid memberId.
-      <a href="/powerful/adminMemberMag" class="alert-link">Go Back</a>
+      Invalid memberID.
+      <a href="/powerful/addWriter" class="alert-link">Go Back</a>
     </div>
     {{else}}
     
-    <form method="POST" action="/powerful/updateMember" id="frmRegister" novalidate>
+    <form method="POST" action="/powerful/updateNewWriter" id="frmRegister" novalidate>
       <div class="form-group">
         <label for="txtCatID">#</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{this.mem.IDAccount}}">
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDAccount" value="{{idWriter.IDAccount}}">
       </div>
+    
       <div class="form-group">
-        <label for="txtCatName">Expiration Date</label>
-        <input type="text" class="form-control" id="txtDOB" name="dob" autocomplete="off">
-        <script>
-                    var dateControl = document.getElementById('txtDOB');
-                    dateControl.value = {{this.mem.VipDate}};
-                </script>
+        <label for="txtCatName">Category</label>
+       <select class="mdb-select md-form" name="cmbCate">
+        <option value="" disabled selected>Choose category</option>
+        
+         {{#each this.cate}}
+         <option value="{{Name_parentscate}}-{{IDCate_Parents}}">{{Name_parentscate}}-{{IDCate_Parents}}</option>
+         {{/each}}
+        </select>
       </div>
-      <a class="btn btn-primary" href="/powerful/adminMemberMag" role="button">
+      <a class="btn btn-primary" href="/powerful/addWriter" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         List
       </a>
-      <button type="submit" class="btn btn-outline-danger" formaction="/powerful/deleteMember">
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
-        Delete
-      </button>
-      <button type="submit" class="btn btn-success" >
+      <button type="submit" class="btn btn-success">
         <i class="fa fa-check" aria-hidden="true"></i>
         Save
       </button>

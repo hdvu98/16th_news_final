@@ -89,10 +89,13 @@
                             <div class="table-title bg-dark">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <h2>Member <b>Management</b></h2>
+                                            <h2>Add <b>New Writer</b></h2>
                                         </div>
                                         <div class="col-sm-8">						
-                                            <a href="/powerful/adminMemberMag" class="btn btn-primary"><i class="material-icons"></i> <span>Refresh List</span></a>
+                                            <a class="btn btn-primary" href="/powerful/adminWriterMag" role="button" style="float:right;">
+                                                <i class="fa fa-backward" aria-hidden="true"></i>
+                                                Back To List
+                                            </a> 
                                         </div>
                                     </div>
                                 </div>    
@@ -138,9 +141,9 @@
                                     
                                     <td class="text-right">
                                     
-                                  <a class="btn btn-primary btn-sm" title="Set To Vip Member" href="/powerful/editMember/{{post.IDAccount}}" role="button">
+                                  <a class="btn btn-primary btn-sm" title="Set To New Writer" href="/powerful/chooseCateWriter/{{post.IDAccount}}" role="button">
                                     
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
                                   </a>
 
                                 </tr>

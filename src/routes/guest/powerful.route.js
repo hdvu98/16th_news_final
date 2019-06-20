@@ -10,7 +10,7 @@ var tagModel=require('../../models/Tag.model');
 var AcceptInfo=require('../../models/AcceptInfo.model')
 
 var userModel=require('../../models/user.model');
-
+var ecModel=require('../../models/editorCate.model');
 //require('../../middlewares/upload')(router);
 
 // post status: 0 public/ 1 chờ đăng/  2 chờ duyệt / 3 từ chối tuyệt /4 xóa
@@ -826,11 +826,11 @@ router.get('/editMember/:id', (req, res) => {
       next(error);
     }
   })
-  router.post('/deleteMember', (req, res) => {
+  router.post('/deleteMember', (req, res,next) => {
   
     try{
-      var id = req.params.id;
-    
+      var id = req.body.IDAccount;
+      console.log(id);
     userModel.delete(id)
       .then(n => {
         res.redirect('/powerful/adminMemberMag');
@@ -846,8 +846,212 @@ router.get('/editMember/:id', (req, res) => {
 router.get('/adminPostMag', (req, res, next) => {
     res.render('guest/vwPowerful/adminPostMag');
 })
+
+//Admin Writer Mag
+
+router.get('/editWriter/:id', (req, res) => {
+  
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    
+    var id = req.params.id;
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/editWriter', { error: true });
+      return;
+    }
+  
+    userModel.singleWriterByID(id).then(rows=>{
+      res.locals.writer=rows[0];
+      console.log(res.locals.writer);
+      
+  });
+    categoryModel.all().then(rows => {
+      if (rows.length > 0) {
+        res.render('guest/vwPowerful/editWriter', {
+          error: false,
+          cate: rows
+        });
+      } else {
+         
+        res.render('guest/vwPowerful/editWriter', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    });    
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
+  })
+router.post('/updateNewWriter', (req, res) => {
+  try{
+    
+   
+    var entityUser={
+      IDAccount:req.body.IDAccount,
+      Type_account:1
+    }
+    var str = req.body.cmbCate;
+    var arr = str.split("-").map(function (val) { return +val + 1; });
+    var entityEC={
+      FKEditor:req.body.IDAccount,
+      FKCate:arr[1]
+    }
+    var userpost=userModel.update(entityUser);
+    var ecpost=ecModel.add(entityEC);
+    Promise.all([userpost,ecpost]).then(([userpost,ecpost])=>{
+      res.redirect('/powerful/addWriter');
+    }).catch(err => {
+      console.log(err);
+    });
+  
+  }catch(error){
+    next(error);
+  }
+})
+router.get('/chooseCateWriter/:id', (req, res) => {
+  
+  if(req.isAuthenticated() && req.user.Type_account==3){
+    
+    var id = req.params.id;
+    console.log(id);
+    if (isNaN(id)) {
+      res.render('guest/vwPowerful/chooseCateWriter', { error: true });
+      return;
+    }
+    userModel.single(id).then(rows=>{
+      res.locals.idWriter=rows[0];
+      
+  });
+    categoryModel.all().then(rows => {
+      if (rows.length > 0) {
+        res.render('guest/vwPowerful/chooseCateWriter', {
+          error: false,
+          cate: rows
+        });
+      } else {
+         
+        res.render('guest/vwPowerful/chooseCateWriter', { error: true });
+      }
+    }).catch(err => {
+      console.log(err);
+    });    
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+    
+  })
+
+router.get('/addWriter', (req, res, next) => {
+  if(req.isAuthenticated() && req.user.Type_account==3)
+  {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var mem=userModel.allByMem(limit,offset);
+      var count=userModel.countByMem();
+      Promise.all([mem,count]).then(([mem,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+
+        //phân trang
+
+        var post_status=[];
+        nPosts=mem.length;
+        for (i = 0; i <nPosts ; i++) {
+          Yes= false;
+          No=false;
+      	  post=mem[i];
+          if(mem[i].Vip==1)
+          {
+            Yes=true;
+          }    
+          else{
+            No=true;
+          }
+          
+          var obj = {
+          post,
+          Yes,
+	        No
+          }
+          post_status.push(obj);
+        }
+        res.render('guest/vwPowerful/addWriter',{post_status,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+ 
+})
+
 router.get('/adminWriterMag', (req, res, next) => {
-    res.render('guest/vwPowerful/adminWriterMag');
+  if(req.isAuthenticated() && req.user.Type_account==3)
+  {
+    var limit = 10; 
+    var page = req.query.page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * limit;
+      var mem=userModel.allByWriter(limit,offset);
+      var count=userModel.countByWriter();
+      Promise.all([mem,count]).then(([mem,count])=>{
+
+        //Phân trang
+
+        var pages = [];
+                var total = count[0].total;
+                var nPages = Math.floor(total / limit);
+                if (total % limit > 0) nPages++;
+                first=1;
+                last=nPages;
+                for (i = 1; i <= nPages; i++) {
+                    
+                  var active = false;
+                  if (+page === i) active = true;
+            
+                  var obj = {
+                    value: i,
+                    active
+                  }
+                  pages.push(obj);
+                }
+        res.render('guest/vwPowerful/adminWriterMag',{mem,pages});
+      }).catch(err=>{
+        console.log(err);
+        res.eng('error occured');
+    });
+
+  }
+  else{
+    res.redirect('/account/login');
+  }
+ 
 })
 
 //Admin Tag Management
@@ -910,6 +1114,17 @@ router.get('/addTag', (req, res, next) => {
     res.redirect('/account/login');
   }
     
+})
+router.get('/is-emptyDate', (req, res, next) => {
+  var date = req.query.dob;
+  console.log(date);
+  if(date=="_/_/____")
+  {
+    console.log('false');
+    return res.json(false);
+  }
+  console.log('true');
+  return res.json(true);
 })
 router.get('/is-exitsTag', (req, res, next) => {
   var nameTag = req.query.tagName;
