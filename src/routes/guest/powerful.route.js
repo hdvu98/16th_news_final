@@ -317,20 +317,28 @@ router.post('/Editor/accept/:id',(req,res,next)=>{
   try{
     var id=req.params.id;
     var date=req.body.pdate;
-  
+    var update={
+      FKPost:id,
+      FKEditor:req.user.IDAccount,
+      PublishDate: null,
+      EPost_Status:0
+     }
      var acceptInfo={
       FKPost:id,
       FKEditor:req.user.IDAccount,
-      PublishDate: date
+      PublishDate: date,
+      EPost_Status:1,
+      EPost_Action:1
      }
      var entity = {
       IDPost:id,     
       Status_post: 1
      }
     var post=postModel.update(entity);
+    var edit=AcceptInfo.update(update);
     var info=AcceptInfo.add(acceptInfo);
-    Promise.all([post,info]).then(([post,info])=>{
-      res.redirect('/powerful/editorMag');
+    Promise.all([post,edit,info]).then(([post,edit,info])=>{
+      res.redirect(req.get('referer'));
     }).catch(err => {
       console.log(err);
     });
@@ -338,6 +346,7 @@ router.post('/Editor/accept/:id',(req,res,next)=>{
       next(error);
     }
 })
+
 router.post('/Editor/deny/:id',(req,res,next)=>{
   try{
     var id=req.params.id;
@@ -345,7 +354,23 @@ router.post('/Editor/deny/:id',(req,res,next)=>{
       IDPost:id,
       Status_post: 3,
      }
-    postModel.update(entity).then(rows => {
+     var update={
+      FKPost:id,
+      FKEditor:req.user.IDAccount,
+      PublishDate: null,
+      EPost_Status:0
+     }
+     var DenyInfo={
+      FKPost:id,
+      FKEditor:req.user.IDAccount,
+      PublishDate: null,
+      EPost_Status:1,
+      EPost_Action:0
+     }
+     var post=postModel.update(entity);
+     var editInfo=AcceptInfo.update(update);
+     var addDeny=AcceptInfo.add(DenyInfo);
+     Promise.all([post,editInfo,addDeny]).then(([post,info,add])=>{
       res.redirect(req.get('referer'));
     }).catch(err => {
       console.log(err);
@@ -386,8 +411,31 @@ router.get('/editorAccept',(req,res,next)=>{
             }
             pages.push(obj);
           }
+//trạng thái
+          var post_status=[];
+        nPosts=posts.length;
+        for (i = 0; i <nPosts ; i++) {
+          Accepted = false;
+          Denied=false;
+          post=posts[i];
+        
+          if(posts[i].Status_post==1)
+          {
+            Accepted=true;
+          }
+          else{
+            Denied=true;
+          }
+          
+          var obj = {
+          post,
+          Accepted,
+          Denied,
+          }
+          post_status.push(obj);
+        }
     }      
-        res.render('guest/vwPowerful/vwEditor/AcceptedPosts',{posts,pages});
+        res.render('guest/vwPowerful/vwEditor/AcceptedPosts',{post_status,pages});
       }).catch(err=>{
         console.log(err);
         res.eng('error occured');

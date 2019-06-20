@@ -194,6 +194,22 @@ app.get('/post/:id',(req,res)=>{
           }
           pages.push(obj);
         }
+        if(rows!=null)
+        {
+            for(i=0;i<rows.length;i++)
+            {
+                var view=rows[i].Num_of_View+1;
+
+                console.log("\n\nview")
+                console.log(rows[i].Num_of_View+1);
+                enity={
+                    IDPost:id,
+                    Num_of_View:view,
+                    Num_of_Comment:total
+                }
+                postModel.update(enity);
+            }
+        }
         console.log(rows);
         res.render('guest/vwSinglePost/SinglePost',{isVipPost,post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
 

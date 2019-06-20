@@ -11,12 +11,15 @@ module.exports = (req, res, next) => {
     }
     else if(res.locals.authUser.Type_account =='1'){
       res.locals.isWriter=true;
+      res.locals.isVip=true;
     }
     else if(res.locals.authUser.Type_account =='2'){
       res.locals.isEditor=true;
+      res.locals.isVip=true;
     }
     else if(res.locals.authUser.Type_account =='3'){
       res.locals.isAdmin=true;
+      res.locals.isVip=true;
     }
   }
   next();

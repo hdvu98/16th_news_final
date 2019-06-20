@@ -69,8 +69,18 @@
                         <div class="table-filter">
                               <!-- filter -->
                               <div class="row  mt-1">
-                                  <div class="col">
-                                  </div>
+                                   <div class="col">
+                                            <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                      <label class="form-text" for="status-filter"><b>Status:  </b></label>
+                                                    </div>
+                                                    <select class="custom-select" style="border-radius:5px;" id="status-filter" onchange="filterText()">
+                                                      <option value="all" selected >All</option>
+                                                      <option value="denied">Denied</option>
+                                                      <option value="accepted">Accepted</option>                                              
+                                                    </select>
+                                             </div>                                          
+                                      </div>
                                   <!-- end filter -->  
                                   <div class="col">
                                           <!-- search -->
