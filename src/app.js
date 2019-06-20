@@ -172,7 +172,12 @@ app.get('/:category',(req,res)=>{
         res.end('error occured');
     });
 });
-
+app.get('/About',(req,res)=>{
+    res.render('guest/vwAboutUS/About');
+});
+app.get('/Contact',(req,res)=>{
+    res.render('guest/vwAboutUS/Contact');
+});
 app.get('/post/:id',(req,res)=>{
     var id=req.params.id;
     var limit = 10;
