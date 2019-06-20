@@ -43,14 +43,25 @@
     <!-- end-modal -->
     <!-- date -->
     <script>
-
              $('#datepicker').datetimepicker({
                 dateformat: 'd/m/Y ',
                 timeFormat:  "hh:mm:ss",
                 timepicker: true,
                 mask: true,
-                });    
+                editable: true,
+                minDate:"-1d"
+                });  
+
+
     </script>
+    <script>
+  var date=document.getElementById('datepicker').onchange=uploadOnChange;
+  function uploadOnChange()
+  {
+ 
+    document.getElementById('datepicked').value=$('#datepicker').datepicker('getDate'))
+  }
+</script>
     <!-- date -->
 
         <!-- search -->
@@ -161,8 +172,7 @@
                                                 <form method="POST" action="/powerful/Editor/accept/{{post.IDPost}}">                
                                                     <div class="form-group">
                                                             <label style="float: left;">Publish date: </label>
-                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off" value={{PublishDate}}>
-                                                             
+                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off" required>
                                                     </div>
                                                     <div class="modal-submit">
                                                                     <button href="" type="submit" class="btn btn-view modal-btn" name="apply" value="apply">Apply</button>

@@ -18,10 +18,19 @@ module.exports={
         ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
     },
+    countAllByTopic:(id)=>{
+        return db.load(`Select *,count(*) as 'total' from post join cate_child on FKCategory =IDCate_child where FKCategory = '${id}' and Status_post=0 
+        `);
+    }
+    ,
     allByWriter:(id,limit,offset)=>{
         return db.load(`Select * from post  where FKIDWritter_post = '${id}' and Status_post<4
         ORDER BY datecomplete desc
         limit ${limit} offset ${offset}`);
+    },
+    countAllByWriter:(id)=>{
+        return db.load(`Select *,count(*) as 'total' from post  where FKIDWritter_post = '${id}' and Status_post<4
+       `);
     },
     allByEditor:(id,limit,offset)=>{
         return db.load(`Select * from post join cate_child on FKCategory =IDCate_child
@@ -30,6 +39,12 @@ module.exports={
         where FKEditor = '${id}' and Status_post='2' 
         ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
+    },
+    countAllByEditor:(id)=>{
+        return db.load(`Select *,count(*) as 'total' from post join cate_child on FKCategory =IDCate_child
+        join editor_cate on FKIDCate_Parents=FKCate
+        left join account on FKIDWritter_post=IDAccount
+        where FKEditor = '${id}' and Status_post='2' `);
     },
     allByAdmin:(limit,offset)=>{
         return db.load(`Select * from post 
@@ -40,13 +55,29 @@ module.exports={
         ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
     },
+    countAllByAdmin:()=>{
+        return db.load(`Select *,count(*) as 'total' from post 
+        INNER JOIN cate_child ON FKCategory =IDCate_child 
+        INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+        left join account on FKIDWritter_post=IDAccount
+        where Status_post='2' 
+        `);
+    }
+    ,
     allAccepted:(id,limit,offset)=>{
         return db.load(`Select * from post 
         join editor_post on IDPost=FKPost
         left join account on FKIDWritter_post=IDAccount
-        where FKEditor = '${id}' and EPost_Status='1' and (Status_post='1' or Status_post='3') 
+        where FKEditor = '${id}' and EPost_Status='1' 
         ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
+    },
+    countAllAccepted:(id)=>{
+        return db.load(`Select *,count(*) as 'total' from post 
+        join editor_post on IDPost=FKPost
+        left join account on FKIDWritter_post=IDAccount
+        where FKEditor = '${id}' and EPost_Status='1'
+        `);
     }
     ,
     countByWriter:(id)=>{
@@ -141,17 +172,15 @@ module.exports={
         );
     },
     allLastedPostByEachTopic:()=>{
-        return db.load(`select * from
-        ((select f.IDPost,f.Title,f.Thumbnail,f.Status_post,f.FKCategory,f.FKIDWritter_post,f.DateComplete,f.Content,f.Num_of_View,f.Num_of_Like,f.Num_of_Comment,f.Type_of_post
-        from (
-           select title,idpost, min(datecomplete) as lasted
-           from post group by fkcategory
-        ) as x inner join post as f on f.idpost = x.idpost and f.datecomplete = x.lasted) as tbPost
-        inner join cate_child on tbPost.fkcategory=idcate_child)
-        inner join cate_parents on fkidcate_parents=idcate_parents where Status_post=0`
-        
+        return db.load(` select f.IDCate_Parents,f.Name_parentscate,IDCate_Child,Name_childcate, f.IDPost,f.Title,f.Thumbnail,f.Status_post,f.FKCategory,f.FKIDWritter_post,f.DateComplete,f.Content,f.Num_of_View,f.Num_of_Like,f.Num_of_Comment,f.Type_of_post,max(f.datecomplete)
+        as lasted
+           from (select * from post
+           inner join cate_child on fkcategory=idcate_child
+            inner join cate_parents on fkidcate_parents=idcate_parents where Status_post=0)
+           as f group by fkcategory`
         );
-    },
+    }
+    ,
     singleFullInfo:id=>{
         return db.load(`SELECT * FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
@@ -238,6 +267,12 @@ module.exports={
         ORDER BY datecomplete desc
         limit ${limit} offset ${offset}`);
       },
+      countAllVipPost:(status,Type)=>{
+        return db.load(`Select *, count(*) as 'total' from post join cate_child on FKCategory =IDCate_child where 
+        Type_of_post= '${Type}' and Status_post='${status}'
+        `);
+      }
+      ,
       searchVipContent:(key)=>{
         return db.load(`SELECT * FROM news.post WHERE MATCH (content) AGAINST ('"${key}" @4' IN BOOLEAN MODE)
         and Status_post=0

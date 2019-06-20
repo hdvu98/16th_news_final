@@ -117,7 +117,7 @@ app.get('/contact',(req,res)=>{
 });
 
 app.get('/:category',(req,res)=>{
-    var limit = 10;
+    var limit = 5;
   
     var page = req.query.page || 1;
     if (page < 1) page = 1;
@@ -182,7 +182,7 @@ app.get('/:category',(req,res)=>{
 
 app.get('/post/:id',(req,res)=>{
     var id=req.params.id;
-    var limit = 10;
+    var limit = 5;
   
     var page = req.query.page || 1;
     if (page < 1) page = 1;

@@ -19,19 +19,21 @@ router.get('/editorMag', (req, res, next) => {
   {
     if(req.user.Type_account==2)
     {
-    var limit = 10; 
+    var limit = 5; 
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var offset = (page - 1) * limit;
       var posts=postModel.allByEditor(req.user.IDAccount,limit,offset);
-      Promise.all([posts]).then(([posts])=>{
+      var count=postModel.countAllByEditor(req.user.IDAccount);
+      Promise.all([posts,count]).then(([posts,count])=>{
         //Phân trang
         if(posts!=null)
         { 
-          console.log(posts);
           var pages = [];
-          var total = posts.length;
+          var total = count[0].total;
+          console.log(total);
           var nPages = Math.floor(total / limit);
+          console.log(nPages);
           if (total % limit > 0) nPages++;
           first=1;
           last=nPages;
@@ -46,6 +48,7 @@ router.get('/editorMag', (req, res, next) => {
             }
             pages.push(obj);
           }
+          console.log(pages);
     }      
         res.render('guest/vwPowerful/editorMag',{posts,pages});
       }).catch(err=>{
@@ -68,7 +71,7 @@ router.get('/postMagWriter', (req, res, next) => {
   {
     if(req.user.Type_account==1)
     {
-    var limit = 10; 
+    var limit = 5; 
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var offset = (page - 1) * limit;
@@ -158,9 +161,12 @@ router.get('/vip',(req,res,next)=>{
       if (page < 1) page = 1;
       var offset = (page - 1) * limit;
       var posts=postModel.allVipPost('0','1',limit,offset);
-      Promise.all([posts]).then(([posts])=>{
+      var count=postModel.countAllVipPost('0','1');
+
+  
+      Promise.all([posts,count]).then(([posts,count])=>{
         var pages = [];
-        var total = posts.length;
+        var total = count[0].total;
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         first=1;
@@ -270,7 +276,6 @@ router.get('/raw/:id',(req, res, next) => {
             res.render('guest/vwPowerful/vwWriter/raw',{post:post});
           }
           else if(req.user.Type_account==2){
-            console.log('tui la hai nek');
             res.render('guest/vwPowerful/vwWriter/raw',{post:postEditor});
           }
           else{
@@ -443,18 +448,18 @@ router.get('/editorAccept',(req,res,next)=>{
   {
     if(req.user.Type_account==2)
     {
-    var limit = 10; 
+    var limit = 5; 
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var offset = (page - 1) * limit;
       var posts=postModel.allAccepted(req.user.IDAccount,limit,offset);
-      Promise.all([posts]).then(([posts])=>{
+      var count=postModel.countAllAccepted(req.user.IDAccount);
+      Promise.all([posts,count]).then(([posts,count])=>{
         //Phân trang
         if(posts!=null)
         { 
-          console.log(posts);
           var pages = [];
-          var total = posts.length;
+          var total = count[0].total;
           var nPages = Math.floor(total / limit);
           if (total % limit > 0) nPages++;
           first=1;
@@ -478,7 +483,7 @@ router.get('/editorAccept',(req,res,next)=>{
           Denied=false;
           post=posts[i];
         
-          if(posts[i].Status_post==1)
+          if(posts[i].Status_post==1||posts[i].Status_post==0)
           {
             Accepted=true;
           }
@@ -956,7 +961,7 @@ router.get('/editMember/:id', (req, res) => {
       var diffDays = Math.round((now.getTime()-dayEx.getTime())/oneDay );
      // var diffDays = Math.round(now.getTime()-dayEx.getTime() );
       console.log(diffDays);
-      if(diffDays<=7&diffDays>=0){
+      if(diffDays<=7){
         vip=1;
       }
       console.log(vip);
@@ -999,18 +1004,18 @@ router.get('/adminPostMag', (req, res, next) => {
   {
     if(req.user.Type_account==3)
     {
-    var limit = 10; 
+    var limit = 5; 
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var offset = (page - 1) * limit;
       var posts=postModel.allByAdmin(limit,offset);
-      Promise.all([posts]).then(([posts])=>{
+      var count=postModel.countAllByAdmin();
+      Promise.all([posts,count]).then(([posts,count])=>{
         //Phân trang
         if(posts!=null)
         { 
-          console.log(posts);
           var pages = [];
-          var total = posts.length;
+          var total = count[0].total;
           var nPages = Math.floor(total / limit);
           if (total % limit > 0) nPages++;
           first=1;

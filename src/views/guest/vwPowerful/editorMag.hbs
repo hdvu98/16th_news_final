@@ -26,12 +26,21 @@
     <!-- end-modal -->
     <!-- date -->
     <script>
-             $('#datepicker').datetimepicker({
-                dateformat: 'd/m/Y ',
-                timeFormat:  "hh:mm:ss",
-                timepicker: true,
-                mask: true,
-                });    
+        
+
+    $('#datepicker').datetimepicker({
+    dateformat: 'd/m/Y ',
+    timeFormat:  "hh:mm:ss",
+    timepicker: true,
+    mask: true,
+    editable: true,
+    minDate:"-1d"
+    });    
+                
+$("form").validate();
+
+
+  $('select').material_select();
     </script>
     <!-- date -->
 
@@ -129,10 +138,10 @@
                                             <div class="modal-content">
                                                 <span class="close">&times;</span>
                                                 <h3>Settings</h3>
-                                                <form method="POST" action="/powerful/editor/accept/{{IDPost}}">                
+                                                <form method="POST" id="dialogform" action="/powerful/editor/accept/{{IDPost}}">                
                                                     <div class="form-group">
                                                             <label style="float: left;">Publish date: </label>
-                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off">
+                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off" required>
                                                     </div>
                                                     <div class="modal-submit">
                                                                     <button href="" type="submit" class="btn btn-view modal-btn" name="apply" value="apply">Apply</button>
@@ -167,7 +176,7 @@
                             </table>
                                 <!-- <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div> -->
                                    <div class="row">
-                        <div class="col-sm-12">
+                         <div class="col-sm-12">
                             <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                

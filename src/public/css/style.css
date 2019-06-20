@@ -289,6 +289,7 @@ img {
     z-index: 1;
     margin-bottom: 15px;
     margin-top:15px;
+    height: 4em;
     background-color: #f2f4f5;
     padding: 10px 25px;
     border-left: 4px solid #fa8231;
@@ -340,7 +341,7 @@ img {
 .bg-overlay {
     position: relative;
     z-index: 2;
-    background-position: center center;
+    background-position: top center;
     background-size: cover;
 }
 
@@ -1139,6 +1140,7 @@ input:focus {
 .single-blog-post .post-thumbnail img {
     width: 100%;
     height: 250px;
+    object-fit: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -3432,6 +3434,7 @@ h5.tittle {
     color: white;
     font-size: 36px;
     padding-bottom: 10px;
+    padding-right:100px;
     border-bottom: 1px solid #B7BDBF;
 }
 

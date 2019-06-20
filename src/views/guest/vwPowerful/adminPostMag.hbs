@@ -31,7 +31,11 @@
                 timeFormat:  "hh:mm:ss",
                 timepicker: true,
                 mask: true,
-                });    
+                editable: true,
+                minDate:"-1d"
+                
+      
+                });   
     </script>
     <!-- date -->
 
@@ -133,7 +137,7 @@
                                                 <form method="POST" action="/powerful/editor/accept/{{IDPost}}">                
                                                     <div class="form-group">
                                                             <label style="float: left;">Publish date: </label>
-                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off">
+                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off" required>
                                                     </div>
                                                     <div class="modal-submit">
                                                                     <button href="" type="submit" class="btn btn-view modal-btn" name="apply" value="apply">Apply</button>
