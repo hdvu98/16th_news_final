@@ -4,6 +4,12 @@ module.exports={
     all:()=>{
         return db.load('Select * from post where Status_post=0 order by datecomplete desc ');
     },
+    allAcceptedPost:()=>{
+        return db.load(`SELECT *,DATEDIFF(now(), PublishDate) as'DayLeft' FROM post 
+        join editor_post on IDpost=FKpost
+        where Status_post='1' and epost_status='1' and epost_action='1' `);
+    }
+    ,
     single : id=>{
         return db.load(`SELECT * FROM post where IDpost = '${id}' and Status_post=0`);
     },
@@ -25,11 +31,20 @@ module.exports={
         ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
     },
+    allByAdmin:(limit,offset)=>{
+        return db.load(`Select * from post 
+        INNER JOIN cate_child ON FKCategory =IDCate_child 
+        INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+        left join account on FKIDWritter_post=IDAccount
+        where Status_post='2' 
+        ORDER BY datecomplete and type_of_post desc
+        limit ${limit} offset ${offset}`);
+    },
     allAccepted:(id,limit,offset)=>{
         return db.load(`Select * from post 
         join editor_post on IDPost=FKPost
         left join account on FKIDWritter_post=IDAccount
-        where FKEditor = '${id}' and Status_post<'2' 
+        where FKEditor = '${id}' and EPost_Status='1' and (Status_post='1' or Status_post='3') 
         ORDER BY datecomplete and type_of_post desc
         limit ${limit} offset ${offset}`);
     }
@@ -156,8 +171,24 @@ module.exports={
         return db.load(`SELECT * FROM post
             INNER JOIN cate_child ON FKCategory =IDCate_child 
             INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
-            INNER JOIN news.account On FKIDWritter_post=IDAccount
+            left JOIN news.account On FKIDWritter_post=IDAccount
         where IDpost='${id}' and Status_post<4`)
+    },
+    singleRawWriter:(id,writer)=>{
+        return db.load(`SELECT * FROM post
+            INNER JOIN cate_child ON FKCategory =IDCate_child 
+            INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+            left JOIN news.account On FKIDWritter_post=IDAccount
+        where IDpost='${id}' and Status_post<4 and FKIDWritter_post='${writer}' `)
+    }
+    ,
+    singleRawEditor:(id,editor)=>{
+        return db.load(` SELECT * FROM post
+        INNER JOIN cate_child ON FKCategory =IDCate_child 
+        INNER JOIN cate_parents ON fkidcate_parents  = idcate_parents
+        left JOIN news.account On FKIDWritter_post=IDAccount
+        left join editor_cate on fkidcate_parents =FKCate
+    where IDpost='${id}' and Status_post<4 and FKEditor=${editor}`)
     },
     update:entity=>{
         return db.update('post', 'IDPost', entity);

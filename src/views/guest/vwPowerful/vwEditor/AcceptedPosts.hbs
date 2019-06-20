@@ -6,7 +6,24 @@
 {{#section 'js'}}
   <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-
+      <script>
+            function filterText()
+                {  
+                    var rex = new RegExp($('#status-filter').val().toLowerCase());
+                    if(rex =="/all/"){clearFilter()}else{
+                        $('.table-row').hide();
+                        $('.table-row').filter(function() {
+                        return rex.test($(this).text().toLowerCase());
+                        }).show();
+                }
+                }
+                
+            function clearFilter()
+                {
+                    $('.status-filter').val('');
+                    $('.table-row').show();
+                }
+        </script>
 <script>
     var modal = document.getElementById('myAcceptModal');
     var span = document.getElementsByClassName('close')[0];
@@ -26,6 +43,7 @@
     <!-- end-modal -->
     <!-- date -->
     <script>
+
              $('#datepicker').datetimepicker({
                 dateformat: 'd/m/Y ',
                 timeFormat:  "hh:mm:ss",
@@ -63,7 +81,7 @@
           <div class="sidebar-heading"><i class="fa fa-dashboard"></i> Dashboard </div>
           <div class="list-group list-group-flush">
             <a href="/powerful/editorMag" class="list-group-item list-group-item-action bg-dark ">Draft</a>
-            <a href="/powerful/editorAccept" class="list-group-item list-group-item-action bg-dark active">Accepted Post</a>
+            <a href="/powerful/editorAccept" class="list-group-item list-group-item-action bg-dark active">Post Management</a>
 
         </div>
         </div>
@@ -95,7 +113,17 @@
                             <div class="table-filter">
                                   <!-- filter -->
                                   <div class="row  mt-1">
-                                      <div class="col">
+                                       <div class="col">
+                                            <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                      <label class="form-text" for="status-filter"><b>Status:  </b></label>
+                                                    </div>
+                                                    <select class="custom-select" style="border-radius:5px;" id="status-filter" onchange="filterText()">
+                                                      <option value="all" selected >All</option>
+                                                      <option value="denied">Denied</option>
+                                                      <option value="accepted">Accepted</option>                                              
+                                                    </select>
+                                             </div>                                          
                                       </div>
                                       <!-- end filter -->  
                                       <div class="col">
@@ -119,25 +147,55 @@
                                         <th>ID</th>
                                         <th>Title</th>
                                         <th>Author</th>						
-                                        <th>Post Date</th>		
-                                        <th>Accept Date</th>										                                      
+                                        <th>Status</th>		
+                                        <th>Publish Date</th>	
+                                        <th>Action</th>									                                      
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each this.posts}}
+                                    {{#each this.post_status}}
+                                     <div class="accept-modal" id="myAcceptModal">
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <h3>Settings</h3>
+                                                <form method="POST" action="/powerful/Editor/accept/{{post.IDPost}}">                
+                                                    <div class="form-group">
+                                                            <label style="float: left;">Publish date: </label>
+                                                             <input type="text" class="form-control" id="datepicker" name="pdate"  placeholder="Publish Time" autocomplete="off" value={{PublishDate}}>
+                                                             
+                                                    </div>
+                                                    <div class="modal-submit">
+                                                                    <button href="" type="submit" class="btn btn-view modal-btn" name="apply" value="apply">Apply</button>
+                                                                    <a href=""  class="btn btn-remove modal-btn">Close</a>
+                                                    </div>
+                                                </form>
+                                                
+                                                <ol id="subjects" type="1" class="circle"style="margin-left:32px;">
+                                                </ol>
+                                            </div>
+                                        </div>
 
                                      <!-- /#wrapper -->   
                                     <tr class="table-row">
-                                        <td>{{IDPost}}</td>
-                                        <td><a href="/Powerful/raw/{{IDPost}}">{{Title}}</a></td>
-                                        <td>{{Username}}</td>
-                                        <td>{{DateComplete}}</td>  
-                                        <td>{{PublishDate}}</td>                      
+                                        <td>{{post.IDPost}}</td>
+                                        <td><a href="/Powerful/raw/{{post.IDPost}}">{{post.Title}}</a></td>
+                                        <td>{{post.Username}}</td>
+                                        {{#if Accepted}}
+                                        <td>Accepted</td>
+                                        {{/if}}
+                                        {{#if Denied}}
+                                        <td>Denied</td>
+                                        {{/if}}
+                                        <td>{{post.PublishDate}}</td>                      
                                         <!-- <td><span class="status text-published">&bull;</span></td> -->
                                         <td>
-                                            <form method="POST" action="/powerful/editor/deny/{{IDPost}}" >
-                                             <a href="/Powerful/raw/{{IDPost}}" class="btn btn-sm btn-view" title="View" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
-                                            <button href="#" class="btn tbn-sm btn-remove" title="deny" data-toggle="tooltip"><i class="fa fa-ban"></i></button>       
+                                            <form class="" method="POST" action="/powerful/editor/deny/{{post.IDPost}}" >
+                                            <div class="form-group">
+                                             <a href="/Powerful/raw/{{IDPost}}" class="btn btn-sm btn-view" title="View" data-toggle="tooltip"><i style="font-size: 17px;" class="fa fa-eye"></i></a>
+                                             <a href="#" class="btn btn-sm btn-edit" title="Accept"data-toggle="tooltip"onclick="viewSettings()"><i style="font-size: 17px;" class="fa fa-edit"></i></a>    
+                                            <button href="#" class="btn tbn-sm btn-remove" title="deny" data-toggle="tooltip"><i style="font-size: 12px;" class="fa fa-ban"></i></button>       
+
+                                            </div>
                                             </form>
                                         </td>
                                     </tr>

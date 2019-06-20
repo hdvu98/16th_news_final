@@ -45,6 +45,25 @@ app.use('/tag', require('./routes/guest/tags.route'));
 app.use('/search', require('./routes/guest/search.route'));
 app.use(bodyParser.urlencoded({extended: true}))
 
+// app.use((req, res, next) => {
+//     next(createError(404));
+//   })
+  
+// app.use((err, req, res, next) => {
+//     var status = err.status || 500;
+//     var errorView = 'error';
+//     if (status === 404)
+//       errorView = '404';
+  
+//     var msg = err.message;
+//     var error = err;
+//     res.status(status).render(errorView, {
+//       layout: false,
+//       msg,
+//       error
+//     })
+//   })
+
 
 app.get('/',(req,res)=>{
     postModel.topLasted().then(topLasted=>{
@@ -193,6 +212,22 @@ app.get('/post/:id',(req,res)=>{
             active
           }
           pages.push(obj);
+        }
+        if(rows!=null)
+        {
+            for(i=0;i<rows.length;i++)
+            {
+                var view=rows[i].Num_of_View+1;
+
+                console.log("\n\nview")
+                console.log(rows[i].Num_of_View+1);
+                enity={
+                    IDPost:id,
+                    Num_of_View:view,
+                    Num_of_Comment:total
+                }
+                postModel.update(enity);
+            }
         }
         console.log(rows);
         res.render('guest/vwSinglePost/SinglePost',{isVipPost,post:rows,Tags:TagsRows,Comments:cmtRows,similarPost:similarPost,pages,first,last});
