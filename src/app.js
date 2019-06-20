@@ -45,6 +45,25 @@ app.use('/tag', require('./routes/guest/tags.route'));
 app.use('/search', require('./routes/guest/search.route'));
 app.use(bodyParser.urlencoded({extended: true}))
 
+// app.use((req, res, next) => {
+//     next(createError(404));
+//   })
+  
+// app.use((err, req, res, next) => {
+//     var status = err.status || 500;
+//     var errorView = 'error';
+//     if (status === 404)
+//       errorView = '404';
+  
+//     var msg = err.message;
+//     var error = err;
+//     res.status(status).render(errorView, {
+//       layout: false,
+//       msg,
+//       error
+//     })
+//   })
+
 
 app.get('/',(req,res)=>{
     postModel.topLasted().then(topLasted=>{
